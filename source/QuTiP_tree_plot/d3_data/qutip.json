@@ -1,0 +1,984 @@
+{
+    "children": [
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "scattering"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "cite"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "fastsparse"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "semidefinite"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "configrc"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "qobjevo_codegen"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "piqs"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "interpolate"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "qobjevo"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "pdpsolve"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "heom"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "progressbar"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "spmv"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "spsolve"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "circuit"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "icm"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "qubits"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "circuit_latex"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "qft"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_icm"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "cqed"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "circuitprocessor"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "spinchain"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_tensor"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_brtools"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_spinchain"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_spmath"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_mkl"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_sesolve"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_basis_transformation"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_cqed"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_td_formats"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_qubit_evolution"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_heom_solver"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_sparse"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_brmesolve_td"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_mesolve"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_metrics"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_three_level"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_superoper"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_propagator"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_qft"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_qubits"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_stochastic_me"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_qpt"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_enr_state_operator"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_qubitcircuit"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_states"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_steadystate"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_operators"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_utilities"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_sp_eigs"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_fileio"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_subsys_apply"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_cy_structs"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_partial_transpose"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_qobj"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_piqs"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_rhs_reuse"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_stochastic_se"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_fastsparse"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_expect"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_wigner"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_mcsolve"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_parallel"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_qobjevo"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_correlation"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_superop_reps"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_rand"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_floquet"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_countstat"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_ptrace"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_entropy"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_openmp"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_scattering"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_graph"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_gates"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_eigenstates"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_dimensions"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_random"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_interpolate"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_brmesolve"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "test_control_pulseoptim"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "pyxbuilder"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "br_codegen"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "codegen"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "bench_openmp"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "fidcomp"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "optimresult"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "pulseoptim"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "io"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "dump"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "optimconfig"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "symplectic"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "stats"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "termcond"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "optimizer"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "errors"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "propcomp"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "grape"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "pulsegen"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "tslotcomp"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "loadparams"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "dynamics"
+        },
+        {
+            "children": [],
+            "color": "black",
+            "idx": -1,
+            "name": "heom"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "mesolve"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "steadystate"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "sesolve"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "solver"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "rhs_generate"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "eseries"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "bloch_redfield"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "stochastic"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "rcsolve"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "floquet"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "mcsolve"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "correlation"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "propagator"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "essolve"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "memorycascade"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "transfertensor"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "bloch_redfield"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "memorycascade"
+        },
+        {
+            "children": [],
+            "color": "#0B5FA5",
+            "idx": 0,
+            "name": "transfertensor"
+        },
+        {
+            "children": [],
+            "color": "#043C6B",
+            "idx": 1,
+            "name": "settings"
+        },
+        {
+            "children": [],
+            "color": "#3F8FD2",
+            "idx": 2,
+            "name": "wigner"
+        },
+        {
+            "children": [],
+            "color": "#3F8FD2",
+            "idx": 2,
+            "name": "bloch"
+        },
+        {
+            "children": [],
+            "color": "#3F8FD2",
+            "idx": 2,
+            "name": "visualization"
+        },
+        {
+            "children": [],
+            "color": "#3F8FD2",
+            "idx": 2,
+            "name": "distributions"
+        },
+        {
+            "children": [],
+            "color": "#3F8FD2",
+            "idx": 2,
+            "name": "orbital"
+        },
+        {
+            "children": [],
+            "color": "#3F8FD2",
+            "idx": 2,
+            "name": "tomography"
+        },
+        {
+            "children": [],
+            "color": "#3F8FD2",
+            "idx": 2,
+            "name": "bloch3d"
+        },
+        {
+            "children": [],
+            "color": "#00AE68",
+            "idx": 3,
+            "name": "superop_reps"
+        },
+        {
+            "children": [],
+            "color": "#00AE68",
+            "idx": 3,
+            "name": "subsystem_apply"
+        },
+        {
+            "children": [],
+            "color": "#00AE68",
+            "idx": 3,
+            "name": "superoperator"
+        },
+        {
+            "children": [],
+            "color": "#00AE68",
+            "idx": 3,
+            "name": "operators"
+        },
+        {
+            "children": [],
+            "color": "#007143",
+            "idx": 4,
+            "name": "three_level_atom"
+        },
+        {
+            "children": [],
+            "color": "#007143",
+            "idx": 4,
+            "name": "continuous_variables"
+        },
+        {
+            "children": [],
+            "color": "#007143",
+            "idx": 4,
+            "name": "random_objects"
+        },
+        {
+            "children": [],
+            "color": "#007143",
+            "idx": 4,
+            "name": "states"
+        },
+        {
+            "children": [],
+            "color": "#36D695",
+            "idx": 5,
+            "name": "gates"
+        },
+        {
+            "children": [],
+            "color": "#FF4500",
+            "idx": 6,
+            "name": "countstat"
+        },
+        {
+            "children": [],
+            "color": "#FF4500",
+            "idx": 6,
+            "name": "metrics"
+        },
+        {
+            "children": [],
+            "color": "#FF4500",
+            "idx": 6,
+            "name": "entropy"
+        },
+        {
+            "children": [],
+            "color": "#692102",
+            "idx": 7,
+            "name": "expect"
+        },
+        {
+            "children": [],
+            "color": "#692102",
+            "idx": 7,
+            "name": "tensor"
+        },
+        {
+            "children": [],
+            "color": "#692102",
+            "idx": 7,
+            "name": "qobj"
+        },
+        {
+            "children": [],
+            "color": "#692102",
+            "idx": 7,
+            "name": "partial_transpose"
+        },
+        {
+            "children": [],
+            "color": "#692102",
+            "idx": 7,
+            "name": "ptrace"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "permute"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "version"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "graph"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "simdiag"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "about"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "hardware_info"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "ipynbtools"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "sparse"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "utilities"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "parallel"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "fileio"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "utilities"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "utilities"
+        },
+        {
+            "children": [],
+            "color": "#BF5730",
+            "idx": 8,
+            "name": "utilities"
+        }
+    ],
+    "name": "QuTiP",
+    "size": 2000
+}
