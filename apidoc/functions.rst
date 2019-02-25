@@ -192,9 +192,14 @@ Scattering in Quantum Optical Systems
     :members: temporal_basis_vector, temporal_scattered_state, scattering_probability
     :undoc-members:
 
+Permutational Invariance
+-------------------------------------
+
+.. automodule:: qutip.piqs
+    :members: jspin, dicke, ghz, css
+
 Visualization
 ===============
-
 	
 Pseudoprobability Functions
 ----------------------------
