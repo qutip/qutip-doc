@@ -96,7 +96,7 @@ Density Matrix Metrics
     :members: fidelity, tracedist, bures_dist, bures_angle, hilbert_dist, average_gate_fidelity, process_fidelity
 
 
-Continous Variables
+Continuous Variables
 -------------------
 
 .. automodule:: qutip.continuous_variables
@@ -265,7 +265,7 @@ Optimal control
 .. automodule:: qutip.control.pulsegen
     :members: create_pulse_gen
 
-Utilitiy Functions
+Utility Functions
 ==================
 
 .. _functions-graph:
