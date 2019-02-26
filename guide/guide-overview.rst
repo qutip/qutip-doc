@@ -20,6 +20,7 @@ QuTiP is designed to be a general framework for solving quantum mechanics proble
 
 .. _figure-qutip_org:
 
-   
-Tree-diagram of the 361 user accessible functions and classes in QuTiP 4.3.
-(Online only)
+.. figure:: figures/qutip_tree.png
+   :align: center
+   :figwidth: 100%   
+Tree-diagram of the 361 user accessible functions and classes in QuTiP 4.3. A vector image of the code tree is in :download:`qutip_tree.pdf <doc/qutip_tree.pdf>`.
