@@ -84,7 +84,6 @@ Permutational Invariance
 .. autoclass:: qutip.piqs.Pim
     :members:
 
-
 .. _classes-distributions:
 
 Distribution functions
