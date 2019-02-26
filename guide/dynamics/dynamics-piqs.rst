@@ -58,7 +58,7 @@ The rates for collective and local processes are simply defined as
 - :code:`dephasing` defines :math:`\gamma_\text{D}`, local dephasing 
 - :code:`pumping`  defines :math:`\gamma_\text{P}`, incoherent pumping. 
 
-Then the :code:`system.lindbladian()` creates the total TLS Linbladian superoperator matrix. Similarly, :code:`system.hamiltonian` defines the TLS hamiltonian of the system :math:`H_\text{TLS}`.
+Then the :code:`system.lindbladian()` creates the total TLS Lindbladian superoperator matrix. Similarly, :code:`system.hamiltonian` defines the TLS hamiltonian of the system :math:`H_\text{TLS}`.
 
 The system's Liouvillian can be built using :code:`system.liouvillian()`. The properties of a Piqs object can be visualized by simply calling 
 :code:`system`. We give two basic examples on the use of *PIQS*. In the first example the incoherent emission of N driven TLSs is considered.
@@ -72,41 +72,53 @@ The system's Liouvillian can be built using :code:`system.liouvillian()`. The pr
     L = system.liouvillian()
     steady = steadystate(L)
 
-For more example of use, see the "Permutational Invariant Lindblad Dynamics" section in the Tutorials. 
+For more example of use, see the "Permutational Invariant Lindblad Dynamics" section in the tutorials section of the website, `http://qutip.org/tutorials.html <http://qutip.org/tutorials.html>`_. 
 
-.. list-table:: Useful PIQS functions
+.. list-table:: Useful PIQS functions. 
    :widths: 25 25 50
    :header-rows: 1
 
    * - Operators
      - Command
      - Description
-   * - Collective spin Jx  
+   * - Collective spin algebra :math:`J_x,\ J_y,\ J_z`  
+     - ``jspin(N)``          
+     - The collective spin algebra  :math:`J_x,\ J_y,\ J_z` for :math:`N` TLSs
+   * - Collective spin :math:`J_x`  
      - ``jspin(N, "x")``          
-     - The collective spin operator Jx. Requires N number of TLS
-   * - Collective spin J+
+     - The collective spin operator :math:`Jx`. Requires :math:`N` number of TLSs
+   * - Collective spin :math:`J_y`  
+     - ``jspin(N, "y")``          
+     - The collective spin operator :math:`J_y`. Requires :math:`N` number of TLSs
+   * - Collective spin :math:`J_z`  
+     - ``jspin(N, "z")``          
+     - The collective spin operator :math:`J_z`. Requires :math:`N` number of TLSs
+   * - Collective spin :math:`J_+`
      - ``jspin(N, "+")``          
-     - The collective spin operator J+.
-   * - Collective spin J-
+     - The collective spin operator :math:`J_+`.
+   * - Collective spin :math:`J_-`
      - ``jspin(N, "-")``          
-     - The collective spin operator Jz.
-   * - Collective spin Jz in uncoupled basis
+     - The collective spin operator :math:`J_-`.
+   * - Collective spin :math:`J_z` in uncoupled basis
      - ``jspin(N, "z", basis='uncoupled')``          
-     - The collective spin operator Jz in the uncoupled basis
-   * - Dicke state |j, m>
+     - The collective spin operator :math:`J_z` in the uncoupled basis of dimension :math:`2^N`.
+   * - Dicke state :math:`|j,m\rangle` density matrix
      - ``dicke(N, j, m)``
-     - A Dicke state given by |j, m>
-   * - Excited state in uncoupled basis
+     - The density matrix for the Dicke state given by :math:`|j,m\rangle`
+   * - Excited-state density matrix  in Dicke basis
+     - ``excited(N)``
+     - The excited state in the Dicke basis
+   * - Excited-state density matrix  in uncoupled basis
      - ``excited(N, basis="uncoupled")``
      - The excited state in the uncoupled basis
-   * - GHZ state in the Dicke basis
+   * - Ground-state density matrix  in Dicke basis
+     - ``ground(N)``
+     - The ground state in the Dicke basis
+   * - GHZ-state density matrix in the Dicke basis
      - ``ghz(N)``
-     - The GHZ state in the Dicke (default) basis for N number of TLS
+     - The GHZ-state density matrix in the Dicke (default) basis for N number of TLS
    * - Collapse operators of the ensemble
      - ``Dicke.c_ops()``
-     - The collapse operators for the ensemble can be called by the `c_ops` method of the dicke class.
+     - The collapse operators for the ensemble can be called by the `c_ops` method of the Dicke class.
 
-.. list-table:: 
-   :widths: 15 10 30
-   :header-rows: 1
-
+More functions relative to the `qutip.piqs` module can be found at :ref:`apidoc`. Attributes to the :class:`qutip.piqs.Dicke` and :class:`qutip.piqs.Pim` class can also be found there. 
