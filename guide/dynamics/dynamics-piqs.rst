@@ -75,7 +75,7 @@ The system's Liouvillian can be built using :code:`system.liouvillian()`. The pr
 For more example of use, see the "Permutational Invariant Lindblad Dynamics" section in the Tutorials. 
 
 .. list-table:: Useful PIQS functions
-   :widths: 15 10 30
+   :widths: 25 25 50
    :header-rows: 1
 
    * - Operators
@@ -105,13 +105,8 @@ For more example of use, see the "Permutational Invariant Lindblad Dynamics" sec
    * - Collapse operators of the ensemble
      - ``Dicke.c_ops()``
      - The collapse operators for the ensemble can be called by the `c_ops` method of the dicke class.
-    
-    @savefig guide-dynamics-jc.png width=5.0in align=center
-    In [1]: show()
 
-
-
-
-
-
+.. list-table:: 
+   :widths: 15 10 30
+   :header-rows: 1
 
