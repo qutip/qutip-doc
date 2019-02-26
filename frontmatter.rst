@@ -19,19 +19,19 @@ This document contains a user guide and automatically generated API documentatio
 .. _QuTiP project web page: http://www.qutip.org
 
 
-:Author: Alexander Pitchford
+:Author: P.D. Nation
 
-:Author: Chris Grenade
+:Author: Alexander Pitchford
 
 :Author: Arne Grimsmo
 
-:Author: P.D. Nation
-
 :Author: J.R. Johansson
 
+:Author: Chris Grenade
 
-:version: 4.0
-:status: Released (XX YY, 2017)
+
+:version: 4.3
+:status: Released (July 18, 2018)
 :copyright: This documentation is licensed under the Creative Commons Attribution 3.0 Unported License.
 
 .. _citing-qutip:
@@ -54,13 +54,21 @@ which may also be download from http://arxiv.org/abs/1211.6518 or http://arxiv.o
 
 Funding
 =======
+QuTiP is developed under the auspice of the non-profit organization:
 
-The development of QuTiP has been partially supported by the Japanese Society for the Promotion of Science Foreign Postdoctoral Fellowship Program under grants P11202 (PDN) and P11501 (JRJ).  Additional funding comes from RIKEN, Kakenhi grant Nos. 2301202 (PDN), 2302501 (JRJ), and Korea University. 
+.. _image-qustar:
+
+.. figure:: figures/NumFocus_logo.png
+   :width: 3in
+   :figclass: align-center
+
+
+QuTiP was partially supported by 
 
 .. _image-jsps:
 
 .. figure:: figures/jsps.jpg
-   :width: 4in
+   :width: 2in
    :figclass: align-center
 
 .. _image-riken:
@@ -69,25 +77,22 @@ The development of QuTiP has been partially supported by the Japanese Society fo
 	:width: 1.5in
 	:figclass: align-center
 
-|
-
 .. _image-korea:
 
 .. figure:: figures/korea-logo.png
-	:width: 3in
+	:width: 2in
 	:figclass: align-center
-
 
 .. _about:
 
 About QuTiP
 ===========
 
-Every quantum system encountered in the real world is an open quantum system. For although much care is taken experimentally to eliminate the unwanted influence of external interactions, there remains, if ever so slight, a coupling between the system of interest and the external world. In addition, any measurement performed on the system necessarily involves coupling to the measuring device, therefore introducing an additional source of external influence. Consequently, developing the necessary tools, both theoretical and numerical, to account for the interactions between a system and its environment is an essential step in understanding the dynamics of quantum systems.
+Every quantum system encountered in the real world is an open quantum system. For although much care is taken experimentally to eliminate the unwanted influence of external interactions, there remains, if ever so slight, a coupling between the system of interest and the external world. In addition, any measurement performed on the system necessarily involves coupling to the measuring device, therefore introducing an additional source of external influence. Consequently, developing the necessary tools, both theoretical and numerical, to account for the interactions between a system and its environment is an essential step in understanding the dynamics of practical quantum systems.
 
 In general, for all but the most basic of Hamiltonians, an analytical description of the system dynamics is not possible, and one must resort to numerical simulations of the equations of motion. In absence of a quantum computer, these simulations must be carried out using classical computing techniques, where the exponentially increasing dimensionality of the underlying Hilbert space severely limits the size of system that can be efficiently simulated. However, in many fields such as quantum optics, trapped ions, superconducting circuit devices, and most recently nanomechanical systems, it is possible to design systems using a small number of effective oscillator and spin components, excited by a limited number of quanta, that are amenable to classical simulation in a truncated Hilbert space.
 
-The Quantum Toolbox in Python, or QuTiP, is a fully open-source implementation of a framework written in the Python programming language designed for simulating the open quantum dynamics for systems such as those listed above. This framework distinguishes itself from the other available software solutions in providing the following advantages:
+The Quantum Toolbox in Python, or QuTiP, is an open-source framework written in the Python programming language, designed for simulating the open quantum dynamics of systems such as those listed above. This framework distinguishes itself from other available software solutions in providing the following advantages:
 
 * QuTiP relies entirely on open-source software.  You are free to modify and use it as you wish with no licensing fees or limitations.
 
@@ -97,7 +102,7 @@ The Quantum Toolbox in Python, or QuTiP, is a fully open-source implementation o
 
 * QuTiP allows for solving the dynamics of Hamiltonians with (almost) arbitrary time-dependence, including collapse operators.
 
-* Time-dependent problems can be automatically compiled into C-code at run-time for increased performance.
+* Time-dependent problems can be automatically compiled into C++-code at run-time for increased performance.
 
 * Takes advantage of the multiple processing cores found in essentially all modern computers.
 

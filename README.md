@@ -14,7 +14,11 @@ Build requirements
 * numpydoc
 * ipython
 
-2017-01-07: Partially successful building using:
+In a conda environment use:
+    
+    $ conda install sphinx numpydoc sphinx_rtd_theme ipython
+
+2017-03-28: Successful building using:
 
 * sphinx v1.5.1
 * numpydoc v0.6.0
@@ -31,12 +35,8 @@ then note that this build directory structure must exist already:
 
 To build the documentation on Linux or OS X run:
 
-    $ make html
-    
-2017-01-09: latexpdf build not currently working. If it can be fixed, then:
-
     $ make html latexpdf
-
+    
 Building Documentation On Windows
 ---------------------------------
 

@@ -31,13 +31,17 @@ Bloch sphere
 .. autoclass:: qutip.bloch.Bloch
     :members: 
 
-.. autoclass:: qutip.bloch3d.Bloch3d
+
+Cubic Spline
+---------------
+
+.. autoclass:: qutip.interpolate.Cubic_Spline
     :members: 
 
 
 .. _classes-non_markov:
 
-non-Markovian Solvers
+Non-Markovian Solvers
 ---------------------
 
 .. autoclass:: qutip.nonmarkov.heom.HEOMSolver
@@ -67,6 +71,17 @@ Solver Options and Results
     :members:
 
 .. autoclass:: qutip.stochastic.StochasticSolverOptions
+    :members:
+
+.. _classes-piqs:
+
+Permutational Invariance
+---------------
+
+.. autoclass:: qutip.piqs.Dicke
+    :members:
+
+.. autoclass:: qutip.piqs.Pim
     :members:
 
 .. _classes-distributions:
@@ -248,3 +263,4 @@ Optimal control
     
 .. autoclass:: qutip.control.dump.DumpSummaryItem
     :members:
+

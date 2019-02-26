@@ -7,19 +7,147 @@
 Change Log
 **********
 
-Version 4.1.0 (in dev)
-++++++++++++++++++++++
+Version 4.3.0 (July 14, 2018)
+++++++++++++++++++++++++++++++
+
+Improvements
+------------
+- **MAJOR FEATURE**: Added the Permutational Invariant Quantum Solver (PIQS) module (**by Nathan Shammah** and **Shahnawaz Ahmed**) which allows the simluation of large TLSs ensembles including collective and local Lindblad dissipation. Applications range from superradiance to spin squeezing.
+
+- **MAJOR FEATURE**: Added a photon scattering module (**by Ben Bartlett**) which can be used to study scattering in arbitrary driven systems coupled to some configuration of output waveguides.
+
+- Cubic_Spline functions as time-dependent arguments for the collapse operators in mesolve are now allowed.
+
+- Added a faster version of bloch_redfield_tensor, using components from the time-dependent version. About 3x+ faster for secular tensors, and 10x+ faster for non-secular tensors.
+
+- Computing Q.overlap() [inner product] is now ~30x faster.
+
+- Added projector method to Qobj class.
+
+- Added fast projector method, ``Q.proj()``.
+
+- Computing matrix elements, ``Q.matrix_element`` is now ~10x faster.
+
+- Computing expectation values for ket vectors using ``expect`` is now ~10x faster.
+
+- ``Q.tr()`` is now faster for small Hilbert space dimensions.
+
+- Unitary operator evolution added to sesolve
+
+- Use OPENMP for tidyup if installed.
+
+
+Bug Fixes
+---------
+
+- Fixed bug that stopped simdiag working for python 3.
+
+- Fixed semidefinite cvxpy Variable and Parameter.
+
+- Fixed iterative lu solve atol keyword issue.
+
+- Fixed unitary op evolution rhs matrix in ssesolve.
+
+- Fixed interpolating function to return zero outside range.
+
+- Fixed dnorm complex casting bug.
+
+- Fixed control.io path checking issue.
+
+- Fixed ENR fock dimension.
+
+- Fixed hard coded options in propagator 'batch' mode
+
+- Fixed bug in trace-norm for non-Hermitian operators.
+
+- Fixed bug related to args not being passed to coherence_function_g2
+
+- Fixed MKL error checking dict key error
+
+
+Version 4.2.0 (July 28, 2017)
+++++++++++++++++++++++++++++++
+
+Improvements
+------------
+
+- **MAJOR FEATURE**: Initial implementation of time-dependent Bloch-Redfield Solver.
+
+- Qobj tidyup is now an order of magnitude faster.
+
+- Time-dependent codegen now generates output NumPy arrays faster.
+
+- Improved calculation for analytic coefficients in coherent states (Sebastian Kramer).
+
+- Input array to correlation FFT method now checked for validity.
+
+- Function-based time-dependent mesolve and sesolve routines now faster.
+
+- Codegen now makes sure that division is done in C, as opposed to Python.
+
+- Can now set different controls for a each timeslot in quantum optimization. 
+This allows time-varying controls to be used in pulse optimisation.
+
+
+Bug Fixes
+---------
+
+- rcsolve importing old Odeoptions Class rather than Options.
+
+- Non-int issue in spin Q and Wigner functions.
+
+- Qobj's should tidyup before determining isherm.
+
+- Fixed time-dependent RHS function loading on Win.
+
+- Fixed several issues with compiling with Cython 0.26.
+
+- Liouvillian superoperators were hard setting isherm=True by default.
+
+- Fixed an issue with the solver safety checks when inputing a list
+with Python functions as time-dependence.
+
+- Fixed non-int issue in Wigner_cmap.
+
+- MKL solver error handling not working properly.
+
+
+
+Version 4.1.0 (March 10, 2017)
+++++++++++++++++++++++++++++++
 
 Improvements
 ------------
 
 *Core libraries*
 
-- erf supported function in td strings
+- **MAJOR FEATURE**: QuTiP now works for Python 3.5+ on Windows using Visual Studio 2015.
 
-*QIP*
+- **MAJOR FEATURE**: Cython and other low level code switched to C++ for MS Windows compatibility.
 
-- Gate object can be used to instantiate another identical gate
+- **MAJOR FEATURE**: Can now use interpolating cubic splines as time-dependent coefficients.
+
+- **MAJOR FEATURE**: Sparse matrix - vector multiplication now parallel using OPENMP.
+
+- Automatic tuning of OPENMP threading threshold.
+
+- Partial trace function is now up to 100x+ faster.
+
+- Hermitian verification now up to 100x+ faster.
+
+- Internal Qobj objects now created up to 60x faster.
+
+- Inplace conversion from COO -> CSR sparse formats (e.g. Memory efficiency improvement.)
+
+- Faster reverse Cuthill-Mckee and sparse one and inf norms.
+
+
+
+Bug Fixes
+---------
+
+- Cleanup of temp. Cython files now more robust and working under Windows.
+
 
 
 Version 4.0.2 (January 5, 2017)
