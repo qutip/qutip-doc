@@ -1,0 +1,1170 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qutip.operators &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>qutip.operators</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qutip.operators</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of QuTiP: Quantum Toolbox in Python.</span>
+<span class="c1">#</span>
+<span class="c1">#    Copyright (c) 2011 and later, Paul D. Nation and Robert J. Johansson.</span>
+<span class="c1">#    All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Redistribution and use in source and binary forms, with or without</span>
+<span class="c1">#    modification, are permitted provided that the following conditions are</span>
+<span class="c1">#    met:</span>
+<span class="c1">#</span>
+<span class="c1">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="c1">#       this list of conditions and the following disclaimer.</span>
+<span class="c1">#</span>
+<span class="c1">#    2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="c1">#       notice, this list of conditions and the following disclaimer in the</span>
+<span class="c1">#       documentation and/or other materials provided with the distribution.</span>
+<span class="c1">#</span>
+<span class="c1">#    3. Neither the name of the QuTiP: Quantum Toolbox in Python nor the names</span>
+<span class="c1">#       of its contributors may be used to endorse or promote products derived</span>
+<span class="c1">#       from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1">#    &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A</span>
+<span class="c1">#    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1">#    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1">#    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1">#    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1">#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1">#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1">#    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">###############################################################################</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions for generating Qobj representation of a variety</span>
+<span class="sd">of commonly occuring quantum operators.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;jmat&#39;</span><span class="p">,</span> <span class="s1">&#39;spin_Jx&#39;</span><span class="p">,</span> <span class="s1">&#39;spin_Jy&#39;</span><span class="p">,</span> <span class="s1">&#39;spin_Jz&#39;</span><span class="p">,</span> <span class="s1">&#39;spin_Jm&#39;</span><span class="p">,</span> <span class="s1">&#39;spin_Jp&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;spin_J_set&#39;</span><span class="p">,</span> <span class="s1">&#39;sigmap&#39;</span><span class="p">,</span> <span class="s1">&#39;sigmam&#39;</span><span class="p">,</span> <span class="s1">&#39;sigmax&#39;</span><span class="p">,</span> <span class="s1">&#39;sigmay&#39;</span><span class="p">,</span> <span class="s1">&#39;sigmaz&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;destroy&#39;</span><span class="p">,</span> <span class="s1">&#39;create&#39;</span><span class="p">,</span> <span class="s1">&#39;qeye&#39;</span><span class="p">,</span> <span class="s1">&#39;identity&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">,</span> <span class="s1">&#39;momentum&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;num&#39;</span><span class="p">,</span> <span class="s1">&#39;squeeze&#39;</span><span class="p">,</span> <span class="s1">&#39;squeezing&#39;</span><span class="p">,</span> <span class="s1">&#39;displace&#39;</span><span class="p">,</span> <span class="s1">&#39;commutator&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;qutrit_ops&#39;</span><span class="p">,</span> <span class="s1">&#39;qdiags&#39;</span><span class="p">,</span> <span class="s1">&#39;phase&#39;</span><span class="p">,</span> <span class="s1">&#39;qzero&#39;</span><span class="p">,</span> <span class="s1">&#39;enr_destroy&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;enr_identity&#39;</span><span class="p">,</span> <span class="s1">&#39;charge&#39;</span><span class="p">,</span> <span class="s1">&#39;tunneling&#39;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">from</span> <span class="nn">qutip.qobj</span> <span class="k">import</span> <span class="n">Qobj</span>
+<span class="kn">from</span> <span class="nn">qutip.fastsparse</span> <span class="k">import</span> <span class="n">fast_csr_matrix</span><span class="p">,</span> <span class="n">fast_identity</span>
+
+<span class="c1">#</span>
+<span class="c1"># Spin operators</span>
+<span class="c1">#</span>
+<div class="viewcode-block" id="jmat"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.jmat">[docs]</a><span class="k">def</span> <span class="nf">jmat</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Higher-order spin operators:</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    j : float</span>
+<span class="sd">        Spin of operator</span>
+
+<span class="sd">    args : str</span>
+<span class="sd">        Which operator to return &#39;x&#39;,&#39;y&#39;,&#39;z&#39;,&#39;+&#39;,&#39;-&#39;.</span>
+<span class="sd">        If no args given, then output is [&#39;x&#39;,&#39;y&#39;,&#39;z&#39;]</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    jmat : qobj / ndarray</span>
+<span class="sd">        ``qobj`` for requested spin operator(s).</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; jmat(1)</span>
+<span class="sd">    [ Quantum object: dims = [[3], [3]], \</span>
+<span class="sd">shape = [3, 3], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.          0.70710678  0.        ]</span>
+<span class="sd">     [ 0.70710678  0.          0.70710678]</span>
+<span class="sd">     [ 0.          0.70710678  0.        ]]</span>
+<span class="sd">     Quantum object: dims = [[3], [3]], \</span>
+<span class="sd">shape = [3, 3], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.+0.j          0.-0.70710678j  0.+0.j        ]</span>
+<span class="sd">     [ 0.+0.70710678j  0.+0.j          0.-0.70710678j]</span>
+<span class="sd">     [ 0.+0.j          0.+0.70710678j  0.+0.j        ]]</span>
+<span class="sd">     Quantum object: dims = [[3], [3]], \</span>
+<span class="sd">shape = [3, 3], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 1.  0.  0.]</span>
+<span class="sd">     [ 0.  0.  0.]</span>
+<span class="sd">     [ 0.  0. -1.]]]</span>
+
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    If no &#39;args&#39; input, then returns array of [&#39;x&#39;,&#39;y&#39;,&#39;z&#39;] operators.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">j</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;j must be a non-negative integer or half-integer&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jmat</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">jmat</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">jmat</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">_jplus</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">_jplus</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">.</span><span class="n">getH</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">_jplus</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">_jplus</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">.</span><span class="n">getH</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">_jplus</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">-</span> <span class="n">_jplus</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">.</span><span class="n">getH</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">_jz</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Invalid type&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">A</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_jplus</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Internal functions for generating the data representing the J-plus</span>
+<span class="sd">    operator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">m</span><span class="p">))[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">ptr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">+</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">ptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">fast_csr_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span><span class="n">ind</span><span class="p">,</span><span class="n">ptr</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_jz</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Internal functions for generating the data representing the J-z operator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">j</span><span class="o">-</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="n">k</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="c1"># Even shaped matrix</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">ptr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">ptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span>
+    <span class="c1"># Odd shaped matrix</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">ptr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">N</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">ptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">fast_csr_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span><span class="n">ind</span><span class="p">,</span><span class="n">ptr</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Spin j operators:</span>
+<span class="c1">#</span>
+<div class="viewcode-block" id="spin_Jx"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.spin_Jx">[docs]</a><span class="k">def</span> <span class="nf">spin_Jx</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Spin-j x operator</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    j : float</span>
+<span class="sd">        Spin of operator</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    op : Qobj</span>
+<span class="sd">        ``qobj`` representation of the operator.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jmat</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="spin_Jy"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.spin_Jy">[docs]</a><span class="k">def</span> <span class="nf">spin_Jy</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Spin-j y operator</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    j : float</span>
+<span class="sd">        Spin of operator</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    op : Qobj</span>
+<span class="sd">        ``qobj`` representation of the operator.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jmat</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="spin_Jz"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.spin_Jz">[docs]</a><span class="k">def</span> <span class="nf">spin_Jz</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Spin-j z operator</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    j : float</span>
+<span class="sd">        Spin of operator</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    op : Qobj</span>
+<span class="sd">        ``qobj`` representation of the operator.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jmat</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="spin_Jm"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.spin_Jm">[docs]</a><span class="k">def</span> <span class="nf">spin_Jm</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Spin-j annihilation operator</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    j : float</span>
+<span class="sd">        Spin of operator</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    op : Qobj</span>
+<span class="sd">        ``qobj`` representation of the operator.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jmat</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="spin_Jp"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.spin_Jp">[docs]</a><span class="k">def</span> <span class="nf">spin_Jp</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Spin-j creation operator</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    j : float</span>
+<span class="sd">        Spin of operator</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    op : Qobj</span>
+<span class="sd">        ``qobj`` representation of the operator.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jmat</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">spin_J_set</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set of spin-j operators (x, y, z)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    j : float</span>
+<span class="sd">        Spin of operators</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list : list of Qobj</span>
+<span class="sd">        list of ``qobj`` representating of the spin operator.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jmat</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Pauli spin 1/2 operators:</span>
+<span class="c1">#</span>
+<div class="viewcode-block" id="sigmap"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.sigmap">[docs]</a><span class="k">def</span> <span class="nf">sigmap</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Creation operator for Pauli spins.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; sigmam()</span>
+<span class="sd">    Quantum object: dims = [[2], [2]], \</span>
+<span class="sd">shape = [2, 2], type = oper, isHerm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.  1.]</span>
+<span class="sd">     [ 0.  0.]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jmat</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="sigmam"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.sigmam">[docs]</a><span class="k">def</span> <span class="nf">sigmam</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Annihilation operator for Pauli spins.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; sigmam()</span>
+<span class="sd">    Quantum object: dims = [[2], [2]], \</span>
+<span class="sd">shape = [2, 2], type = oper, isHerm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.  0.]</span>
+<span class="sd">     [ 1.  0.]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jmat</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="sigmax"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.sigmax">[docs]</a><span class="k">def</span> <span class="nf">sigmax</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Pauli spin 1/2 sigma-x operator</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; sigmax()</span>
+<span class="sd">    Quantum object: dims = [[2], [2]], \</span>
+<span class="sd">shape = [2, 2], type = oper, isHerm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.  1.]</span>
+<span class="sd">     [ 1.  0.]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">jmat</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="sigmay"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.sigmay">[docs]</a><span class="k">def</span> <span class="nf">sigmay</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Pauli spin 1/2 sigma-y operator.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; sigmay()</span>
+<span class="sd">    Quantum object: dims = [[2], [2]], \</span>
+<span class="sd">shape = [2, 2], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.+0.j  0.-1.j]</span>
+<span class="sd">     [ 0.+1.j  0.+0.j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">jmat</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="sigmaz"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.sigmaz">[docs]</a><span class="k">def</span> <span class="nf">sigmaz</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Pauli spin 1/2 sigma-z operator.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; sigmaz()</span>
+<span class="sd">    Quantum object: dims = [[2], [2]], \</span>
+<span class="sd">shape = [2, 2], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 1.  0.]</span>
+<span class="sd">     [ 0. -1.]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">jmat</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># DESTROY returns annihilation operator for N dimensional Hilbert space</span>
+<span class="c1"># out = destroy(N), N is integer value &amp;  N&gt;0</span>
+<span class="c1">#</span>
+<div class="viewcode-block" id="destroy"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.destroy">[docs]</a><span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Destruction (lowering) operator.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">        Dimension of Hilbert space.</span>
+
+<span class="sd">    offset : int (default 0)</span>
+<span class="sd">        The lowest number state that is included in the finite number state</span>
+<span class="sd">        representation of the operator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oper : qobj</span>
+<span class="sd">        Qobj for lowering operator.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; destroy(4)</span>
+<span class="sd">    Quantum object: dims = [[4], [4]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.00000000+0.j  1.00000000+0.j  0.00000000+0.j  0.00000000+0.j]</span>
+<span class="sd">     [ 0.00000000+0.j  0.00000000+0.j  1.41421356+0.j  0.00000000+0.j]</span>
+<span class="sd">     [ 0.00000000+0.j  0.00000000+0.j  0.00000000+0.j  1.73205081+0.j]</span>
+<span class="sd">     [ 0.00000000+0.j  0.00000000+0.j  0.00000000+0.j  0.00000000+0.j]]</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>  <span class="c1"># raise error if N not integer</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Hilbert space dimension must be integer value&quot;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">offset</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="n">offset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">ptr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">ptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">fast_csr_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span><span class="n">ind</span><span class="p">,</span><span class="n">ptr</span><span class="p">),</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">)),</span> <span class="n">isherm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># create returns creation operator for N dimensional Hilbert space</span>
+<span class="c1"># out = create(N), N is integer value &amp;  N&gt;0</span>
+<span class="c1">#</span>
+<div class="viewcode-block" id="create"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.create">[docs]</a><span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Creation (raising) operator.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">        Dimension of Hilbert space.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oper : qobj</span>
+<span class="sd">        Qobj for raising operator.</span>
+
+<span class="sd">    offset : int (default 0)</span>
+<span class="sd">        The lowest number state that is included in the finite number state</span>
+<span class="sd">        representation of the operator.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; create(4)</span>
+<span class="sd">    Quantum object: dims = [[4], [4]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.00000000+0.j  0.00000000+0.j  0.00000000+0.j  0.00000000+0.j]</span>
+<span class="sd">     [ 1.00000000+0.j  0.00000000+0.j  0.00000000+0.j  0.00000000+0.j]</span>
+<span class="sd">     [ 0.00000000+0.j  1.41421356+0.j  0.00000000+0.j  0.00000000+0.j]</span>
+<span class="sd">     [ 0.00000000+0.j  0.00000000+0.j  1.73205081+0.j  0.00000000+0.j]]</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>  <span class="c1"># raise error if N not integer</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Hilbert space dimension must be integer value&quot;</span><span class="p">)</span>
+    <span class="n">qo</span> <span class="o">=</span> <span class="n">destroy</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>  <span class="c1"># create operator using destroy function</span>
+    <span class="k">return</span> <span class="n">qo</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># QEYE returns identity operator for an N dimensional space</span>
+<span class="c1"># a = qeye(N), N is integer &amp; N&gt;0</span>
+<span class="c1">#</span>
+<div class="viewcode-block" id="qeye"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.qeye">[docs]</a><span class="k">def</span> <span class="nf">qeye</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identity operator</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int or list of ints</span>
+<span class="sd">        Dimension of Hilbert space. If provided as a list of ints,</span>
+<span class="sd">        then the dimension is the product over this list, but the</span>
+<span class="sd">        ``dims`` property of the new Qobj are set to this list.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oper : qobj</span>
+<span class="sd">        Identity operator Qobj.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; qeye(3)</span>
+<span class="sd">    Quantum object: dims = [[3], [3]], \</span>
+<span class="sd">shape = [3, 3], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 1.  0.  0.]</span>
+<span class="sd">     [ 0.  1.  0.]</span>
+<span class="sd">     [ 0.  0.  1.]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tensor</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">identity</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">N</span><span class="p">])</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">N</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;N must be integer N&gt;=0&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">fast_identity</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">isherm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">isunitary</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="identity"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.identity">[docs]</a><span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Identity operator. Alternative name to :func:`qeye`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int or list of ints</span>
+<span class="sd">        Dimension of Hilbert space. If provided as a list of ints,</span>
+<span class="sd">        then the dimension is the product over this list, but the</span>
+<span class="sd">        ``dims`` property of the new Qobj are set to this list.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oper : qobj</span>
+<span class="sd">        Identity operator Qobj.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">qeye</span><span class="p">(</span><span class="n">N</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="position"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.position">[docs]</a><span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Position operator x=1/sqrt(2)*(a+a.dag())</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">        Number of Fock states in Hilbert space.</span>
+
+<span class="sd">    offset : int (default 0)</span>
+<span class="sd">        The lowest number state that is included in the finite number state</span>
+<span class="sd">        representation of the operator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oper : qobj</span>
+<span class="sd">        Position operator as Qobj.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">destroy</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="momentum"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.momentum">[docs]</a><span class="k">def</span> <span class="nf">momentum</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Momentum operator p=-1j/sqrt(2)*(a-a.dag())</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">        Number of Fock states in Hilbert space.</span>
+
+<span class="sd">    offset : int (default 0)</span>
+<span class="sd">        The lowest number state that is included in the finite number state</span>
+<span class="sd">        representation of the operator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oper : qobj</span>
+<span class="sd">        Momentum operator as Qobj.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">destroy</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="num"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.num">[docs]</a><span class="k">def</span> <span class="nf">num</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Quantum object for number operator.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">        The dimension of the Hilbert space.</span>
+
+<span class="sd">    offset : int (default 0)</span>
+<span class="sd">        The lowest number state that is included in the finite number state</span>
+<span class="sd">        representation of the operator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oper: qobj</span>
+<span class="sd">        Qobj for number operator.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; num(4)</span>
+<span class="sd">    Quantum object: dims = [[4], [4]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[0 0 0 0]</span>
+<span class="sd">     [0 1 0 0]</span>
+<span class="sd">     [0 0 2 0]</span>
+<span class="sd">     [0 0 0 3]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">offset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">ptr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">ptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">ptr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">ptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span>
+
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">fast_csr_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span><span class="n">ind</span><span class="p">,</span><span class="n">ptr</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">)),</span> <span class="n">isherm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="squeeze"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.squeeze">[docs]</a><span class="k">def</span> <span class="nf">squeeze</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Single-mode Squeezing operator.</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">        Dimension of hilbert space.</span>
+
+<span class="sd">    z : float/complex</span>
+<span class="sd">        Squeezing parameter.</span>
+
+<span class="sd">    offset : int (default 0)</span>
+<span class="sd">        The lowest number state that is included in the finite number state</span>
+<span class="sd">        representation of the operator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oper : :class:`qutip.qobj.Qobj`</span>
+<span class="sd">        Squeezing operator.</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; squeeze(4, 0.25)</span>
+<span class="sd">    Quantum object: dims = [[4], [4]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.98441565+0.j  0.00000000+0.j  0.17585742+0.j  0.00000000+0.j]</span>
+<span class="sd">     [ 0.00000000+0.j  0.95349007+0.j  0.00000000+0.j  0.30142443+0.j]</span>
+<span class="sd">     [-0.17585742+0.j  0.00000000+0.j  0.98441565+0.j  0.00000000+0.j]</span>
+<span class="sd">     [ 0.00000000+0.j -0.30142443+0.j  0.00000000+0.j  0.95349007+0.j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">destroy</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">op</span><span class="o">.</span><span class="n">expm</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="squeezing"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.squeezing">[docs]</a><span class="k">def</span> <span class="nf">squeezing</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generalized squeezing operator.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        S(z) = \\exp\\left(\\frac{1}{2}\\left(z^*a_1a_2</span>
+<span class="sd">        - za_1^\\dagger a_2^\\dagger\\right)\\right)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    a1 : :class:`qutip.qobj.Qobj`</span>
+<span class="sd">        Operator 1.</span>
+
+<span class="sd">    a2 : :class:`qutip.qobj.Qobj`</span>
+<span class="sd">        Operator 2.</span>
+
+<span class="sd">    z : float/complex</span>
+<span class="sd">        Squeezing parameter.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oper : :class:`qutip.qobj.Qobj`</span>
+<span class="sd">        Squeezing operator.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a1</span> <span class="o">*</span> <span class="n">a2</span><span class="p">)</span> <span class="o">-</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span><span class="n">a1</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">a2</span><span class="o">.</span><span class="n">dag</span><span class="p">()))</span>
+    <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">expm</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="displace"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.displace">[docs]</a><span class="k">def</span> <span class="nf">displace</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Single-mode displacement operator.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">        Dimension of Hilbert space.</span>
+
+<span class="sd">    alpha : float/complex</span>
+<span class="sd">        Displacement amplitude.</span>
+
+<span class="sd">    offset : int (default 0)</span>
+<span class="sd">        The lowest number state that is included in the finite number state</span>
+<span class="sd">        representation of the operator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oper : qobj</span>
+<span class="sd">        Displacement operator.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    ---------</span>
+<span class="sd">    &gt;&gt;&gt; displace(4,0.25)</span>
+<span class="sd">    Quantum object: dims = [[4], [4]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.96923323+0.j -0.24230859+0.j  0.04282883+0.j -0.00626025+0.j]</span>
+<span class="sd">     [ 0.24230859+0.j  0.90866411+0.j -0.33183303+0.j  0.07418172+0.j]</span>
+<span class="sd">     [ 0.04282883+0.j  0.33183303+0.j  0.84809499+0.j -0.41083747+0.j]</span>
+<span class="sd">     [ 0.00626025+0.j  0.07418172+0.j  0.41083747+0.j  0.90866411+0.j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">destroy</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">expm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">D</span></div>
+
+
+<div class="viewcode-block" id="commutator"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.commutator">[docs]</a><span class="k">def</span> <span class="nf">commutator</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the commutator of kind `kind` (normal, anti) of the</span>
+<span class="sd">    two operators A and B.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">A</span> <span class="o">*</span> <span class="n">B</span> <span class="o">-</span> <span class="n">B</span> <span class="o">*</span> <span class="n">A</span>
+
+    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;anti&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">A</span> <span class="o">*</span> <span class="n">B</span> <span class="o">+</span> <span class="n">B</span> <span class="o">*</span> <span class="n">A</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unknown commutator kind &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">kind</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="qutrit_ops"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.qutrit_ops">[docs]</a><span class="k">def</span> <span class="nf">qutrit_ops</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Operators for a three level system (qutrit).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    opers: array</span>
+<span class="sd">        `array` of qutrit operators.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">qutip.states</span> <span class="k">import</span> <span class="n">qutrit_basis</span>
+
+    <span class="n">one</span><span class="p">,</span> <span class="n">two</span><span class="p">,</span> <span class="n">three</span> <span class="o">=</span> <span class="n">qutrit_basis</span><span class="p">()</span>
+    <span class="n">sig11</span> <span class="o">=</span> <span class="n">one</span> <span class="o">*</span> <span class="n">one</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span>
+    <span class="n">sig22</span> <span class="o">=</span> <span class="n">two</span> <span class="o">*</span> <span class="n">two</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span>
+    <span class="n">sig33</span> <span class="o">=</span> <span class="n">three</span> <span class="o">*</span> <span class="n">three</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span>
+    <span class="n">sig12</span> <span class="o">=</span> <span class="n">one</span> <span class="o">*</span> <span class="n">two</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span>
+    <span class="n">sig23</span> <span class="o">=</span> <span class="n">two</span> <span class="o">*</span> <span class="n">three</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span>
+    <span class="n">sig31</span> <span class="o">=</span> <span class="n">three</span> <span class="o">*</span> <span class="n">one</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sig11</span><span class="p">,</span> <span class="n">sig22</span><span class="p">,</span> <span class="n">sig33</span><span class="p">,</span> <span class="n">sig12</span><span class="p">,</span> <span class="n">sig23</span><span class="p">,</span> <span class="n">sig31</span><span class="p">],</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="qdiags"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.qdiags">[docs]</a><span class="k">def</span> <span class="nf">qdiags</span><span class="p">(</span><span class="n">diagonals</span><span class="p">,</span> <span class="n">offsets</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constructs an operator from an array of diagonals.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    diagonals : sequence of array_like</span>
+<span class="sd">        Array of elements to place along the selected diagonals.</span>
+
+<span class="sd">    offsets : sequence of ints</span>
+<span class="sd">        Sequence for diagonals to be set:</span>
+<span class="sd">            - k=0 main diagonal</span>
+<span class="sd">            - k&gt;0 kth upper diagonal</span>
+<span class="sd">            - k&lt;0 kth lower diagonal</span>
+<span class="sd">    dims : list, optional</span>
+<span class="sd">        Dimensions for operator</span>
+
+<span class="sd">    shape : list, tuple, optional</span>
+<span class="sd">        Shape of operator.  If omitted, a square operator large enough</span>
+<span class="sd">        to contain the diagonals is generated.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    scipy.sparse.diags for usage information.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function requires SciPy 0.11+.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; qdiags(sqrt(range(1, 4)), 1)</span>
+<span class="sd">    Quantum object: dims = [[4], [4]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isherm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.          1.          0.          0.        ]</span>
+<span class="sd">     [ 0.          0.          1.41421356  0.        ]</span>
+<span class="sd">     [ 0.          0.          0.          1.73205081]</span>
+<span class="sd">     [ 0.          0.          0.          0.        ]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">diags</span><span class="p">(</span><span class="n">diagonals</span><span class="p">,</span> <span class="n">offsets</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">dims</span><span class="p">:</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="p">[[],</span> <span class="p">[]]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">shape</span><span class="p">:</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="phase"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.phase">[docs]</a><span class="k">def</span> <span class="nf">phase</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">phi0</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Single-mode Pegg-Barnett phase operator.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">        Number of basis states in Hilbert space.</span>
+<span class="sd">    phi0 : float</span>
+<span class="sd">        Reference phase.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oper : qobj</span>
+<span class="sd">        Phase operator with respect to reference phase.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The Pegg-Barnett phase operator is Hermitian on a truncated Hilbert space.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">phim</span> <span class="o">=</span> <span class="n">phi0</span> <span class="o">+</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span>  <span class="c1"># discrete phase angles</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">kk</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">kk</span><span class="p">)</span>
+                       <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="n">phim</span><span class="p">])</span>
+    <span class="n">ops</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">st</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span> <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">states</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ops</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="qzero"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.qzero">[docs]</a><span class="k">def</span> <span class="nf">qzero</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Zero operator</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int or list of ints</span>
+<span class="sd">        Dimension of Hilbert space. If provided as a list of ints,</span>
+<span class="sd">        then the dimension is the product over this list, but the</span>
+<span class="sd">        ``dims`` property of the new Qobj are set to this list.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    qzero : qobj</span>
+<span class="sd">        Zero operator Qobj.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tensor</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">qzero</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">N</span><span class="p">])</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)))</span> <span class="ow">or</span> <span class="n">N</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;N must be integer N&gt;=0&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">),</span> <span class="n">isherm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="enr_destroy"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.enr_destroy">[docs]</a><span class="k">def</span> <span class="nf">enr_destroy</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">excitations</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate annilation operators for modes in a excitation-number-restricted</span>
+<span class="sd">    state space. For example, consider a system consisting of 4 modes, each</span>
+<span class="sd">    with 5 states. The total hilbert space size is 5**4 = 625. If we are</span>
+<span class="sd">    only interested in states that contain up to 2 excitations, we only need</span>
+<span class="sd">    to include states such as</span>
+
+<span class="sd">        (0, 0, 0, 0)</span>
+<span class="sd">        (0, 0, 0, 1)</span>
+<span class="sd">        (0, 0, 0, 2)</span>
+<span class="sd">        (0, 0, 1, 0)</span>
+<span class="sd">        (0, 0, 1, 1)</span>
+<span class="sd">        (0, 0, 2, 0)</span>
+<span class="sd">        ...</span>
+
+<span class="sd">    This function creates annihilation operators for the 4 modes that act</span>
+<span class="sd">    within this state space:</span>
+
+<span class="sd">        a1, a2, a3, a4 = enr_destroy([5, 5, 5, 5], excitations=2)</span>
+
+<span class="sd">    From this point onwards, the annihiltion operators a1, ..., a4 can be</span>
+<span class="sd">    used to setup a Hamiltonian, collapse operators and expectation-value</span>
+<span class="sd">    operators, etc., following the usual pattern.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dims : list</span>
+<span class="sd">        A list of the dimensions of each subsystem of a composite quantum</span>
+<span class="sd">        system.</span>
+
+<span class="sd">    excitations : integer</span>
+<span class="sd">        The maximum number of excitations that are to be included in the</span>
+<span class="sd">        state space.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a_ops : list of qobj</span>
+<span class="sd">        A list of annihilation operators for each mode in the composite</span>
+<span class="sd">        quantum system described by dims.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">qutip.states</span> <span class="k">import</span> <span class="n">enr_state_dictionaries</span>
+
+    <span class="n">nstates</span><span class="p">,</span> <span class="n">state2idx</span><span class="p">,</span> <span class="n">idx2state</span> <span class="o">=</span> <span class="n">enr_state_dictionaries</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">excitations</span><span class="p">)</span>
+
+    <span class="n">a_ops</span> <span class="o">=</span> <span class="p">[</span><span class="n">sp</span><span class="o">.</span><span class="n">lil_matrix</span><span class="p">((</span><span class="n">nstates</span><span class="p">,</span> <span class="n">nstates</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex</span><span class="p">)</span>
+             <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dims</span><span class="p">))]</span>
+
+    <span class="k">for</span> <span class="n">n1</span><span class="p">,</span> <span class="n">state1</span> <span class="ow">in</span> <span class="n">idx2state</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">n2</span><span class="p">,</span> <span class="n">state2</span> <span class="ow">in</span> <span class="n">idx2state</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a_ops</span><span class="p">):</span>
+                <span class="n">s1</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">idx2</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">state1</span><span class="p">)</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">!=</span> <span class="n">idx2</span><span class="p">]</span>
+                <span class="n">s2</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">idx2</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">state2</span><span class="p">)</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">!=</span> <span class="n">idx2</span><span class="p">]</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">state1</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">==</span> <span class="n">state2</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">s1</span> <span class="o">==</span> <span class="n">s2</span><span class="p">):</span>
+                    <span class="n">a_ops</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">state2</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">Qobj</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="n">dims</span><span class="p">,</span> <span class="n">dims</span><span class="p">])</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">a_ops</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="enr_identity"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.enr_identity">[docs]</a><span class="k">def</span> <span class="nf">enr_identity</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">excitations</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate the identity operator for the excitation-number restricted</span>
+<span class="sd">    state space defined by the `dims` and `exciations` arguments. See the</span>
+<span class="sd">    docstring for enr_fock for a more detailed description of these arguments.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dims : list</span>
+<span class="sd">        A list of the dimensions of each subsystem of a composite quantum</span>
+<span class="sd">        system.</span>
+
+<span class="sd">    excitations : integer</span>
+<span class="sd">        The maximum number of excitations that are to be included in the</span>
+<span class="sd">        state space.</span>
+
+<span class="sd">    state : list of integers</span>
+<span class="sd">        The state in the number basis representation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    op : Qobj</span>
+<span class="sd">        A Qobj instance that represent the identity operator in the</span>
+<span class="sd">        exication-number-restricted state space defined by `dims` and</span>
+<span class="sd">        `exciations`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">qutip.states</span> <span class="k">import</span> <span class="n">enr_state_dictionaries</span>
+
+    <span class="n">nstates</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">enr_state_dictionaries</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">excitations</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">nstates</span><span class="p">,</span> <span class="n">nstates</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="n">dims</span><span class="p">,</span> <span class="n">dims</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="charge"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.charge">[docs]</a><span class="k">def</span> <span class="nf">charge</span><span class="p">(</span><span class="n">Nmax</span><span class="p">,</span> <span class="n">Nmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate the diagonal charge operator over charge states</span>
+<span class="sd">    from Nmin to Nmax.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Nmax : int</span>
+<span class="sd">        Maximum charge state to consider.</span>
+
+<span class="sd">    Nmin : int (default = -Nmax)</span>
+<span class="sd">        Lowest charge state to consider.</span>
+
+<span class="sd">    frac : float (default = 1)</span>
+<span class="sd">        Specify fractional charge if needed.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    C : Qobj</span>
+<span class="sd">        Charge operator over [Nmin,Nmax].</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    .. versionadded:: 3.2</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">Nmin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">Nmin</span> <span class="o">=</span> <span class="o">-</span><span class="n">Nmax</span>
+    <span class="n">diag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Nmin</span><span class="p">,</span> <span class="n">Nmax</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">frac</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">diag</span> <span class="o">*=</span> <span class="n">frac</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">diags</span><span class="p">(</span><span class="n">diag</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">isherm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="tunneling"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.operators.tunneling">[docs]</a><span class="k">def</span> <span class="nf">tunneling</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tunneling operator with elements of the form</span>
+<span class="sd">    :math:`\sum |N&gt;&lt;N+m| + |N+m&gt;&lt;N|`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">        Number of basis states in Hilbert space.</span>
+<span class="sd">    m : int (default = 1)</span>
+<span class="sd">        Number of excitations in tunneling event.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    T : Qobj</span>
+<span class="sd">        Tunneling operator.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    .. versionadded:: 3.2</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">diags</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">m</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">m</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)]</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">diags</span><span class="p">(</span><span class="n">diags</span><span class="p">,[</span><span class="n">m</span><span class="p">,</span><span class="o">-</span><span class="n">m</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">isherm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># Break circular dependencies by a trailing import.</span>
+<span class="c1"># Note that we use a relative import here to deal with that</span>
+<span class="c1"># qutip.tensor is the *function* tensor, not the module.</span>
+<span class="kn">from</span> <span class="nn">qutip.tensor</span> <span class="k">import</span> <span class="n">tensor</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

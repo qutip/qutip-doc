@@ -1,0 +1,400 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Solving for Steady-State Solutions &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="An Overview of the Eseries Class" href="guide-eseries.html" />
+    <link rel="prev" title="Setting Options for the Dynamics Solvers" href="dynamics/dynamics-options.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="guide.html">Users Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="guide-overview.html">Guide Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-basics.html">Basic Operations on Quantum Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html">Manipulating States and Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-tensor.html">Using Tensor Products and Partial Traces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-dynamics.html">Time Evolution and Quantum System Dynamics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Solving for Steady-State Solutions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#steady-state-solvers-in-qutip">Steady State solvers in QuTiP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-steadystate-solver">Using the Steadystate Solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-solver-arguments">Additional Solver Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-harmonic-oscillator-in-thermal-bath">Example: Harmonic Oscillator in Thermal Bath</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="guide-eseries.html">An Overview of the Eseries Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-correlation.html">Two-time correlation functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-control.html">Quantum Optimal Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-bloch.html">Plotting on the Bloch Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-visualization.html">Visualization of quantum states and processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-parfor.html">Parallel computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-saving.html">Saving QuTiP Objects and Data Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-random.html">Generating Random Quantum States &amp; Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-settings.html">Modifying Internal QuTiP Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="guide.html">Users Guide</a> &raquo;</li>
+        
+      <li>Solving for Steady-State Solutions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/guide/guide-steady.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="solving-for-steady-state-solutions">
+<span id="steady"></span><h1>Solving for Steady-State Solutions<a class="headerlink" href="#solving-for-steady-state-solutions" title="Permalink to this headline">¶</a></h1>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Updated in QuTiP 3.2.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">qutip</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="section" id="introduction">
+<span id="steady-intro"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>For time-independent open quantum systems with decay rates larger than the corresponding excitation rates, the system will tend toward a steady state as <span class="math notranslate nohighlight">\(t\rightarrow\infty\)</span> that satisfies the equation</p>
+<div class="math notranslate nohighlight">
+\[\frac{d\hat{\rho}_{ss}}{dt}=\mathcal{L}\hat{\rho}_{ss}=0.\]</div>
+<p>Although the requirement for time-independence seems quite resitrictive, one can often employ a transformation to the interaction picture that yields a time-independent Hamiltonian.  For many these systems, solving for the asymptotic density matrix <span class="math notranslate nohighlight">\(\hat{\rho}_{ss}\)</span> can be achieved using direct or iterative solution methods faster than using master equation or Monte Carlo simulations.  Although the steady state equation has a simple mathematical form, the properties of the Liouvillian operator are such that the solutions to this equation are anything but straightforward to find.</p>
+</div>
+<div class="section" id="steady-state-solvers-in-qutip">
+<h2>Steady State solvers in QuTiP<a class="headerlink" href="#steady-state-solvers-in-qutip" title="Permalink to this headline">¶</a></h2>
+<p>In QuTiP, the steady-state solution for a system Hamiltonian or Liouvillian is given by <a class="reference internal" href="../apidoc/functions.html#qutip.steadystate.steadystate" title="qutip.steadystate.steadystate"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.steadystate.steadystate()</span></code></a>.  This function implements a number of different methods for finding the steady state, each with their own pros and cons, where the method used can be chosen using the <code class="docutils literal notranslate"><span class="pre">method</span></code> keyword argument.</p>
+<table border="1" class="colwidths-given table-striped docutils">
+<colgroup>
+<col width="18%" />
+<col width="27%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Keyword</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Direct (default)</td>
+<td>'direct'</td>
+<td>Direct solution solving <span class="math notranslate nohighlight">\(Ax=b\)</span> via sparse LU decomposition.</td>
+</tr>
+<tr class="row-odd"><td>Eigenvalue</td>
+<td>'eigen'</td>
+<td>Iteratively find the zero eigenvalue of <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>.</td>
+</tr>
+<tr class="row-even"><td>Inverse-Power</td>
+<td>'power'</td>
+<td>Solve using the inverse-power method.</td>
+</tr>
+<tr class="row-odd"><td>GMRES</td>
+<td>'iterative-gmres'</td>
+<td>Solve using the GMRES method and optional preconditioner.</td>
+</tr>
+<tr class="row-even"><td>LGMRES</td>
+<td>'iterative-lgmres'</td>
+<td>Solve using the LGMRES method and optional preconditioner.</td>
+</tr>
+<tr class="row-odd"><td>BICGSTAB</td>
+<td>'iterative-bicgstab'</td>
+<td>Solve using the BICGSTAB method and optional preconditioner.</td>
+</tr>
+<tr class="row-even"><td>SVD</td>
+<td>'svd'</td>
+<td>Steady-state solution via the <strong>dense</strong> SVD of the Liouvillian.</td>
+</tr>
+</tbody>
+</table>
+<p>The function <a class="reference internal" href="../apidoc/functions.html#qutip.steadystate.steadystate" title="qutip.steadystate.steadystate"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.steadystate.steadystate()</span></code></a> can take either a Hamiltonian and a list of collapse operators as input, generating internally the corresponding Liouvillian super operator in Lindblad form, or alternatively, a Liouvillian passed by the user. When possible, we recommend passing the Hamiltonian and collapse operators to <a class="reference internal" href="../apidoc/functions.html#qutip.steadystate.steadystate" title="qutip.steadystate.steadystate"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.steadystate.steadystate()</span></code></a>, and letting the function automatically build the Liouvillian (in Lindblad form) for the system.</p>
+<p>As of QuTiP 3.2, the <code class="docutils literal notranslate"><span class="pre">direct</span></code> and <code class="docutils literal notranslate"><span class="pre">power</span></code> methods can take advantage of the Intel Pardiso LU solver in the Intel Math Kernel library that comes with the Anacoda (2.5+) and Intel Python distributions.  This gives a substantial increase in performance compared with the standard SuperLU method used by SciPy.  To verify that QuTiP can find the necessary libraries, one can check for <code class="docutils literal notranslate"><span class="pre">INTEL</span> <span class="pre">MKL</span> <span class="pre">Ext:</span> <span class="pre">True</span></code> in the QuTiP about box (<a class="reference internal" href="../apidoc/functions.html#qutip.about" title="qutip.about"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.about()</span></code></a>).</p>
+</div>
+<div class="section" id="using-the-steadystate-solver">
+<span id="steady-usage"></span><h2>Using the Steadystate Solver<a class="headerlink" href="#using-the-steadystate-solver" title="Permalink to this headline">¶</a></h2>
+<p>Solving for the steady state solution to the Lindblad master equation for a general system with <a class="reference internal" href="../apidoc/functions.html#qutip.steadystate.steadystate" title="qutip.steadystate.steadystate"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.steadystate.steadystate()</span></code></a> can be accomplished using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rho_ss</span> <span class="o">=</span> <span class="n">steadystate</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">c_ops</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">H</span></code> is a quantum object representing the system Hamiltonian, and <code class="docutils literal notranslate"><span class="pre">c_ops</span></code> is a list of quantum objects for the system collapse operators. The output, labeled as <code class="docutils literal notranslate"><span class="pre">rho_ss</span></code>, is the steady-state solution for the systems.  If no other keywords are passed to the solver, the default 'direct' method is used, generating a solution that is exact to machine precision at the expense of a large memory requirement.  The large amount of memory need for the direct LU decomposition method stems from the large bandwidth of the system Liouvillian and the correspondingly large fill-in (extra nonzero elements) generated in the LU factors.  This fill-in can be reduced by using bandwidth minimization algorithms such as those discussed in <a class="reference internal" href="#steady-args"><span class="std std-ref">Additional Solver Arguments</span></a>.  However, in most cases, the default fill-in reducing algorithm is nearly optimal.  Additional parameters may be used by calling the steady-state solver as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rho_ss</span> <span class="o">=</span> <span class="n">steadystate</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">c_ops</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;power&#39;</span><span class="p">,</span> <span class="n">use_rcm</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">method='power'</span></code> indicates that we are using the inverse-power solution method, and <code class="docutils literal notranslate"><span class="pre">use_rcm=True</span></code> turns on a bandwidth minimization routine.</p>
+<p>Although it is not obvious, the <code class="docutils literal notranslate"><span class="pre">'direct'</span></code>, <code class="docutils literal notranslate"><span class="pre">eigen</span></code>, and <code class="docutils literal notranslate"><span class="pre">'power'</span></code> methods all use an LU decomposition internally and thus suffer from a large memory overhead.  In contrast, iterative methods such as the <code class="docutils literal notranslate"><span class="pre">'iterative-gmres'</span></code>, <code class="docutils literal notranslate"><span class="pre">'iterative-lgmres'</span></code>, and <code class="docutils literal notranslate"><span class="pre">'iterative-bicgstab'</span></code> methods do not factor the matrix and thus take less memory than these previous methods and allowing, in principle, for extremely large system sizes. The downside is that these methods can take much longer than the direct method as the condition number of the Liouvillian matrix is large, indicating that these iterative methods require a large number of iterations for convergence.  To overcome this, one can use a preconditioner <span class="math notranslate nohighlight">\(M\)</span> that solves for an approximate inverse for the (modified) Liouvillian, thus better conditioning the problem, leading to faster convergence.  The use of a preconditioner can actually make these iterative methods faster than the other solution methods.  The problem with precondioning is that it is only well defined for Hermitian matrices.  Since the Liouvillian is non-Hermitian, the ability to find a good preconditioner is not guaranteed.  And moreover, if a preconditioner is found, it is not guaranteed to have a good condition number. QuTiP can make use of an incomplete LU preconditioner when using the iterative <code class="docutils literal notranslate"><span class="pre">'gmres'</span></code>, <code class="docutils literal notranslate"><span class="pre">'lgmres'</span></code>, and <code class="docutils literal notranslate"><span class="pre">'bicgstab'</span></code> solvers by setting <code class="docutils literal notranslate"><span class="pre">use_precond=True</span></code>. The preconditioner optionally makes use of a combination of symmetric and anti-symmetric matrix permutations that attempt to improve the preconditioning process.  These features are discussed in the <a class="reference internal" href="#steady-args"><span class="std std-ref">Additional Solver Arguments</span></a> section.  Even with these state-of-the-art permutations, the generation of a successful preconditoner for non-symmetric matrices is currently a trial-and-error process due to the lack of mathematical work done in this area.  It is always recommended to begin with the direct solver with no additional arguments before selecting a different method.</p>
+<p>Finding the steady-state solution is not limited to the Lindblad form of the master equation. Any time-independent Liouvillian constructed from a Hamiltonian and collapse operators can be used as an input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rho_ss</span> <span class="o">=</span> <span class="n">steadystate</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">L</span></code> is the Louvillian.  All of the additional arguments can also be used in this case.</p>
+</div>
+<div class="section" id="additional-solver-arguments">
+<span id="steady-args"></span><h2>Additional Solver Arguments<a class="headerlink" href="#additional-solver-arguments" title="Permalink to this headline">¶</a></h2>
+<p>The following additional solver arguments are available for the steady-state solver:</p>
+<table border="1" class="colwidths-given table-striped docutils">
+<colgroup>
+<col width="10%" />
+<col width="30%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Options (default listed first)</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>method</td>
+<td>'direct', 'eigen', 'power', 'iterative-gmres','iterative-lgmres', 'svd'</td>
+<td>Method used for solving for the steady-state density matrix.</td>
+</tr>
+<tr class="row-odd"><td>sparse</td>
+<td>True, False</td>
+<td>Use sparse version of direct solver.</td>
+</tr>
+<tr class="row-even"><td>weight</td>
+<td>None</td>
+<td>Allows the user to define the weighting factor used in the <code class="docutils literal notranslate"><span class="pre">'direct'</span></code>, <code class="docutils literal notranslate"><span class="pre">'GMRES'</span></code>, and <code class="docutils literal notranslate"><span class="pre">'LGMRES'</span></code> solvers.</td>
+</tr>
+<tr class="row-odd"><td>permc_spec</td>
+<td>'COLAMD', 'NATURAL'</td>
+<td>Column ordering used in the sparse LU decomposition.</td>
+</tr>
+<tr class="row-even"><td>use_rcm</td>
+<td>False, True</td>
+<td>Use a Reverse Cuthill-Mckee reordering to minimize the bandwidth of the modified Liouvillian used in the LU decomposition.  If <code class="docutils literal notranslate"><span class="pre">use_rcm=True</span></code> then the column ordering is set to <code class="docutils literal notranslate"><span class="pre">'Natural'</span></code> automatically unless explicitly set.</td>
+</tr>
+<tr class="row-odd"><td>use_precond</td>
+<td>False, True</td>
+<td>Attempt to generate a preconditioner when using the <code class="docutils literal notranslate"><span class="pre">'iterative-gmres'</span></code> and <code class="docutils literal notranslate"><span class="pre">'iterative-lgmres'</span></code> methods.</td>
+</tr>
+<tr class="row-even"><td>M</td>
+<td>None, sparse_matrix, LinearOperator</td>
+<td>A user defined preconditioner, if any.</td>
+</tr>
+<tr class="row-odd"><td>use_wbm</td>
+<td>False, True</td>
+<td>Use a Weighted Bipartite Matching algorithm to attempt to make the modified Liouvillian more diagonally dominate, and thus for favorable for preconditioning.  Set to <code class="docutils literal notranslate"><span class="pre">True</span></code> automatically when using a iterative method, unless explicitly set.</td>
+</tr>
+<tr class="row-even"><td>tol</td>
+<td>1e-9</td>
+<td>Tolerance used in finding the solution for all methods expect <code class="docutils literal notranslate"><span class="pre">'direct'</span></code> and <code class="docutils literal notranslate"><span class="pre">'svd'</span></code>.</td>
+</tr>
+<tr class="row-odd"><td>maxiter</td>
+<td>10000</td>
+<td>Maximum number of iterations to perform for all methods expect <code class="docutils literal notranslate"><span class="pre">'direct'</span></code> and <code class="docutils literal notranslate"><span class="pre">'svd'</span></code>.</td>
+</tr>
+<tr class="row-even"><td>fill_factor</td>
+<td>10</td>
+<td>Upper-bound on the allowed fill-in for the approximate inverse preconditioner.  This value may need to be set much higher than this in some cases.</td>
+</tr>
+<tr class="row-odd"><td>drop_tol</td>
+<td>1e-3</td>
+<td>Sets the threshold for the relative magnitude of preconditioner elements that should be dropped.  A lower number yields a more accurate approximate inverse at the expense of fill-in and increased runtime.</td>
+</tr>
+<tr class="row-even"><td>diag_pivot_thresh</td>
+<td>None</td>
+<td>Sets the threshold between <span class="math notranslate nohighlight">\([0,1]\)</span> for which diagonal elements are considered acceptable pivot points when using a preconditioner.</td>
+</tr>
+<tr class="row-odd"><td>ILU_MILU</td>
+<td>'smilu_2'</td>
+<td>Selects the incomplete LU decomposition method algorithm used.</td>
+</tr>
+</tbody>
+</table>
+<p>Further information can be found in the <a class="reference internal" href="../apidoc/functions.html#qutip.steadystate.steadystate" title="qutip.steadystate.steadystate"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.steadystate.steadystate()</span></code></a> docstrings.</p>
+</div>
+<div class="section" id="example-harmonic-oscillator-in-thermal-bath">
+<span id="steady-example"></span><h2>Example: Harmonic Oscillator in Thermal Bath<a class="headerlink" href="#example-harmonic-oscillator-in-thermal-bath" title="Permalink to this headline">¶</a></h2>
+<p>A simple example of a system that reaches a steady state is a harmonic oscillator coupled to a thermal environment.  Below we consider a harmonic oscillator, initially in the <span class="math notranslate nohighlight">\(\left|10\right&gt;\)</span> number state, and weakly coupled to a thermal environment characterized by an average particle expectation value of <span class="math notranslate nohighlight">\(\left&lt;n\right&gt;=2\)</span>.  We calculate the evolution via master equation and Monte Carlo methods, and see that they converge to the steady-state solution.  Here we choose to perform only a few Monte Carlo trajectories so we can distinguish this evolution from the master-equation solution.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="guide-eseries.html" class="btn btn-neutral float-right" title="An Overview of the Eseries Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dynamics/dynamics-options.html" class="btn btn-neutral float-left" title="Setting Options for the Dynamics Solvers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

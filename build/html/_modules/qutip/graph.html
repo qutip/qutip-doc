@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qutip.graph &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>qutip.graph</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qutip.graph</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of QuTiP: Quantum Toolbox in Python.</span>
+<span class="c1">#</span>
+<span class="c1">#    Copyright (c) 2011 and later, Paul D. Nation and Robert J. Johansson.</span>
+<span class="c1">#    All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Redistribution and use in source and binary forms, with or without</span>
+<span class="c1">#    modification, are permitted provided that the following conditions are</span>
+<span class="c1">#    met:</span>
+<span class="c1">#</span>
+<span class="c1">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="c1">#       this list of conditions and the following disclaimer.</span>
+<span class="c1">#</span>
+<span class="c1">#    2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="c1">#       notice, this list of conditions and the following disclaimer in the</span>
+<span class="c1">#       documentation and/or other materials provided with the distribution.</span>
+<span class="c1">#</span>
+<span class="c1">#    3. Neither the name of the QuTiP: Quantum Toolbox in Python nor the names</span>
+<span class="c1">#       of its contributors may be used to endorse or promote products derived</span>
+<span class="c1">#       from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1">#    &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A</span>
+<span class="c1">#    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1">#    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1">#    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1">#    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1">#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1">#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1">#    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">###############################################################################</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains a collection of graph theory routines used mainly</span>
+<span class="sd">to reorder matrices for iterative steady state solvers.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;graph_degree&#39;</span><span class="p">,</span> <span class="s1">&#39;column_permutation&#39;</span><span class="p">,</span> <span class="s1">&#39;breadth_first_search&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;reverse_cuthill_mckee&#39;</span><span class="p">,</span> <span class="s1">&#39;maximum_bipartite_matching&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;weighted_bipartite_matching&#39;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">from</span> <span class="nn">qutip.cy.graph_utils</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">_breadth_first_search</span><span class="p">,</span> <span class="n">_node_degrees</span><span class="p">,</span>
+    <span class="n">_reverse_cuthill_mckee</span><span class="p">,</span> <span class="n">_maximum_bipartite_matching</span><span class="p">,</span>
+    <span class="n">_weighted_bipartite_matching</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="graph_degree"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.graph.graph_degree">[docs]</a><span class="k">def</span> <span class="nf">graph_degree</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the degree for the nodes (rows) of a symmetric</span>
+<span class="sd">    graph in sparse CSR or CSC format, or a qobj.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A : qobj, csr_matrix, csc_matrix</span>
+<span class="sd">        Input quantum object or csr_matrix.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    degree : array</span>
+<span class="sd">        Array of integers giving the degree for each node (row).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_csc</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_csr</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Input must be CSC or CSR sparse matrix.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">_node_degrees</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span></div>
+
+
+<div class="viewcode-block" id="breadth_first_search"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.graph.breadth_first_search">[docs]</a><span class="k">def</span> <span class="nf">breadth_first_search</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Breadth-First-Search (BFS) of a graph in CSR or CSC matrix format starting</span>
+<span class="sd">    from a given node (row).  Takes Qobjs and CSR or CSC matrices as inputs.</span>
+
+<span class="sd">    This function requires a matrix with symmetric structure.</span>
+<span class="sd">    Use A+trans(A) if original matrix is not symmetric or not sure.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A : csc_matrix, csr_matrix</span>
+<span class="sd">        Input graph in CSC or CSR matrix format</span>
+<span class="sd">    start : int</span>
+<span class="sd">        Staring node for BFS traversal.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    order : array</span>
+<span class="sd">        Order in which nodes are traversed from starting node.</span>
+<span class="sd">    levels : array</span>
+<span class="sd">        Level of the nodes in the order that they are traversed.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_csc</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_csr</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Input must be CSC or CSR sparse matrix.&#39;</span><span class="p">)</span>
+
+    <span class="n">num_rows</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+    <span class="n">order</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">_breadth_first_search</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">num_rows</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
+    <span class="c1"># since maybe not all nodes are in search, check for unused entires in</span>
+    <span class="c1"># arrays</span>
+    <span class="k">return</span> <span class="n">order</span><span class="p">[</span><span class="n">order</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">levels</span><span class="p">[</span><span class="n">levels</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<span class="k">def</span> <span class="nf">column_permutation</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finds the non-symmetric column permutation of A such that the columns </span>
+<span class="sd">    are given in ascending order according to the number of nonzero entries.</span>
+<span class="sd">    This is sometimes useful for decreasing the fill-in of sparse LU </span>
+<span class="sd">    factorization.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A : csc_matrix</span>
+<span class="sd">        Input sparse CSC sparse matrix.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    perm : array</span>
+<span class="sd">        Array of permuted row and column indices.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_csc</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csc_matrix</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">indptr</span><span class="p">)</span>
+    <span class="n">perm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">perm</span>
+
+
+<div class="viewcode-block" id="reverse_cuthill_mckee"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.graph.reverse_cuthill_mckee">[docs]</a><span class="k">def</span> <span class="nf">reverse_cuthill_mckee</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the permutation array that orders a sparse CSR or CSC matrix</span>
+<span class="sd">    in Reverse-Cuthill McKee ordering. Since the input matrix must be</span>
+<span class="sd">    symmetric, this routine works on the matrix A+Trans(A) if the sym flag is</span>
+<span class="sd">    set to False (Default).</span>
+
+<span class="sd">    It is assumed by default (*sym=False*) that the input matrix is not</span>
+<span class="sd">    symmetric. This is because it is faster to do A+Trans(A) than it is to</span>
+<span class="sd">    check for symmetry for a generic matrix. If you are guaranteed that the</span>
+<span class="sd">    matrix is symmetric in structure (values of matrix element do not matter)</span>
+<span class="sd">    then set *sym=True*</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A : csc_matrix, csr_matrix</span>
+<span class="sd">        Input sparse CSC or CSR sparse matrix format.</span>
+<span class="sd">    sym : bool {False, True}</span>
+<span class="sd">        Flag to set whether input matrix is symmetric.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    perm : array</span>
+<span class="sd">        Array of permuted row and column indices.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This routine is used primarily for internal reordering of Lindblad</span>
+<span class="sd">    superoperators for use in iterative solver routines.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    E. Cuthill and J. McKee, &quot;Reducing the Bandwidth of Sparse Symmetric</span>
+<span class="sd">    Matrices&quot;, ACM &#39;69 Proceedings of the 1969 24th national conference,</span>
+<span class="sd">    (1969).</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_csc</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_csr</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Input must be CSC or CSR sparse matrix.&#39;</span><span class="p">)</span>
+
+    <span class="n">nrows</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">sym</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">A</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">_reverse_cuthill_mckee</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">nrows</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="maximum_bipartite_matching"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.graph.maximum_bipartite_matching">[docs]</a><span class="k">def</span> <span class="nf">maximum_bipartite_matching</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">perm_type</span><span class="o">=</span><span class="s1">&#39;row&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns an array of row or column permutations that removes nonzero</span>
+<span class="sd">    elements from the diagonal of a nonsingular square CSC sparse matrix. Such</span>
+<span class="sd">    a permutation is always possible provided that the matrix is nonsingular.</span>
+<span class="sd">    This function looks at the structure of the matrix only.</span>
+
+<span class="sd">    The input matrix will be converted to CSC matrix format if</span>
+<span class="sd">    necessary.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A : sparse matrix</span>
+<span class="sd">        Input matrix</span>
+
+<span class="sd">    perm_type : str {&#39;row&#39;, &#39;column&#39;}</span>
+<span class="sd">        Type of permutation to generate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    perm : array</span>
+<span class="sd">        Array of row or column permutations.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function relies on a maximum cardinality bipartite matching algorithm</span>
+<span class="sd">    based on a breadth-first search (BFS) of the underlying graph[1]_.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    I. S. Duff, K. Kaya, and B. Ucar, &quot;Design, Implementation, and</span>
+<span class="sd">    Analysis of Maximum Transversal Algorithms&quot;, ACM Trans. Math. Softw.</span>
+<span class="sd">    38, no. 2, (2011).</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nrows</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s1">&#39;Maximum bipartite matching requires a square matrix.&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_csr</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_coo</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_csc</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;matrix must be in CSC, CSR, or COO format.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">perm_type</span> <span class="o">==</span> <span class="s1">&#39;column&#39;</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
+
+    <span class="n">perm</span> <span class="o">=</span> <span class="n">_maximum_bipartite_matching</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">nrows</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">perm</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Possibly singular input matrix.&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">perm</span></div>
+
+
+<div class="viewcode-block" id="weighted_bipartite_matching"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.graph.weighted_bipartite_matching">[docs]</a><span class="k">def</span> <span class="nf">weighted_bipartite_matching</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">perm_type</span><span class="o">=</span><span class="s1">&#39;row&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns an array of row permutations that attempts to maximize</span>
+<span class="sd">    the product of the ABS values of the diagonal elements in</span>
+<span class="sd">    a nonsingular square CSC sparse matrix. Such a permutation is</span>
+<span class="sd">    always possible provided that the matrix is nonsingular.</span>
+
+<span class="sd">    This function looks at both the structure and ABS values of the</span>
+<span class="sd">    underlying matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A : csc_matrix</span>
+<span class="sd">        Input matrix</span>
+
+<span class="sd">    perm_type : str {&#39;row&#39;, &#39;column&#39;}</span>
+<span class="sd">        Type of permutation to generate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    perm : array</span>
+<span class="sd">        Array of row or column permutations.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function uses a weighted maximum cardinality bipartite matching</span>
+<span class="sd">    algorithm based on breadth-first search (BFS).  The columns are weighted</span>
+<span class="sd">    according to the element of max ABS value in the associated rows and</span>
+<span class="sd">    are traversed in descending order by weight.  When performing the BFS</span>
+<span class="sd">    traversal, the row associated to a given column is the one with maximum</span>
+<span class="sd">    weight. Unlike other techniques[1]_, this algorithm does not guarantee the</span>
+<span class="sd">    product of the diagonal is maximized.  However, this limitation is offset</span>
+<span class="sd">    by the substantially faster runtime of this method.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    I. S. Duff and J. Koster, &quot;The design and use of algorithms for</span>
+<span class="sd">    permuting large entries to the diagonal of sparse matrices&quot;, SIAM J.</span>
+<span class="sd">    Matrix Anal. and Applics. 20, no. 4, 889 (1997).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+   
+    <span class="n">nrows</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;weighted_bfs_matching requires a square matrix.&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_csr</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_coo</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">sp</span><span class="o">.</span><span class="n">isspmatrix_csc</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;matrix must be in CSC, CSR, or COO format.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">perm_type</span> <span class="o">==</span> <span class="s1">&#39;column&#39;</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
+
+    <span class="n">perm</span> <span class="o">=</span> <span class="n">_weighted_bipartite_matching</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> 
+                    <span class="n">A</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">nrows</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">perm</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Possibly singular input matrix.&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">perm</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

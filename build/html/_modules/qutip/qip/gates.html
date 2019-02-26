@@ -1,0 +1,1241 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qutip.qip.gates &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>qutip.qip.gates</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qutip.qip.gates</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of QuTiP: Quantum Toolbox in Python.</span>
+<span class="c1">#</span>
+<span class="c1">#    Copyright (c) 2011 and later, Paul D. Nation and Robert J. Johansson.</span>
+<span class="c1">#    All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Redistribution and use in source and binary forms, with or without</span>
+<span class="c1">#    modification, are permitted provided that the following conditions are</span>
+<span class="c1">#    met:</span>
+<span class="c1">#</span>
+<span class="c1">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="c1">#       this list of conditions and the following disclaimer.</span>
+<span class="c1">#</span>
+<span class="c1">#    2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="c1">#       notice, this list of conditions and the following disclaimer in the</span>
+<span class="c1">#       documentation and/or other materials provided with the distribution.</span>
+<span class="c1">#</span>
+<span class="c1">#    3. Neither the name of the QuTiP: Quantum Toolbox in Python nor the names</span>
+<span class="c1">#       of its contributors may be used to endorse or promote products derived</span>
+<span class="c1">#       from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1">#    &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A</span>
+<span class="c1">#    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1">#    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1">#    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1">#    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1">#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1">#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1">#    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">###############################################################################</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">from</span> <span class="nn">qutip.qobj</span> <span class="k">import</span> <span class="n">Qobj</span>
+<span class="kn">from</span> <span class="nn">qutip.operators</span> <span class="k">import</span> <span class="n">identity</span><span class="p">,</span> <span class="n">qeye</span><span class="p">,</span> <span class="n">sigmax</span>
+<span class="kn">from</span> <span class="nn">qutip.tensor</span> <span class="k">import</span> <span class="n">tensor</span>
+<span class="kn">from</span> <span class="nn">qutip.states</span> <span class="k">import</span> <span class="n">fock_dm</span>
+
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">product</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span><span class="p">,</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">mul</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="s1">&#39;ry&#39;</span><span class="p">,</span> <span class="s1">&#39;rz&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrtnot&#39;</span><span class="p">,</span> <span class="s1">&#39;snot&#39;</span><span class="p">,</span> <span class="s1">&#39;phasegate&#39;</span><span class="p">,</span> <span class="s1">&#39;cphase&#39;</span><span class="p">,</span> <span class="s1">&#39;cnot&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;csign&#39;</span><span class="p">,</span> <span class="s1">&#39;berkeley&#39;</span><span class="p">,</span> <span class="s1">&#39;swapalpha&#39;</span><span class="p">,</span> <span class="s1">&#39;swap&#39;</span><span class="p">,</span> <span class="s1">&#39;iswap&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrtswap&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;sqrtiswap&#39;</span><span class="p">,</span> <span class="s1">&#39;fredkin&#39;</span><span class="p">,</span> <span class="s1">&#39;toffoli&#39;</span><span class="p">,</span> <span class="s1">&#39;rotation&#39;</span><span class="p">,</span> <span class="s1">&#39;controlled_gate&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;globalphase&#39;</span><span class="p">,</span> <span class="s1">&#39;hadamard_transform&#39;</span><span class="p">,</span> <span class="s1">&#39;gate_sequence_product&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;gate_expand_1toN&#39;</span><span class="p">,</span> <span class="s1">&#39;gate_expand_2toN&#39;</span><span class="p">,</span> <span class="s1">&#39;gate_expand_3toN&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;qubit_clifford_group&#39;</span><span class="p">]</span>
+
+<span class="c1">#</span>
+<span class="c1"># Single Qubit Gates</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="rx"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.rx">[docs]</a><span class="k">def</span> <span class="nf">rx</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Single-qubit rotation for operator sigmax with angle phi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    result : qobj</span>
+<span class="sd">        Quantum object for operator describing the rotation.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_1toN</span><span class="p">(</span><span class="n">rx</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">N</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)],</span>
+                     <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]])</span></div>
+
+
+<div class="viewcode-block" id="ry"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.ry">[docs]</a><span class="k">def</span> <span class="nf">ry</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Single-qubit rotation for operator sigmay with angle phi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    result : qobj</span>
+<span class="sd">        Quantum object for operator describing the rotation.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_1toN</span><span class="p">(</span><span class="n">ry</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">N</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)],</span>
+                     <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]])</span></div>
+
+
+<div class="viewcode-block" id="rz"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.rz">[docs]</a><span class="k">def</span> <span class="nf">rz</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Single-qubit rotation for operator sigmaz with angle phi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    result : qobj</span>
+<span class="sd">        Quantum object for operator describing the rotation.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_1toN</span><span class="p">(</span><span class="n">rz</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">N</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]])</span></div>
+
+
+<div class="viewcode-block" id="sqrtnot"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.sqrtnot">[docs]</a><span class="k">def</span> <span class="nf">sqrtnot</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Single-qubit square root NOT gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    result : qobj</span>
+<span class="sd">        Quantum object for operator describing the square root NOT gate.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_1toN</span><span class="p">(</span><span class="n">sqrtnot</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="mf">0.5</span> <span class="o">+</span> <span class="mf">0.5</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="mf">0.5</span><span class="n">j</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mf">0.5</span> <span class="o">-</span> <span class="mf">0.5</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="mf">0.5</span><span class="n">j</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="snot"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.snot">[docs]</a><span class="k">def</span> <span class="nf">snot</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Quantum object representing the SNOT (Hadamard) gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    snot_gate : qobj</span>
+<span class="sd">        Quantum object representation of SNOT gate.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; snot()</span>
+<span class="sd">    Quantum object: dims = [[2], [2]], \</span>
+<span class="sd">shape = [2, 2], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.70710678+0.j  0.70710678+0.j]</span>
+<span class="sd">     [ 0.70710678+0.j -0.70710678+0.j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_1toN</span><span class="p">(</span><span class="n">snot</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">Qobj</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="phasegate"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.phasegate">[docs]</a><span class="k">def</span> <span class="nf">phasegate</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns quantum object representing the phase shift gate.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        Phase rotation angle.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    phase_gate : qobj</span>
+<span class="sd">        Quantum object representation of phase shift gate.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; phasegate(pi/4)</span>
+<span class="sd">    Quantum object: dims = [[2], [2]], \</span>
+<span class="sd">shape = [2, 2], type = oper, isHerm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 1.00000000+0.j          0.00000000+0.j        ]</span>
+<span class="sd">     [ 0.00000000+0.j          0.70710678+0.70710678j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_1toN</span><span class="p">(</span><span class="n">phasegate</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">N</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)]],</span>
+                    <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]])</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># 2 Qubit Gates</span>
+<span class="c1">#</span>
+
+<div class="viewcode-block" id="cphase"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.cphase">[docs]</a><span class="k">def</span> <span class="nf">cphase</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns quantum object representing the controlled phase shift gate.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        Phase rotation angle.</span>
+
+<span class="sd">    N : integer</span>
+<span class="sd">        The number of qubits in the target space.</span>
+
+<span class="sd">    control : integer</span>
+<span class="sd">        The index of the control qubit.</span>
+
+<span class="sd">    target : integer</span>
+<span class="sd">        The index of the target qubit.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    U : qobj</span>
+<span class="sd">        Quantum object representation of controlled phase gate.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">control</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Minimum value: N=1, control=0 and target=0&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">control</span> <span class="o">&gt;=</span> <span class="n">N</span> <span class="ow">or</span> <span class="n">target</span> <span class="o">&gt;=</span> <span class="n">N</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;control and target need to be smaller than N&quot;</span><span class="p">)</span>
+
+    <span class="n">U_list1</span> <span class="o">=</span> <span class="p">[</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span> <span class="o">*</span> <span class="n">N</span>
+    <span class="n">U_list2</span> <span class="o">=</span> <span class="p">[</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span> <span class="o">*</span> <span class="n">N</span>
+
+    <span class="n">U_list1</span><span class="p">[</span><span class="n">control</span><span class="p">]</span> <span class="o">=</span> <span class="n">fock_dm</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">U_list1</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">phasegate</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+    <span class="n">U_list2</span><span class="p">[</span><span class="n">control</span><span class="p">]</span> <span class="o">=</span> <span class="n">fock_dm</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">U</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">U_list1</span><span class="p">)</span> <span class="o">+</span> <span class="n">tensor</span><span class="p">(</span><span class="n">U_list2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">U</span></div>
+
+
+<div class="viewcode-block" id="cnot"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.cnot">[docs]</a><span class="k">def</span> <span class="nf">cnot</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Quantum object representing the CNOT gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    cnot_gate : qobj</span>
+<span class="sd">        Quantum object representation of CNOT gate</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; cnot()</span>
+<span class="sd">    Quantum object: dims = [[2, 2], [2, 2]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">        [[ 1.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  1.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  1.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  1.+0.j  0.+0.j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">control</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">N</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_2toN</span><span class="p">(</span><span class="n">cnot</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span>
+                    <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="csign"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.csign">[docs]</a><span class="k">def</span> <span class="nf">csign</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Quantum object representing the CSIGN gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    csign_gate : qobj</span>
+<span class="sd">        Quantum object representation of CSIGN gate</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; csign()</span>
+<span class="sd">    Quantum object: dims = [[2, 2], [2, 2]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">        [[ 1.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  1.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  1.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  -1.+0.j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">control</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">N</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_2toN</span><span class="p">(</span><span class="n">csign</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+                    <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="berkeley"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.berkeley">[docs]</a><span class="k">def</span> <span class="nf">berkeley</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Quantum object representing the Berkeley gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    berkeley_gate : qobj</span>
+<span class="sd">        Quantum object representation of Berkeley gate</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; berkeley()</span>
+<span class="sd">    Quantum object: dims = [[2, 2], [2, 2]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">        [[ cos(pi/8).+0.j  0.+0.j           0.+0.j           0.+sin(pi/8).j]</span>
+<span class="sd">         [ 0.+0.j          cos(3pi/8).+0.j  0.+sin(3pi/8).j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j          0.+sin(3pi/8).j  cos(3pi/8).+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+sin(pi/8).j  0.+0.j           0.+0.j           cos(pi/8).+0.j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">N</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_2toN</span><span class="p">(</span><span class="n">cnot</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">)],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">),</span> <span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span>
+                      <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">),</span>
+                      <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">)]],</span>
+                    <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="swapalpha"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.swapalpha">[docs]</a><span class="k">def</span> <span class="nf">swapalpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Quantum object representing the SWAPalpha gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    swapalpha_gate : qobj</span>
+<span class="sd">        Quantum object representation of SWAPalpha gate</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; swapalpha(alpha)</span>
+<span class="sd">    Quantum object: dims = [[2, 2], [2, 2]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 1.+0.j  0.+0.j                    0.+0.j                    0.+0.j]</span>
+<span class="sd">     [ 0.+0.j  0.5*(1 + exp(j*pi*alpha)  0.5*(1 - exp(j*pi*alpha)  0.+0.j]</span>
+<span class="sd">     [ 0.+0.j  0.5*(1 - exp(j*pi*alpha)  0.5*(1 + exp(j*pi*alpha)  0.+0.j]</span>
+<span class="sd">     [ 0.+0.j  0.+0.j                    0.+0.j                    1.+0.j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">N</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_2toN</span><span class="p">(</span><span class="n">cnot</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)),</span>
+                      <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)),</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)),</span>
+                      <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)),</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+                    <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="swap"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.swap">[docs]</a><span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Quantum object representing the SWAP gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    swap_gate : qobj</span>
+<span class="sd">        Quantum object representation of SWAP gate</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; swap()</span>
+<span class="sd">    Quantum object: dims = [[2, 2], [2, 2]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 1.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">     [ 0.+0.j  0.+0.j  1.+0.j  0.+0.j]</span>
+<span class="sd">     [ 0.+0.j  1.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">     [ 0.+0.j  0.+0.j  0.+0.j  1.+0.j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">targets</span> <span class="o">!=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">N</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_2toN</span><span class="p">(</span><span class="n">swap</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+                    <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="iswap"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.iswap">[docs]</a><span class="k">def</span> <span class="nf">iswap</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Quantum object representing the iSWAP gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iswap_gate : qobj</span>
+<span class="sd">        Quantum object representation of iSWAP gate</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; iswap()</span>
+<span class="sd">    Quantum object: dims = [[2, 2], [2, 2]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 1.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">     [ 0.+0.j  0.+0.j  0.+1.j  0.+0.j]</span>
+<span class="sd">     [ 0.+0.j  0.+1.j  0.+0.j  0.+0.j]</span>
+<span class="sd">     [ 0.+0.j  0.+0.j  0.+0.j  1.+0.j]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">targets</span> <span class="o">!=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">N</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_2toN</span><span class="p">(</span><span class="n">iswap</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+                    <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="sqrtswap"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.sqrtswap">[docs]</a><span class="k">def</span> <span class="nf">sqrtswap</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Quantum object representing the square root SWAP gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    sqrtswap_gate : qobj</span>
+<span class="sd">        Quantum object representation of square root SWAP gate</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">targets</span> <span class="o">!=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">N</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_2toN</span><span class="p">(</span><span class="n">sqrtswap</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="mf">0.5</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="mf">0.5</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="mf">0.5</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="mf">0.5</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]),</span>
+                    <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="sqrtiswap"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.sqrtiswap">[docs]</a><span class="k">def</span> <span class="nf">sqrtiswap</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Quantum object representing the square root iSWAP gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    sqrtiswap_gate : qobj</span>
+<span class="sd">        Quantum object representation of square root iSWAP gate</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; sqrtiswap()</span>
+<span class="sd">    Quantum object: dims = [[2, 2], [2, 2]], \</span>
+<span class="sd">shape = [4, 4], type = oper, isHerm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 1.00000000+0.j   0.00000000+0.j   \</span>
+<span class="sd">       0.00000000+0.j          0.00000000+0.j]</span>
+<span class="sd">     [ 0.00000000+0.j   0.70710678+0.j   \</span>
+<span class="sd">       0.00000000-0.70710678j  0.00000000+0.j]</span>
+<span class="sd">     [ 0.00000000+0.j   0.00000000-0.70710678j\</span>
+<span class="sd">       0.70710678+0.j          0.00000000+0.j]</span>
+<span class="sd">     [ 0.00000000+0.j   0.00000000+0.j   \</span>
+<span class="sd">       0.00000000+0.j          1.00000000+0.j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">targets</span> <span class="o">!=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">N</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_2toN</span><span class="p">(</span><span class="n">sqrtiswap</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="n">j</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+                              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="n">j</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+                              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]),</span> <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># 3 Qubit Gates</span>
+<span class="c1">#</span>
+
+<div class="viewcode-block" id="fredkin"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.fredkin">[docs]</a><span class="k">def</span> <span class="nf">fredkin</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Quantum object representing the Fredkin gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fredkin_gate : qobj</span>
+<span class="sd">        Quantum object representation of Fredkin gate.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; fredkin()</span>
+<span class="sd">    Quantum object: dims = [[2, 2, 2], [2, 2, 2]], \</span>
+<span class="sd">shape = [8, 8], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">        [[ 1.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  1.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  1.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  1.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  0.+0.j  1.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  1.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  1.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  1.+0.j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">[</span><span class="n">control</span><span class="p">,</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">!=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="n">N</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_3toN</span><span class="p">(</span><span class="n">fredkin</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span>
+                                <span class="p">[</span><span class="n">control</span><span class="p">,</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+                    <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span></div>
+
+
+<div class="viewcode-block" id="toffoli"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.toffoli">[docs]</a><span class="k">def</span> <span class="nf">toffoli</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">controls</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Quantum object representing the Toffoli gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    toff_gate : qobj</span>
+<span class="sd">        Quantum object representation of Toffoli gate.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; toffoli()</span>
+<span class="sd">    Quantum object: dims = [[2, 2, 2], [2, 2, 2]], \</span>
+<span class="sd">shape = [8, 8], type = oper, isHerm = True</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">        [[ 1.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  1.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  1.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  1.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  0.+0.j  1.+0.j  0.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  1.+0.j  0.+0.j  0.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  1.+0.j]</span>
+<span class="sd">         [ 0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  0.+0.j  1.+0.j  0.+0.j]]</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">target</span><span class="p">]</span> <span class="o">!=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="n">N</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_3toN</span><span class="p">(</span><span class="n">toffoli</span><span class="p">(),</span> <span class="n">N</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span>
+                    <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># Miscellaneous Gates</span>
+<span class="c1">#</span>
+
+<div class="viewcode-block" id="rotation"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.rotation">[docs]</a><span class="k">def</span> <span class="nf">rotation</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Single-qubit rotation for operator op with angle phi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    result : qobj</span>
+<span class="sd">        Quantum object for operator describing the rotation.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gate_expand_1toN</span><span class="p">(</span><span class="n">rotation</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">phi</span><span class="p">),</span> <span class="n">N</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">op</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">expm</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="controlled_gate"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.controlled_gate">[docs]</a><span class="k">def</span> <span class="nf">controlled_gate</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">control_value</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create an N-qubit controlled gate from a single-qubit gate U with the given</span>
+<span class="sd">    control and target qubits.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    U : Qobj</span>
+<span class="sd">        Arbitrary single-qubit gate.</span>
+
+<span class="sd">    N : integer</span>
+<span class="sd">        The number of qubits in the target space.</span>
+
+<span class="sd">    control : integer</span>
+<span class="sd">        The index of the first control qubit.</span>
+
+<span class="sd">    target : integer</span>
+<span class="sd">        The index of the target qubit.</span>
+
+<span class="sd">    control_value : integer (1)</span>
+<span class="sd">        The state of the control qubit that activates the gate U.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    result : qobj</span>
+<span class="sd">        Quantum object representing the controlled-U gate.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="p">[</span><span class="n">N</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">fock_dm</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">control_value</span><span class="p">),</span> <span class="n">U</span><span class="p">)</span> <span class="o">+</span>
+                <span class="n">tensor</span><span class="p">(</span><span class="n">fock_dm</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">control_value</span><span class="p">),</span> <span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">U2</span> <span class="o">=</span> <span class="n">controlled_gate</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">control_value</span><span class="o">=</span><span class="n">control_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">gate_expand_2toN</span><span class="p">(</span><span class="n">U2</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="n">control</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="globalphase"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.globalphase">[docs]</a><span class="k">def</span> <span class="nf">globalphase</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns quantum object representing the global phase shift gate.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        Phase rotation angle.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    phase_gate : qobj</span>
+<span class="sd">        Quantum object representation of global phase shift gate.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; phasegate(pi/4)</span>
+<span class="sd">    Quantum object: dims = [[2], [2]], \</span>
+<span class="sd">shape = [2, 2], type = oper, isHerm = False</span>
+<span class="sd">    Qobj data =</span>
+<span class="sd">    [[ 0.70710678+0.70710678j          0.00000000+0.j]</span>
+<span class="sd">     [ 0.00000000+0.j          0.70710678+0.70710678j]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">N</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">N</span><span class="p">,</span>
+                                          <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;csr&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">])</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># Operation on Gates</span>
+<span class="c1">#</span>
+
+<span class="k">def</span> <span class="nf">_hamming_distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bits</span><span class="o">=</span><span class="mi">32</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the bit-wise Hamming distance of x from 0: That is, the number</span>
+<span class="sd">    1s in the integer x.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tot</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">tot</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">x</span> <span class="o">&amp;=</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">tot</span>
+
+
+<div class="viewcode-block" id="hadamard_transform"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.hadamard_transform">[docs]</a><span class="k">def</span> <span class="nf">hadamard_transform</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Quantum object representing the N-qubit Hadamard gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    q : qobj</span>
+<span class="sd">        Quantum object representation of the N-qubit Hadamard gate.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">N</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="n">_hamming_distance</span><span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">j</span><span class="p">)</span>
+                                      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">N</span><span class="p">)]</span>
+                                     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">N</span><span class="p">)])</span>
+
+    <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="gate_sequence_product"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.gate_sequence_product">[docs]</a><span class="k">def</span> <span class="nf">gate_sequence_product</span><span class="p">(</span><span class="n">U_list</span><span class="p">,</span> <span class="n">left_to_right</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the overall unitary matrix for a given list of unitary operations</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    U_list : list</span>
+<span class="sd">        List of gates implementing the quantum circuit.</span>
+
+<span class="sd">    left_to_right : Boolean</span>
+<span class="sd">        Check if multiplication is to be done from left to right.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    U_overall : qobj</span>
+<span class="sd">        Overall unitary matrix of a given quantum circuit.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">U_overall</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">U</span> <span class="ow">in</span> <span class="n">U_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">left_to_right</span><span class="p">:</span>
+            <span class="n">U_overall</span> <span class="o">=</span> <span class="n">U</span> <span class="o">*</span> <span class="n">U_overall</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">U_overall</span> <span class="o">=</span> <span class="n">U_overall</span> <span class="o">*</span> <span class="n">U</span>
+
+    <span class="k">return</span> <span class="n">U_overall</span></div>
+
+
+<span class="k">def</span> <span class="nf">_powers</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generator that yields powers of an operator `op`,</span>
+<span class="sd">    through to `N`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">qeye</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">yield</span> <span class="n">acc</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">acc</span> <span class="o">*=</span> <span class="n">op</span>
+        <span class="k">yield</span> <span class="n">acc</span>
+
+
+<span class="k">def</span> <span class="nf">qubit_clifford_group</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates the Clifford group on a single qubit,</span>
+<span class="sd">    using the presentation of the group given by Ross and Selinger</span>
+<span class="sd">    (http://www.mathstat.dal.ca/~selinger/newsynth/).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    N : int or None</span>
+<span class="sd">        Number of qubits on which each operator is to be defined</span>
+<span class="sd">        (default: 1).</span>
+<span class="sd">    target : int</span>
+<span class="sd">        Index of the target qubit on which the single-qubit</span>
+<span class="sd">        Clifford operators are to act.</span>
+
+<span class="sd">    Yields</span>
+<span class="sd">    ------</span>
+
+<span class="sd">    op : Qobj</span>
+<span class="sd">        Clifford operators, represented as Qobj instances.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># The Ross-Selinger presentation of the single-qubit Clifford</span>
+    <span class="c1"># group expresses each element in the form C_{ijk} = E^i X^j S^k</span>
+    <span class="c1"># for gates E, X and S, and for i in range(3), j in range(2) and</span>
+    <span class="c1"># k in range(4).</span>
+    <span class="c1">#</span>
+    <span class="c1"># We start by defining these gates. E is defined in terms of H,</span>
+    <span class="c1"># \omega and S, so we define \omega and H first.</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">snot</span><span class="p">()</span>
+
+    <span class="n">X</span> <span class="o">=</span> <span class="n">sigmax</span><span class="p">()</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">phasegate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="n">H</span> <span class="o">*</span> <span class="p">(</span><span class="n">S</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">w</span> <span class="o">**</span> <span class="mi">3</span>
+
+    <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">reduce</span><span class="p">,</span> <span class="n">mul</span><span class="p">),</span> <span class="n">product</span><span class="p">(</span><span class="n">_powers</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+                  <span class="n">_powers</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">_powers</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="mi">4</span><span class="p">))):</span>
+
+        <span class="c1"># partial(reduce, mul) returns a function that takes products</span>
+        <span class="c1"># of its argument, by analogy to sum. Note that by analogy,</span>
+        <span class="c1"># sum can be written as partial(reduce, add).</span>
+
+        <span class="c1"># product(...) yields the Cartesian product of its arguments.</span>
+        <span class="c1"># Here, each element is a tuple (E**i, X**j, S**k) such that</span>
+        <span class="c1"># partial(reduce, mul) acting on the tuple yields E**i * X**j * S**k.</span>
+
+        <span class="c1"># Finally, we optionally expand the gate.</span>
+        <span class="k">if</span> <span class="n">N</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">gate_expand_1toN</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">op</span>
+
+<span class="c1">#</span>
+<span class="c1"># Gate Expand</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="gate_expand_1toN"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.gate_expand_1toN">[docs]</a><span class="k">def</span> <span class="nf">gate_expand_1toN</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a Qobj representing a one-qubit gate that act on a system with N</span>
+<span class="sd">    qubits.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    U : Qobj</span>
+<span class="sd">        The one-qubit gate</span>
+
+<span class="sd">    N : integer</span>
+<span class="sd">        The number of qubits in the target space.</span>
+
+<span class="sd">    target : integer</span>
+<span class="sd">        The index of the target qubit.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gate : qobj</span>
+<span class="sd">        Quantum object representation of N-qubit gate.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;integer N must be larger or equal to 1&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">target</span> <span class="o">&gt;=</span> <span class="n">N</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;target must be integer &lt; integer N&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tensor</span><span class="p">([</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span> <span class="o">*</span> <span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">U</span><span class="p">]</span> <span class="o">+</span>
+                  <span class="p">[</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">target</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="gate_expand_2toN"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.gate_expand_2toN">[docs]</a><span class="k">def</span> <span class="nf">gate_expand_2toN</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a Qobj representing a two-qubit gate that act on a system with N</span>
+<span class="sd">    qubits.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    U : Qobj</span>
+<span class="sd">        The two-qubit gate</span>
+
+<span class="sd">    N : integer</span>
+<span class="sd">        The number of qubits in the target space.</span>
+
+<span class="sd">    control : integer</span>
+<span class="sd">        The index of the control qubit.</span>
+
+<span class="sd">    target : integer</span>
+<span class="sd">        The index of the target qubit.</span>
+
+<span class="sd">    targets : list</span>
+<span class="sd">        List of target qubits.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gate : qobj</span>
+<span class="sd">        Quantum object representation of N-qubit gate.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">targets</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">control</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">targets</span>
+
+    <span class="k">if</span> <span class="n">control</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">target</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Specify value of control and target&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;integer N must be larger or equal to 2&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">control</span> <span class="o">&gt;=</span> <span class="n">N</span> <span class="ow">or</span> <span class="n">target</span> <span class="o">&gt;=</span> <span class="n">N</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;control and not target must be integer &lt; integer N&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">control</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;target and not control cannot be equal&quot;</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">control</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">control</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">control</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">control</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">control</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">control</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">control</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">tensor</span><span class="p">([</span><span class="n">U</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="gate_expand_3toN"><a class="viewcode-back" href="../../../apidoc/functions.html#qutip.qip.gates.gate_expand_3toN">[docs]</a><span class="k">def</span> <span class="nf">gate_expand_3toN</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">controls</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a Qobj representing a three-qubit gate that act on a system with N</span>
+<span class="sd">    qubits.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    U : Qobj</span>
+<span class="sd">        The three-qubit gate</span>
+
+<span class="sd">    N : integer</span>
+<span class="sd">        The number of qubits in the target space.</span>
+
+<span class="sd">    controls : list</span>
+<span class="sd">        The list of the control qubits.</span>
+
+<span class="sd">    target : integer</span>
+<span class="sd">        The index of the target qubit.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gate : qobj</span>
+<span class="sd">        Quantum object representation of N-qubit gate.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;integer N must be larger or equal to 3&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">N</span> <span class="ow">or</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">N</span> <span class="ow">or</span> <span class="n">target</span> <span class="o">&gt;=</span> <span class="n">N</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;control and not target is None.&quot;</span>
+                         <span class="s2">&quot; Must be integer &lt; integer N&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span> <span class="ow">or</span>
+        <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span> <span class="ow">or</span>
+        <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;controls[0], controls[1], and target&quot;</span>
+                         <span class="s2">&quot; cannot be equal&quot;</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># N &gt; 3 cases</span>
+    <span class="c1">#</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">p2</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p2</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">p2</span><span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
+        <span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">p1</span><span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
+        <span class="n">p1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">p1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">p1</span><span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1">#  controls[0] -&gt; controls[1] -&gt; target -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1">#  controls[0] -&gt; target -&gt; controls[1] -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1">#  controls[1] -&gt; controls[0] -&gt; target -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1">#  controls[1] -&gt; target -&gt; controls[0] -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1">#  target -&gt; controls[1] -&gt; controls[0] -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1">#  target -&gt; controls[0] -&gt; controls[1] -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1">#  controls[0] -&gt; self, controls[1] -&gt; target -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1">#  controls[1] -&gt; self, controls[0] -&gt; target -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1">#  target -&gt; self, controls[0] -&gt; controls[1] -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># N &gt; 4 cases</span>
+    <span class="c1">#</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1">#  controls[0] -&gt; controls[1] -&gt; outside, target -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1">#  controls[0] -&gt; target -&gt; outside, controls[1] -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1">#  controls[1] -&gt; target -&gt; outside, controls[0] -&gt; outside</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span><span class="n">controls</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">p2</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">p2</span><span class="p">[</span><span class="n">target</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="n">p1</span><span class="p">[</span><span class="n">p2</span><span class="p">[</span><span class="n">k</span><span class="p">]]]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">tensor</span><span class="p">([</span><span class="n">U</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,1518 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qutip.control.optimizer &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>qutip.control.optimizer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qutip.control.optimizer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># This file is part of QuTiP: Quantum Toolbox in Python.</span>
+<span class="c1">#</span>
+<span class="c1">#    Copyright (c) 2014 and later, Alexander J G Pitchford</span>
+<span class="c1">#    All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Redistribution and use in source and binary forms, with or without</span>
+<span class="c1">#    modification, are permitted provided that the following conditions are</span>
+<span class="c1">#    met:</span>
+<span class="c1">#</span>
+<span class="c1">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="c1">#       this list of conditions and the following disclaimer.</span>
+<span class="c1">#</span>
+<span class="c1">#    2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="c1">#       notice, this list of conditions and the following disclaimer in the</span>
+<span class="c1">#       documentation and/or other materials provided with the distribution.</span>
+<span class="c1">#</span>
+<span class="c1">#    3. Neither the name of the QuTiP: Quantum Toolbox in Python nor the names</span>
+<span class="c1">#       of its contributors may be used to endorse or promote products derived</span>
+<span class="c1">#       from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1">#    &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A</span>
+<span class="c1">#    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1">#    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1">#    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1">#    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1">#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1">#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1">#    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">###############################################################################</span>
+
+<span class="c1"># @author: Alexander Pitchford</span>
+<span class="c1"># @email1: agp1@aber.ac.uk</span>
+<span class="c1"># @email2: alex.pitchford@gmail.com</span>
+<span class="c1"># @organization: Aberystwyth University</span>
+<span class="c1"># @supervisor: Daniel Burgarth</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Classes here are expected to implement a run_optimization function</span>
+<span class="sd">that will use some method for optimising the control pulse, as defined</span>
+<span class="sd">by the control amplitudes. The system that the pulse acts upon are defined</span>
+<span class="sd">by the Dynamics object that must be passed in the instantiation.</span>
+
+<span class="sd">The methods are typically N dimensional function optimisers that</span>
+<span class="sd">find the minima of a fidelity error function. Note the number of variables</span>
+<span class="sd">for the fidelity function is the number of control timeslots,</span>
+<span class="sd">i.e. n_ctrls x Ntimeslots</span>
+<span class="sd">The methods will call functions on the Dynamics.fid_computer object,</span>
+<span class="sd">one or many times per interation,</span>
+<span class="sd">to get the fidelity error and gradient wrt to the amplitudes.</span>
+<span class="sd">The optimisation will stop when one of the termination conditions are met,</span>
+<span class="sd">for example: the fidelity aim has be reached, a local minima has been found,</span>
+<span class="sd">the maximum time allowed has been exceeded</span>
+
+<span class="sd">These function optimisation methods are so far from SciPy.optimize</span>
+<span class="sd">The two methods implemented are:</span>
+<span class="sd">    </span>
+<span class="sd">    BFGS - Broyden–Fletcher–Goldfarb–Shanno algorithm</span>
+<span class="sd">        </span>
+<span class="sd">        This a quasi second order Newton method. It uses successive calls to</span>
+<span class="sd">        the gradient function to make an estimation of the curvature (Hessian)</span>
+<span class="sd">        and hence direct its search for the function minima</span>
+<span class="sd">        The SciPy implementation is pure Python and hance is execution speed is</span>
+<span class="sd">        not high</span>
+<span class="sd">        use subclass: OptimizerBFGS</span>
+
+<span class="sd">    L-BFGS-B - Bounded, limited memory BFGS</span>
+<span class="sd">        </span>
+<span class="sd">        This a version of the BFGS method where the Hessian approximation is</span>
+<span class="sd">        only based on a set of the most recent gradient calls. It generally</span>
+<span class="sd">        performs better where the are a large number of variables</span>
+<span class="sd">        The SciPy implementation of L-BFGS-B is wrapper around a well</span>
+<span class="sd">        established and actively maintained implementation in Fortran</span>
+<span class="sd">        Its is therefore very fast.</span>
+<span class="sd">        # See SciPy documentation for credit and details on the</span>
+<span class="sd">        # scipy.optimize.fmin_l_bfgs_b function</span>
+<span class="sd">        use subclass: OptimizerLBFGSB</span>
+
+<span class="sd">The baseclass Optimizer implements the function wrappers to the</span>
+<span class="sd">fidelity error, gradient, and iteration callback functions.</span>
+<span class="sd">These are called from the within the SciPy optimisation functions.</span>
+<span class="sd">The subclasses implement the algorithm specific pulse optimisation function.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">timeit</span>
+<span class="kn">import</span> <span class="nn">scipy.optimize</span> <span class="k">as</span> <span class="nn">spopt</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="c1"># QuTiP</span>
+<span class="kn">from</span> <span class="nn">qutip</span> <span class="k">import</span> <span class="n">Qobj</span>
+<span class="kn">import</span> <span class="nn">qutip.logging_utils</span> <span class="k">as</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span>
+<span class="c1"># QuTiP control modules</span>
+<span class="kn">import</span> <span class="nn">qutip.control.optimresult</span> <span class="k">as</span> <span class="nn">optimresult</span>
+<span class="kn">import</span> <span class="nn">qutip.control.termcond</span> <span class="k">as</span> <span class="nn">termcond</span>
+<span class="kn">import</span> <span class="nn">qutip.control.errors</span> <span class="k">as</span> <span class="nn">errors</span>
+<span class="kn">import</span> <span class="nn">qutip.control.dynamics</span> <span class="k">as</span> <span class="nn">dynamics</span>
+<span class="kn">import</span> <span class="nn">qutip.control.pulsegen</span> <span class="k">as</span> <span class="nn">pulsegen</span>
+<span class="kn">import</span> <span class="nn">qutip.control.dump</span> <span class="k">as</span> <span class="nn">qtrldump</span>
+
+<span class="k">def</span> <span class="nf">_is_string</span><span class="p">(</span><span class="n">var</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="Optimizer"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.Optimizer">[docs]</a><span class="k">class</span> <span class="nc">Optimizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for all control pulse optimisers. This class should not be</span>
+<span class="sd">    instantiated, use its subclasses</span>
+<span class="sd">    This class implements the fidelity, gradient and interation callback</span>
+<span class="sd">    functions.</span>
+<span class="sd">    All subclass objects must be initialised with a</span>
+<span class="sd">        </span>
+<span class="sd">        OptimConfig instance - various configuration options</span>
+<span class="sd">        Dynamics instance - describes the dynamics of the (quantum) system</span>
+<span class="sd">                            to be control optimised</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    log_level : integer</span>
+<span class="sd">        level of messaging output from the logger.</span>
+<span class="sd">        Options are attributes of qutip.logging_utils,</span>
+<span class="sd">        in decreasing levels of messaging, are:</span>
+<span class="sd">        DEBUG_INTENSE, DEBUG_VERBOSE, DEBUG, INFO, WARN, ERROR, CRITICAL</span>
+<span class="sd">        Anything WARN or above is effectively &#39;quiet&#39; execution,</span>
+<span class="sd">        assuming everything runs as expected.</span>
+<span class="sd">        The default NOTSET implies that the level will be taken from</span>
+<span class="sd">        the QuTiP settings file, which by default is WARN</span>
+
+<span class="sd">    params:  Dictionary</span>
+<span class="sd">        The key value pairs are the attribute name and value</span>
+<span class="sd">        Note: attributes are created if they do not exist already,</span>
+<span class="sd">        and are overwritten if they do.</span>
+
+<span class="sd">    alg : string</span>
+<span class="sd">        Algorithm to use in pulse optimisation.</span>
+<span class="sd">        Options are:</span>
+<span class="sd">            &#39;GRAPE&#39; (default) - GRadient Ascent Pulse Engineering</span>
+<span class="sd">            &#39;CRAB&#39; - Chopped RAndom Basis</span>
+
+<span class="sd">    alg_params : Dictionary</span>
+<span class="sd">        options that are specific to the pulse optim algorithm</span>
+<span class="sd">        that is GRAPE or CRAB</span>
+
+<span class="sd">    disp_conv_msg : bool</span>
+<span class="sd">        Set true to display a convergence message</span>
+<span class="sd">        (for scipy.optimize.minimize methods anyway)</span>
+
+<span class="sd">    optim_method : string</span>
+<span class="sd">        a scipy.optimize.minimize method that will be used to optimise</span>
+<span class="sd">        the pulse for minimum fidelity error</span>
+
+<span class="sd">    method_params : Dictionary</span>
+<span class="sd">        Options for the optim_method.</span>
+<span class="sd">        Note that where there is an equivalent attribute of this instance</span>
+<span class="sd">        or the termination_conditions (for example maxiter)</span>
+<span class="sd">        it will override an value in these options</span>
+
+<span class="sd">    approx_grad : bool</span>
+<span class="sd">        If set True then the method will approximate the gradient itself</span>
+<span class="sd">        (if it has requirement and facility for this)</span>
+<span class="sd">        This will mean that the fid_err_grad_wrapper will not get called</span>
+<span class="sd">        Note it should be left False when using the Dynamics</span>
+<span class="sd">        to calculate approximate gradients</span>
+<span class="sd">        Note it is set True automatically when the alg is CRAB</span>
+
+<span class="sd">    amp_lbound : float or list of floats</span>
+<span class="sd">        lower boundaries for the control amplitudes</span>
+<span class="sd">        Can be a scalar value applied to all controls</span>
+<span class="sd">        or a list of bounds for each control</span>
+
+<span class="sd">    amp_ubound : float or list of floats</span>
+<span class="sd">        upper boundaries for the control amplitudes</span>
+<span class="sd">        Can be a scalar value applied to all controls</span>
+<span class="sd">        or a list of bounds for each control</span>
+
+<span class="sd">    bounds : List of floats</span>
+<span class="sd">        Bounds for the parameters.</span>
+<span class="sd">        If not set before the run_optimization call then the list</span>
+<span class="sd">        is built automatically based on the amp_lbound and amp_ubound</span>
+<span class="sd">        attributes.</span>
+<span class="sd">        Setting this attribute directly allows specific bounds to be set</span>
+<span class="sd">        for individual parameters.</span>
+<span class="sd">        Note: Only some methods use bounds</span>
+
+<span class="sd">    dynamics : Dynamics (subclass instance)</span>
+<span class="sd">        describes the dynamics of the (quantum) system to be control optimised</span>
+<span class="sd">        (see Dynamics classes for details)</span>
+
+<span class="sd">    config : OptimConfig instance</span>
+<span class="sd">        various configuration options</span>
+<span class="sd">        (see OptimConfig for details)</span>
+
+<span class="sd">    termination_conditions : TerminationCondition instance</span>
+<span class="sd">        attributes determine when the optimisation will end</span>
+
+<span class="sd">    pulse_generator : PulseGen (subclass instance)</span>
+<span class="sd">        (can be) used to create initial pulses</span>
+<span class="sd">        not used by the class, but set by pulseoptim.create_pulse_optimizer</span>
+
+<span class="sd">    stats : Stats</span>
+<span class="sd">        attributes of which give performance stats for the optimisation</span>
+<span class="sd">        set to None to reduce overhead of calculating stats.</span>
+<span class="sd">        Note it is (usually) shared with the Dynamics instance</span>
+
+<span class="sd">    dump : :class:`dump.OptimDump`</span>
+<span class="sd">        Container for data dumped during the optimisation.</span>
+<span class="sd">        Can be set by specifying the dumping level or set directly.</span>
+<span class="sd">        Note this is mainly intended for user and a development debugging</span>
+<span class="sd">        but could be used for status information during a long optimisation.</span>
+
+<span class="sd">    dumping : string</span>
+<span class="sd">        level of data dumping: NONE, SUMMARY, FULL or CUSTOM</span>
+<span class="sd">        See property docstring for details</span>
+
+<span class="sd">    dump_to_file : bool</span>
+<span class="sd">        If set True then data will be dumped to file during the optimisation</span>
+<span class="sd">        dumping will be set to SUMMARY during init_optim</span>
+<span class="sd">        if dump_to_file is True and dumping not set.</span>
+<span class="sd">        Default is False</span>
+
+<span class="sd">    dump_dir : string</span>
+<span class="sd">        Basically a link to dump.dump_dir. Exists so that it can be set through</span>
+<span class="sd">        optim_params.</span>
+<span class="sd">        If dump is None then will return None or will set dumping to SUMMARY</span>
+<span class="sd">        when setting a path</span>
+
+<span class="sd">    iter_summary : :class:`OptimIterSummary`</span>
+<span class="sd">        Summary of the most recent iteration.</span>
+<span class="sd">        Note this is only set if dummping is on</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">dyn</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span> <span class="o">=</span> <span class="n">dyn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="n">dyn</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">log_level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_text</span> <span class="o">=</span> <span class="s1">&#39;OPTIM&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pulse_generator</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">disp_conv_msg</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iteration_steps</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">record_iteration_steps</span><span class="o">=</span><span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alg</span> <span class="o">=</span> <span class="s1">&#39;GRAPE&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alg_params</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;l_bfgs_b&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method_params</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">approx_grad</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amp_lbound</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amp_ubound</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_fid_func_calls</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_grad_func_calls</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wall_time_optim_start</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dump_to_file</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dump</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># AJGP 2015-04-21:</span>
+        <span class="c1"># These (copying from config) are here for backward compatibility</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;amp_lbound&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">amp_lbound</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">amp_lbound</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">amp_lbound</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;amp_ubound&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">amp_ubound</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">amp_ubound</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">amp_ubound</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_params</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">log_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span>
+
+    <span class="nd">@log_level</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">log_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lvl</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the log_level attribute and set the level of the logger</span>
+<span class="sd">        that is call logger.setLevel(lvl)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">lvl</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Optimizer.apply_params"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.Optimizer.apply_params">[docs]</a>    <span class="k">def</span> <span class="nf">apply_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set object attributes based on the dictionary (if any) passed in the</span>
+<span class="sd">        instantiation, or passed as a parameter</span>
+<span class="sd">        This is called during the instantiation automatically.</span>
+<span class="sd">        The key value pairs are the attribute name and value</span>
+<span class="sd">        Note: attributes are created if they do not exist already,</span>
+<span class="sd">        and are overwritten if they do.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dumping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The level of data dumping that will occur during the optimisation</span>
+<span class="sd">         - NONE : No processing data dumped (Default)</span>
+<span class="sd">         - SUMMARY : A summary at each iteration will be recorded</span>
+<span class="sd">         - FULL : All logs will be generated and dumped</span>
+<span class="sd">         - CUSTOM : Some customised level of dumping</span>
+<span class="sd">        When first set to CUSTOM this is equivalent to SUMMARY. It is then up</span>
+<span class="sd">        to the user to specify which logs are dumped</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lvl</span> <span class="o">=</span> <span class="s1">&#39;NONE&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lvl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">level</span>
+
+        <span class="k">return</span> <span class="n">lvl</span>
+
+    <span class="nd">@dumping</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">dumping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dump</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_string</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Value must be string value&quot;</span><span class="p">)</span>
+            <span class="n">lvl</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">lvl</span> <span class="o">==</span> <span class="s1">&#39;NONE&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dump</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="p">,</span> <span class="n">qtrldump</span><span class="o">.</span><span class="n">OptimDump</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dump</span> <span class="o">=</span> <span class="n">qtrldump</span><span class="o">.</span><span class="n">OptimDump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">lvl</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">lvl</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dump_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">dump_dir</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@dump_dir</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">dump_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dumping</span> <span class="o">=</span> <span class="s1">&#39;SUMMARY&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">dump_dir</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">_create_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        create the result object</span>
+<span class="sd">        and set the initial_amps attribute as the current amplitudes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">optimresult</span><span class="o">.</span><span class="n">OptimResult</span><span class="p">()</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">initial_fid_err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">fid_computer</span><span class="o">.</span><span class="n">get_fid_err</span><span class="p">()</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">initial_amps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">ctrl_amps</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">evo_full_initial</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">full_evo</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+<div class="viewcode-block" id="Optimizer.init_optim"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.Optimizer.init_optim">[docs]</a>    <span class="k">def</span> <span class="nf">init_optim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_conds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check optimiser attribute status and passed parameters before</span>
+<span class="sd">        running the optimisation.</span>
+<span class="sd">        This is called by run_optimization, but could called independently</span>
+<span class="sd">        to check the configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">term_conds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span> <span class="o">=</span> <span class="n">term_conds</span>
+        <span class="n">term_conds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term_conds</span><span class="p">,</span> <span class="n">termcond</span><span class="o">.</span><span class="n">TerminationConditions</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">UsageError</span><span class="p">(</span><span class="s2">&quot;No termination conditions for the &quot;</span>
+                                    <span class="s2">&quot;optimisation function&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="p">,</span> <span class="n">dynamics</span><span class="o">.</span><span class="n">Dynamics</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">UsageError</span><span class="p">(</span><span class="s2">&quot;No dynamics object attribute set&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">check_ctrls_initialized</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_method_params</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">term_conds</span><span class="o">.</span><span class="n">fid_err_targ</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">term_conds</span><span class="o">.</span><span class="n">fid_goal</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">UsageError</span><span class="p">(</span><span class="s2">&quot;Either the goal or the fidelity &quot;</span>
+                                    <span class="s2">&quot;error tolerance must be set&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">term_conds</span><span class="o">.</span><span class="n">fid_err_targ</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">term_conds</span><span class="o">.</span><span class="n">fid_err_targ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">term_conds</span><span class="o">.</span><span class="n">fid_goal</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">term_conds</span><span class="o">.</span><span class="n">fid_goal</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">term_conds</span><span class="o">.</span><span class="n">fid_goal</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">term_conds</span><span class="o">.</span><span class="n">fid_err_targ</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alg</span> <span class="o">==</span> <span class="s1">&#39;CRAB&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">approx_grad</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump_to_file</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dumping</span> <span class="o">=</span> <span class="s1">&#39;SUMMARY&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">write_to_file</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">create_dump_dir</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Optimiser dump will be written to:</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">dump_dir</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span> <span class="o">=</span> <span class="n">OptimIterSummary</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_fid_func_calls</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_grad_func_calls</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iteration_steps</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="nf">_build_method_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the method_options dictionary for the scipy.optimize.minimize</span>
+<span class="sd">        function based on the attributes of this object and the</span>
+<span class="sd">        termination_conditions</span>
+<span class="sd">        It assumes that apply_method_params has already been run and</span>
+<span class="sd">        hence the method_options attribute may already contain items.</span>
+<span class="sd">        These values will NOT be overridden</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">mo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span>
+
+        <span class="k">if</span> <span class="s1">&#39;max_metric_corr&#39;</span> <span class="ow">in</span> <span class="n">mo</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;maxcor&#39;</span> <span class="ow">in</span> <span class="n">mo</span><span class="p">:</span>
+            <span class="n">mo</span><span class="p">[</span><span class="s1">&#39;maxcor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mo</span><span class="p">[</span><span class="s1">&#39;max_metric_corr&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;max_metric_corr&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;maxcor&#39;</span> <span class="ow">in</span> <span class="n">mo</span><span class="p">:</span>
+            <span class="n">mo</span><span class="p">[</span><span class="s1">&#39;maxcor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_metric_corr</span>
+        <span class="k">if</span> <span class="s1">&#39;accuracy_factor&#39;</span> <span class="ow">in</span> <span class="n">mo</span>  <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;ftol&#39;</span> <span class="ow">in</span> <span class="n">mo</span><span class="p">:</span>
+            <span class="n">mo</span><span class="p">[</span><span class="s1">&#39;ftol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mo</span><span class="p">[</span><span class="s1">&#39;accuracy_factor&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tc</span><span class="p">,</span> <span class="s1">&#39;accuracy_factor&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;ftol&#39;</span> <span class="ow">in</span> <span class="n">mo</span><span class="p">:</span>
+            <span class="n">mo</span><span class="p">[</span><span class="s1">&#39;ftol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">accuracy_factor</span>
+        <span class="k">if</span> <span class="n">tc</span><span class="o">.</span><span class="n">max_iterations</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;maxiter&#39;</span> <span class="ow">in</span> <span class="n">mo</span><span class="p">:</span>
+            <span class="n">mo</span><span class="p">[</span><span class="s1">&#39;maxiter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">max_iterations</span>
+        <span class="k">if</span> <span class="n">tc</span><span class="o">.</span><span class="n">max_fid_func_calls</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;maxfev&#39;</span> <span class="ow">in</span> <span class="n">mo</span><span class="p">:</span>
+            <span class="n">mo</span><span class="p">[</span><span class="s1">&#39;maxfev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">max_fid_func_calls</span>
+        <span class="k">if</span> <span class="n">tc</span><span class="o">.</span><span class="n">min_gradient_norm</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;gtol&#39;</span> <span class="ow">in</span> <span class="n">mo</span><span class="p">:</span>
+            <span class="n">mo</span><span class="p">[</span><span class="s1">&#39;gtol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">min_gradient_norm</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;disp&#39;</span> <span class="ow">in</span> <span class="n">mo</span><span class="p">:</span>
+            <span class="n">mo</span><span class="p">[</span><span class="s1">&#39;disp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">disp_conv_msg</span>
+
+        <span class="k">return</span> <span class="n">mo</span>
+
+<div class="viewcode-block" id="Optimizer.apply_method_params"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.Optimizer.apply_method_params">[docs]</a>    <span class="k">def</span> <span class="nf">apply_method_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loops through all the method_params</span>
+<span class="sd">        (either passed here or the method_params attribute)</span>
+<span class="sd">        If the name matches an attribute of this object or the</span>
+<span class="sd">        termination conditions object, then the value of this attribute</span>
+<span class="sd">        is set. Otherwise it is assumed to a method_option for the</span>
+<span class="sd">        scipy.optimize.minimize function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_params</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">method_params</span> <span class="o">=</span> <span class="n">params</span>
+            <span class="n">unused_params</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">unused_params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unused_params</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method_options</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span> <span class="o">=</span> <span class="n">unused_params</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">unused_params</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_build_bounds_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span>
+        <span class="n">n_ctrls</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">num_ctrls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dyn</span><span class="o">.</span><span class="n">num_tslots</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_ctrls</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amp_lbound</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp_lbound</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp_lbound</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amp_ubound</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp_ubound</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp_ubound</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">lb</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">lb</span><span class="p">):</span>
+                    <span class="n">lb</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">ub</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">ub</span><span class="p">):</span>
+                    <span class="n">ub</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lb</span><span class="p">,</span> <span class="n">ub</span><span class="p">))</span>
+
+<div class="viewcode-block" id="Optimizer.run_optimization"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.Optimizer.run_optimization">[docs]</a>    <span class="k">def</span> <span class="nf">run_optimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_conds</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This default function optimisation method is a wrapper to the</span>
+<span class="sd">        scipy.optimize.minimize function.</span>
+
+<span class="sd">        It will attempt to minimise the fidelity error with respect to some</span>
+<span class="sd">        parameters, which are determined by _get_optim_var_vals (see below)</span>
+
+<span class="sd">        The optimisation end when one of the passed termination conditions</span>
+<span class="sd">        has been met, e.g. target achieved, wall time, or</span>
+<span class="sd">        function call or iteration count exceeded. Note these</span>
+<span class="sd">        conditions include gradient minimum met (local minima) for</span>
+<span class="sd">        methods that use a gradient.</span>
+
+<span class="sd">        The function minimisation method is taken from the optim_method</span>
+<span class="sd">        attribute. Note that not all of these methods have been tested.</span>
+<span class="sd">        Note that some of these use a gradient and some do not.</span>
+<span class="sd">        See the scipy documentation for details. Options specific to the</span>
+<span class="sd">        method can be passed setting the method_params attribute.</span>
+
+<span class="sd">        If the parameter term_conds=None, then the termination_conditions</span>
+<span class="sd">        attribute must already be set. It will be overwritten if the</span>
+<span class="sd">        parameter is not None</span>
+
+<span class="sd">        The result is returned in an OptimResult object, which includes</span>
+<span class="sd">        the final fidelity, time evolution, reason for termination etc</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_optim</span><span class="p">(</span><span class="n">term_conds</span><span class="p">)</span>
+        <span class="n">term_conds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optim_var_vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_optim_var_vals</span><span class="p">()</span>
+        <span class="n">st_time</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wall_time_optimize_start</span> <span class="o">=</span> <span class="n">st_time</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wall_time_optim_start</span> <span class="o">=</span> <span class="n">st_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wall_time_optim_end</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_build_bounds_list</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_method_options</span><span class="p">()</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_result</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">approx_grad</span><span class="p">:</span>
+            <span class="n">jac</span><span class="o">=</span><span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">jac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fid_err_grad_wrapper</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Optimising pulse(s) using </span><span class="si">{}</span><span class="s2"> with &quot;</span>
+                        <span class="s2">&quot;minimise &#39;</span><span class="si">{}</span><span class="s2">&#39; method&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">approx_grad</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot; (approx grad)&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">opt_res</span> <span class="o">=</span> <span class="n">spopt</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fid_err_func_wrapper</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">optim_var_vals</span><span class="p">,</span>
+                <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+                <span class="n">jac</span><span class="o">=</span><span class="n">jac</span><span class="p">,</span>
+                <span class="n">bounds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="p">,</span>
+                <span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">method_options</span><span class="p">,</span>
+                <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_step_callback_func</span><span class="p">)</span>
+
+            <span class="n">amps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ctrl_amps</span><span class="p">(</span><span class="n">opt_res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">dyn</span><span class="o">.</span><span class="n">update_ctrl_amps</span><span class="p">(</span><span class="n">amps</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">termination_reason</span> <span class="o">=</span> <span class="n">opt_res</span><span class="o">.</span><span class="n">message</span>
+            <span class="c1"># Note the iterations are counted in this object as well</span>
+            <span class="c1"># so there are compared here for interest sake only</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">!=</span> <span class="n">opt_res</span><span class="o">.</span><span class="n">nit</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The number of iterations counted </span><span class="si">{}</span><span class="s2"> &quot;</span>
+                            <span class="s2">&quot; does not match the number reported </span><span class="si">{}</span><span class="s2"> &quot;</span>
+                            <span class="s2">&quot;by </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iter</span><span class="p">,</span> <span class="n">opt_res</span><span class="o">.</span><span class="n">nit</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">))</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">=</span> <span class="n">opt_res</span><span class="o">.</span><span class="n">nit</span>
+
+        <span class="k">except</span> <span class="n">errors</span><span class="o">.</span><span class="n">OptimizationTerminate</span> <span class="k">as</span> <span class="n">except_term</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_interpret_term_exception</span><span class="p">(</span><span class="n">except_term</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_common_result_attribs</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">st_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_optim_var_vals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate the 1d array that holds the current variable values</span>
+<span class="sd">        of the function to be optimised</span>
+<span class="sd">        By default (as used in GRAPE) these are the control amplitudes</span>
+<span class="sd">        in each timeslot</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">ctrl_amps</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_get_ctrl_amps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optim_var_vals</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the control amplitudes from the current variable values</span>
+<span class="sd">        of the function to be optimised.</span>
+<span class="sd">        that is the 1d array that is passed from the optimisation method</span>
+<span class="sd">        Note for GRAPE these are the function optimiser parameters</span>
+<span class="sd">        (and this is the default)</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float array[dynamics.num_tslots, dynamics.num_ctrls]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">amps</span> <span class="o">=</span> <span class="n">optim_var_vals</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">ctrl_amps</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">amps</span>
+
+<div class="viewcode-block" id="Optimizer.fid_err_func_wrapper"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.Optimizer.fid_err_func_wrapper">[docs]</a>    <span class="k">def</span> <span class="nf">fid_err_func_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the fidelity error achieved using the ctrl amplitudes passed</span>
+<span class="sd">        in as the first argument.</span>
+
+<span class="sd">        This is called by generic optimisation algorithm as the</span>
+<span class="sd">        func to the minimised. The argument is the current</span>
+<span class="sd">        variable values, i.e. control amplitudes, passed as</span>
+<span class="sd">        a flat array. Hence these are reshaped as [nTimeslots, n_ctrls]</span>
+<span class="sd">        and then used to update the stored ctrl values (if they have changed)</span>
+
+<span class="sd">        The error is checked against the target, and the optimisation is</span>
+<span class="sd">        terminated if the target has been achieved.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_fid_func_calls</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># *** update stats ***</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">num_fidelity_func_calls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_fid_func_calls</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;fidelity error call </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">num_fidelity_func_calls</span><span class="p">))</span>
+
+        <span class="n">amps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ctrl_amps</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">update_ctrl_amps</span><span class="p">(</span><span class="n">amps</span><span class="p">)</span>
+
+        <span class="n">tc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">fid_computer</span><span class="o">.</span><span class="n">get_fid_err</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span><span class="o">.</span><span class="n">fid_func_call_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_fid_func_calls</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span><span class="o">.</span><span class="n">fid_err</span> <span class="o">=</span> <span class="n">err</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">dump_fid_err</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">update_fid_err_log</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">err</span> <span class="o">&lt;=</span> <span class="n">tc</span><span class="o">.</span><span class="n">fid_err_targ</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">GoalAchievedTerminate</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_fid_func_calls</span> <span class="o">&gt;</span> <span class="n">tc</span><span class="o">.</span><span class="n">max_fid_func_calls</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">MaxFidFuncCallTerminate</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">err</span></div>
+
+<div class="viewcode-block" id="Optimizer.fid_err_grad_wrapper"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.Optimizer.fid_err_grad_wrapper">[docs]</a>    <span class="k">def</span> <span class="nf">fid_err_grad_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the gradient of the fidelity error with respect to all of the</span>
+<span class="sd">        variables, i.e. the ctrl amplidutes in each timeslot</span>
+
+<span class="sd">        This is called by generic optimisation algorithm as the gradients of</span>
+<span class="sd">        func to the minimised wrt the variables. The argument is the current</span>
+<span class="sd">        variable values, i.e. control amplitudes, passed as</span>
+<span class="sd">        a flat array. Hence these are reshaped as [nTimeslots, n_ctrls]</span>
+<span class="sd">        and then used to update the stored ctrl values (if they have changed)</span>
+
+<span class="sd">        Although the optimisation algorithms have a check within them for</span>
+<span class="sd">        function convergence, i.e. local minima, the sum of the squares</span>
+<span class="sd">        of the normalised gradient is checked explicitly, and the</span>
+<span class="sd">        optimisation is terminated if this is below the min_gradient_norm</span>
+<span class="sd">        condition</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># *** update stats ***</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_grad_func_calls</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">num_grad_func_calls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_grad_func_calls</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;gradient call </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">num_grad_func_calls</span><span class="p">))</span>
+        <span class="n">amps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ctrl_amps</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">update_ctrl_amps</span><span class="p">(</span><span class="n">amps</span><span class="p">)</span>
+        <span class="n">fid_comp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">fid_computer</span>
+        <span class="c1"># gradient_norm_func is a pointer to the function set in the config</span>
+        <span class="c1"># that returns the normalised gradients</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">fid_comp</span><span class="o">.</span><span class="n">get_fid_err_gradient</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span><span class="o">.</span><span class="n">grad_func_call_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_grad_func_calls</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span><span class="o">.</span><span class="n">grad_norm</span> <span class="o">=</span> <span class="n">fid_comp</span><span class="o">.</span><span class="n">grad_norm</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">dump_grad_norm</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">update_grad_norm_log</span><span class="p">(</span><span class="n">fid_comp</span><span class="o">.</span><span class="n">grad_norm</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">dump_grad</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">update_grad_log</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+
+        <span class="n">tc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span>
+        <span class="k">if</span> <span class="n">fid_comp</span><span class="o">.</span><span class="n">grad_norm</span> <span class="o">&lt;</span> <span class="n">tc</span><span class="o">.</span><span class="n">min_gradient_norm</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">GradMinReachedTerminate</span><span class="p">(</span><span class="n">fid_comp</span><span class="o">.</span><span class="n">grad_norm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grad</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Optimizer.iter_step_callback_func"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.Optimizer.iter_step_callback_func">[docs]</a>    <span class="k">def</span> <span class="nf">iter_step_callback_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check the elapsed wall time for the optimisation run so far.</span>
+<span class="sd">        Terminate if this has exceeded the maximum allowed time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Iteration callback </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iter</span><span class="p">))</span>
+
+        <span class="n">wall_time</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">wall_time_optimize_start</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_iter</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iter_summary</span><span class="o">.</span><span class="n">wall_time</span> <span class="o">=</span> <span class="n">wall_time</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">dump_summary</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="o">.</span><span class="n">add_iter_summary</span><span class="p">()</span>
+
+        <span class="n">tc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span>
+
+        <span class="k">if</span> <span class="n">wall_time</span> <span class="o">&gt;</span> <span class="n">tc</span><span class="o">.</span><span class="n">max_wall_time</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">MaxWallTimeTerminate</span><span class="p">()</span>
+
+        <span class="c1"># *** update stats ***</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_iter</span></div>
+
+    <span class="k">def</span> <span class="nf">_interpret_term_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">except_term</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the result object based on the exception that occurred</span>
+<span class="sd">        during the optimisation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">termination_reason</span> <span class="o">=</span> <span class="n">except_term</span><span class="o">.</span><span class="n">reason</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">except_term</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">GoalAchievedTerminate</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">goal_achieved</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">except_term</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">MaxWallTimeTerminate</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">wall_time_limit_exceeded</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">except_term</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">GradMinReachedTerminate</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">grad_norm_min_reached</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">except_term</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">MaxFidFuncCallTerminate</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">max_fid_func_exceeded</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_add_common_result_attribs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">st_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the result object attributes which are common to all</span>
+<span class="sd">        optimisers and outcomes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_iter</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">num_fid_func_calls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_fid_func_calls</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">wall_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">st_time</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">fid_err</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">fid_computer</span><span class="o">.</span><span class="n">get_fid_err</span><span class="p">()</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">grad_norm_final</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">fid_computer</span><span class="o">.</span><span class="n">grad_norm</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">final_amps</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">ctrl_amps</span>
+        <span class="n">final_evo</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">full_evo</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">final_evo</span><span class="p">,</span> <span class="n">Qobj</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">evo_full_final</span> <span class="o">=</span> <span class="n">final_evo</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">evo_full_final</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">final_evo</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">dyn</span><span class="o">.</span><span class="n">sys_dims</span><span class="p">)</span>
+        <span class="c1"># *** update stats ***</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wall_time_optim_end</span> <span class="o">=</span> <span class="n">end_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">stats</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OptimizerBFGS"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.OptimizerBFGS">[docs]</a><span class="k">class</span> <span class="nc">OptimizerBFGS</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements the run_optimization method using the BFGS algorithm</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Optimizer</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_text</span> <span class="o">=</span> <span class="s1">&#39;BFGS&#39;</span>
+
+<div class="viewcode-block" id="OptimizerBFGS.run_optimization"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.OptimizerBFGS.run_optimization">[docs]</a>    <span class="k">def</span> <span class="nf">run_optimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_conds</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimise the control pulse amplitudes to minimise the fidelity error</span>
+<span class="sd">        using the BFGS (Broyden–Fletcher–Goldfarb–Shanno) algorithm</span>
+<span class="sd">        The optimisation end when one of the passed termination conditions</span>
+<span class="sd">        has been met, e.g. target achieved, gradient minimum met</span>
+<span class="sd">        (local minima), wall time / iteration count exceeded.</span>
+
+<span class="sd">        Essentially this is wrapper to the:</span>
+<span class="sd">        scipy.optimize.fmin_bfgs</span>
+<span class="sd">        function</span>
+
+<span class="sd">        If the parameter term_conds=None, then the termination_conditions</span>
+<span class="sd">        attribute must already be set. It will be overwritten if the</span>
+<span class="sd">        parameter is not None</span>
+
+<span class="sd">        The result is returned in an OptimResult object, which includes</span>
+<span class="sd">        the final fidelity, time evolution, reason for termination etc</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_optim</span><span class="p">(</span><span class="n">term_conds</span><span class="p">)</span>
+        <span class="n">term_conds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optim_var_vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_optim_var_vals</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_method_options</span><span class="p">()</span>
+
+        <span class="n">st_time</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wall_time_optimize_start</span> <span class="o">=</span> <span class="n">st_time</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wall_time_optim_start</span> <span class="o">=</span> <span class="n">st_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wall_time_optim_end</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">approx_grad</span><span class="p">:</span>
+            <span class="n">fprime</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fprime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid_err_grad_wrapper</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Optimising pulse(s) using </span><span class="si">{}</span><span class="s2"> with &quot;</span>
+                        <span class="s2">&quot;&#39;fmin_bfgs&#39; method&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">approx_grad</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot; (approx grad)&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_result</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">optim_var_vals</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">grad</span><span class="p">,</span> <span class="n">invHess</span><span class="p">,</span> <span class="n">nFCalls</span><span class="p">,</span> <span class="n">nGCalls</span><span class="p">,</span> <span class="n">warn</span> <span class="o">=</span> \
+                <span class="n">spopt</span><span class="o">.</span><span class="n">fmin_bfgs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fid_err_func_wrapper</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">optim_var_vals</span><span class="p">,</span>
+                                <span class="n">fprime</span><span class="o">=</span><span class="n">fprime</span><span class="p">,</span>
+<span class="c1">#                                approx_grad=self.approx_grad,</span>
+                                <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_step_callback_func</span><span class="p">,</span>
+                                <span class="n">gtol</span><span class="o">=</span><span class="n">term_conds</span><span class="o">.</span><span class="n">min_gradient_norm</span><span class="p">,</span>
+                                <span class="n">maxiter</span><span class="o">=</span><span class="n">term_conds</span><span class="o">.</span><span class="n">max_iterations</span><span class="p">,</span>
+                                <span class="n">full_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">disp</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">amps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ctrl_amps</span><span class="p">(</span><span class="n">optim_var_vals</span><span class="p">)</span>
+            <span class="n">dyn</span><span class="o">.</span><span class="n">update_ctrl_amps</span><span class="p">(</span><span class="n">amps</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">warn</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">max_iter_exceeded</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">termination_reason</span> <span class="o">=</span> <span class="s2">&quot;Iteration count limit reached&quot;</span>
+            <span class="k">elif</span> <span class="n">warn</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">grad_norm_min_reached</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">termination_reason</span> <span class="o">=</span> <span class="s2">&quot;Gradient normal minimum reached&quot;</span>
+
+        <span class="k">except</span> <span class="n">errors</span><span class="o">.</span><span class="n">OptimizationTerminate</span> <span class="k">as</span> <span class="n">except_term</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_interpret_term_exception</span><span class="p">(</span><span class="n">except_term</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_common_result_attribs</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">st_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+
+<div class="viewcode-block" id="OptimizerLBFGSB"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.OptimizerLBFGSB">[docs]</a><span class="k">class</span> <span class="nc">OptimizerLBFGSB</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements the run_optimization method using the L-BFGS-B algorithm</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    max_metric_corr : integer</span>
+<span class="sd">        The maximum number of variable metric corrections used to define</span>
+<span class="sd">        the limited memory matrix. That is the number of previous</span>
+<span class="sd">        gradient values that are used to approximate the Hessian</span>
+<span class="sd">        see the scipy.optimize.fmin_l_bfgs_b documentation for description</span>
+<span class="sd">        of m argument</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Optimizer</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_text</span> <span class="o">=</span> <span class="s1">&#39;LBFGSB&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_metric_corr</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg_level</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="OptimizerLBFGSB.init_optim"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.OptimizerLBFGSB.init_optim">[docs]</a>    <span class="k">def</span> <span class="nf">init_optim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_conds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check optimiser attribute status and passed parameters before</span>
+<span class="sd">        running the optimisation.</span>
+<span class="sd">        This is called by run_optimization, but could called independently</span>
+<span class="sd">        to check the configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">term_conds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">term_conds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span>
+
+        <span class="c1"># AJGP 2015-04-21:</span>
+        <span class="c1"># These (copying from config) are here for backward compatibility</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;max_metric_corr&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_metric_corr</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">max_metric_corr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_metric_corr</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;accuracy_factor&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">accuracy_factor</span><span class="p">:</span>
+                <span class="n">term_conds</span><span class="o">.</span><span class="n">accuracy_factor</span> <span class="o">=</span> \
+                            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">accuracy_factor</span>
+
+        <span class="n">Optimizer</span><span class="o">.</span><span class="n">init_optim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_conds</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg_level</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">&lt;</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">msg_level</span>  <span class="o">=</span> <span class="mi">2</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">msg_level</span>  <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">msg_level</span>  <span class="o">=</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="OptimizerLBFGSB.run_optimization"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.OptimizerLBFGSB.run_optimization">[docs]</a>    <span class="k">def</span> <span class="nf">run_optimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_conds</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimise the control pulse amplitudes to minimise the fidelity error</span>
+<span class="sd">        using the L-BFGS-B algorithm, which is the constrained</span>
+<span class="sd">        (bounded amplitude values), limited memory, version of the</span>
+<span class="sd">        Broyden–Fletcher–Goldfarb–Shanno algorithm.</span>
+
+<span class="sd">        The optimisation end when one of the passed termination conditions</span>
+<span class="sd">        has been met, e.g. target achieved, gradient minimum met</span>
+<span class="sd">        (local minima), wall time / iteration count exceeded.</span>
+
+<span class="sd">        Essentially this is wrapper to the:</span>
+<span class="sd">        scipy.optimize.fmin_l_bfgs_b function</span>
+<span class="sd">        This in turn is a warpper for well established implementation of</span>
+<span class="sd">        the L-BFGS-B algorithm written in Fortran, which is therefore</span>
+<span class="sd">        very fast. See SciPy documentation for credit and details on</span>
+<span class="sd">        this function.</span>
+
+<span class="sd">        If the parameter term_conds=None, then the termination_conditions</span>
+<span class="sd">        attribute must already be set. It will be overwritten if the</span>
+<span class="sd">        parameter is not None</span>
+
+<span class="sd">        The result is returned in an OptimResult object, which includes</span>
+<span class="sd">        the final fidelity, time evolution, reason for termination etc</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_optim</span><span class="p">(</span><span class="n">term_conds</span><span class="p">)</span>
+        <span class="n">term_conds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optim_var_vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_optim_var_vals</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_method_options</span><span class="p">()</span>
+
+        <span class="n">st_time</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wall_time_optimize_start</span> <span class="o">=</span> <span class="n">st_time</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wall_time_optim_start</span> <span class="o">=</span> <span class="n">st_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wall_time_optim_end</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_bounds_list</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_result</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">approx_grad</span><span class="p">:</span>
+            <span class="n">fprime</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fprime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid_err_grad_wrapper</span>
+
+
+        <span class="k">if</span> <span class="s1">&#39;accuracy_factor&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span><span class="p">:</span>
+            <span class="n">factr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span><span class="p">[</span><span class="s1">&#39;accuracy_factor&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="s1">&#39;ftol&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span><span class="p">:</span>
+            <span class="n">factr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span><span class="p">[</span><span class="s1">&#39;ftol&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">term_conds</span><span class="p">,</span> <span class="s1">&#39;accuracy_factor&#39;</span><span class="p">):</span>
+            <span class="n">factr</span> <span class="o">=</span> <span class="n">term_conds</span><span class="o">.</span><span class="n">accuracy_factor</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">factr</span> <span class="o">=</span> <span class="mf">1e7</span>
+
+        <span class="k">if</span> <span class="s1">&#39;max_metric_corr&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span><span class="p">[</span><span class="s1">&#39;max_metric_corr&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="s1">&#39;maxcor&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_options</span><span class="p">[</span><span class="s1">&#39;maxcor&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;max_metric_corr&#39;</span><span class="p">):</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_metric_corr</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="mi">10</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Optimising pulse(s) using </span><span class="si">{}</span><span class="s2"> with &quot;</span>
+                        <span class="s2">&quot;&#39;fmin_l_bfgs_b&#39; method&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">approx_grad</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot; (approx grad)&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">optim_var_vals</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">res_dict</span> <span class="o">=</span> <span class="n">spopt</span><span class="o">.</span><span class="n">fmin_l_bfgs_b</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fid_err_func_wrapper</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">optim_var_vals</span><span class="p">,</span>
+                <span class="n">fprime</span><span class="o">=</span><span class="n">fprime</span><span class="p">,</span>
+                <span class="n">approx_grad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">approx_grad</span><span class="p">,</span>
+                <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_step_callback_func</span><span class="p">,</span>
+                <span class="n">bounds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">factr</span><span class="o">=</span><span class="n">factr</span><span class="p">,</span>
+                <span class="n">pgtol</span><span class="o">=</span><span class="n">term_conds</span><span class="o">.</span><span class="n">min_gradient_norm</span><span class="p">,</span>
+                <span class="n">disp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">msg_level</span><span class="p">,</span>
+                <span class="n">maxfun</span><span class="o">=</span><span class="n">term_conds</span><span class="o">.</span><span class="n">max_fid_func_calls</span><span class="p">,</span>
+                <span class="n">maxiter</span><span class="o">=</span><span class="n">term_conds</span><span class="o">.</span><span class="n">max_iterations</span><span class="p">)</span>
+
+            <span class="n">amps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ctrl_amps</span><span class="p">(</span><span class="n">optim_var_vals</span><span class="p">)</span>
+            <span class="n">dyn</span><span class="o">.</span><span class="n">update_ctrl_amps</span><span class="p">(</span><span class="n">amps</span><span class="p">)</span>
+            <span class="n">warn</span> <span class="o">=</span> <span class="n">res_dict</span><span class="p">[</span><span class="s1">&#39;warnflag&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">warn</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">grad_norm_min_reached</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">termination_reason</span> <span class="o">=</span> <span class="s2">&quot;function converged&quot;</span>
+            <span class="k">elif</span> <span class="n">warn</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">max_iter_exceeded</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">termination_reason</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Iteration or fidelity &quot;</span>
+                                             <span class="s2">&quot;function call limit reached&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">warn</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">termination_reason</span> <span class="o">=</span> <span class="n">res_dict</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span>
+
+            <span class="n">result</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">=</span> <span class="n">res_dict</span><span class="p">[</span><span class="s1">&#39;nit&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="n">errors</span><span class="o">.</span><span class="n">OptimizationTerminate</span> <span class="k">as</span> <span class="n">except_term</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_interpret_term_exception</span><span class="p">(</span><span class="n">except_term</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_common_result_attribs</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">st_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+<div class="viewcode-block" id="OptimizerCrab"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.OptimizerCrab">[docs]</a><span class="k">class</span> <span class="nc">OptimizerCrab</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Optimises the pulse using the CRAB algorithm [1].</span>
+<span class="sd">    It uses the scipy.optimize.minimize function with the method specified</span>
+<span class="sd">    by the optim_method attribute. See Optimizer.run_optimization for details</span>
+<span class="sd">    It minimises the fidelity error function with respect to the CRAB</span>
+<span class="sd">    basis function coefficients.</span>
+
+<span class="sd">    AJGP ToDo: Add citation here</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Optimizer</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_text</span> <span class="o">=</span> <span class="s1">&#39;CRAB&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_optim_vars</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="OptimizerCrab.init_optim"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.OptimizerCrab.init_optim">[docs]</a>    <span class="k">def</span> <span class="nf">init_optim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_conds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check optimiser attribute status and passed parameters before</span>
+<span class="sd">        running the optimisation.</span>
+<span class="sd">        This is called by run_optimization, but could called independently</span>
+<span class="sd">        to check the configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Optimizer</span><span class="o">.</span><span class="n">init_optim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_conds</span><span class="p">)</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_optim_vars</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">pulse_gen_valid</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># check the pulse generators match the ctrls</span>
+        <span class="c1"># (in terms of number)</span>
+        <span class="c1"># and count the number of parameters</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pulse_generator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pulse_gen_valid</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;pulse_generator attribute is None&quot;</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pulse_generator</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Iterable</span><span class="p">):</span>
+            <span class="n">pulse_gen_valid</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;pulse_generator is not iterable&quot;</span>
+
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pulse_generator</span><span class="p">)</span> <span class="o">!=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">num_ctrls</span><span class="p">:</span>
+            <span class="n">pulse_gen_valid</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">err_msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;the number of pulse generators </span><span class="si">{}</span><span class="s2"> does not equal &quot;</span>
+                        <span class="s2">&quot;the number of controls </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pulse_generator</span><span class="p">),</span> <span class="n">dyn</span><span class="o">.</span><span class="n">num_ctrls</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">pulse_gen_valid</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">p_gen</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pulse_generator</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p_gen</span><span class="p">,</span> <span class="n">pulsegen</span><span class="o">.</span><span class="n">PulseGenCrab</span><span class="p">):</span>
+                    <span class="n">pulse_gen_valid</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">err_msg</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="s2">&quot;pulse_generator contained object of type &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">p_gen</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+                    <span class="k">break</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">num_optim_vars</span> <span class="o">+=</span> <span class="n">p_gen</span><span class="o">.</span><span class="n">num_optim_vars</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pulse_gen_valid</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">UsageError</span><span class="p">(</span>
+                <span class="s2">&quot;The pulse_generator attribute must be set to a list of &quot;</span>
+                <span class="s2">&quot;PulseGenCrab - one for each control. Here &quot;</span> <span class="o">+</span> <span class="n">err_msg</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_build_bounds_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        No bounds necessary here, as the bounds for the CRAB parameters</span>
+<span class="sd">        do not have much physical meaning.</span>
+<span class="sd">        This needs to override the default method, otherwise the shape</span>
+<span class="sd">        will be wrong</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_get_optim_var_vals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate the 1d array that holds the current variable values</span>
+<span class="sd">        of the function to be optimised</span>
+<span class="sd">        For CRAB these are the basis coefficients</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray (1d) of float</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pvals</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">pgen</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pulse_generator</span><span class="p">:</span>
+            <span class="n">pvals</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">pgen</span><span class="o">.</span><span class="n">get_optim_var_vals</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pvals</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_ctrl_amps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optim_var_vals</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the control amplitudes from the current variable values</span>
+<span class="sd">        of the function to be optimised.</span>
+<span class="sd">        that is the 1d array that is passed from the optimisation method</span>
+<span class="sd">        For CRAB the amplitudes will need to calculated by expanding the</span>
+<span class="sd">        series</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float array[dynamics.num_tslots, dynamics.num_ctrls]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+            <span class="n">changed_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optim_var_vals</span> <span class="o">!=</span> <span class="n">optim_var_vals</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> out of </span><span class="si">{}</span><span class="s2"> optimisation parameters changed&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">changed_params</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="nb">len</span><span class="p">(</span><span class="n">optim_var_vals</span><span class="p">)))</span>
+
+        <span class="n">amps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">([</span><span class="n">dyn</span><span class="o">.</span><span class="n">num_tslots</span><span class="p">,</span> <span class="n">dyn</span><span class="o">.</span><span class="n">num_ctrls</span><span class="p">])</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">param_idx_st</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">p_gen</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pulse_generator</span><span class="p">:</span>
+            <span class="n">param_idx_end</span> <span class="o">=</span> <span class="n">param_idx_st</span> <span class="o">+</span> <span class="n">p_gen</span><span class="o">.</span><span class="n">num_optim_vars</span>
+            <span class="n">pg_pvals</span> <span class="o">=</span> <span class="n">optim_var_vals</span><span class="p">[</span><span class="n">param_idx_st</span><span class="p">:</span><span class="n">param_idx_end</span><span class="p">]</span>
+            <span class="n">p_gen</span><span class="o">.</span><span class="n">set_optim_var_vals</span><span class="p">(</span><span class="n">pg_pvals</span><span class="p">)</span>
+            <span class="n">amps</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_gen</span><span class="o">.</span><span class="n">gen_pulse</span><span class="p">()</span>
+            <span class="n">param_idx_st</span> <span class="o">=</span> <span class="n">param_idx_end</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1">#print(&quot;param_idx_end={}&quot;.format(param_idx_end))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optim_var_vals</span> <span class="o">=</span> <span class="n">optim_var_vals</span>
+        <span class="k">return</span> <span class="n">amps</span></div>
+
+<div class="viewcode-block" id="OptimizerCrabFmin"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.OptimizerCrabFmin">[docs]</a><span class="k">class</span> <span class="nc">OptimizerCrabFmin</span><span class="p">(</span><span class="n">OptimizerCrab</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Optimises the pulse using the CRAB algorithm [1, 2].</span>
+<span class="sd">    It uses the scipy.optimize.fmin function which is effectively a wrapper</span>
+<span class="sd">    for the Nelder-mead method.</span>
+<span class="sd">    It minimises the fidelity error function with respect to the CRAB</span>
+<span class="sd">    basis function coefficients.</span>
+<span class="sd">    This is the default Optimizer for CRAB.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    [1] P. Doria, T. Calarco &amp; S. Montangero. Phys. Rev. Lett. 106,</span>
+<span class="sd">        190501 (2011).</span>
+<span class="sd">    [2] T. Caneva, T. Calarco, &amp; S. Montangero. Phys. Rev. A 84, 022326 (2011).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">OptimizerCrab</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_text</span> <span class="o">=</span> <span class="s1">&#39;CRAB_FMIN&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xtol</span> <span class="o">=</span> <span class="mf">1e-4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ftol</span> <span class="o">=</span> <span class="mf">1e-4</span>
+
+<div class="viewcode-block" id="OptimizerCrabFmin.run_optimization"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.OptimizerCrabFmin.run_optimization">[docs]</a>    <span class="k">def</span> <span class="nf">run_optimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_conds</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function optimisation method is a wrapper to the</span>
+<span class="sd">        scipy.optimize.fmin function.</span>
+
+<span class="sd">        It will attempt to minimise the fidelity error with respect to some</span>
+<span class="sd">        parameters, which are determined by _get_optim_var_vals which</span>
+<span class="sd">        in the case of CRAB are the basis function coefficients</span>
+
+<span class="sd">        The optimisation end when one of the passed termination conditions</span>
+<span class="sd">        has been met, e.g. target achieved, wall time, or</span>
+<span class="sd">        function call or iteration count exceeded. Specifically to the fmin</span>
+<span class="sd">        method, the optimisation will stop when change parameter values</span>
+<span class="sd">        is less than xtol or the change in function value is below ftol.</span>
+
+<span class="sd">        If the parameter term_conds=None, then the termination_conditions</span>
+<span class="sd">        attribute must already be set. It will be overwritten if the</span>
+<span class="sd">        parameter is not None</span>
+
+<span class="sd">        The result is returned in an OptimResult object, which includes</span>
+<span class="sd">        the final fidelity, time evolution, reason for termination etc</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_optim</span><span class="p">(</span><span class="n">term_conds</span><span class="p">)</span>
+        <span class="n">term_conds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_conditions</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optim_var_vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_optim_var_vals</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_method_options</span><span class="p">()</span>
+
+        <span class="c1">#print(&quot;Initial values:\n{}&quot;.format(self.optim_var_vals))</span>
+        <span class="n">st_time</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wall_time_optimize_start</span> <span class="o">=</span> <span class="n">st_time</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wall_time_optim_start</span> <span class="o">=</span> <span class="n">st_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">wall_time_optim_end</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_result</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Optimising pulse(s) using </span><span class="si">{}</span><span class="s2"> with &quot;</span>
+                        <span class="s2">&quot;&#39;fmin&#39; (Nelder-Mead) method&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alg</span><span class="p">))</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">spopt</span><span class="o">.</span><span class="n">fmin</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fid_err_func_wrapper</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">optim_var_vals</span><span class="p">,</span>
+                    <span class="n">xtol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xtol</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ftol</span><span class="p">,</span>
+                    <span class="n">maxiter</span><span class="o">=</span><span class="n">term_conds</span><span class="o">.</span><span class="n">max_iterations</span><span class="p">,</span>
+                    <span class="n">maxfun</span><span class="o">=</span><span class="n">term_conds</span><span class="o">.</span><span class="n">max_fid_func_calls</span><span class="p">,</span>
+                    <span class="n">full_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">disp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">disp_conv_msg</span><span class="p">,</span>
+                    <span class="n">retall</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">record_iteration_steps</span><span class="p">,</span>
+                    <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_step_callback_func</span><span class="p">)</span>
+
+            <span class="n">final_param_vals</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">num_iter</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">warn_flag</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">record_iteration_steps</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">iteration_steps</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+            <span class="n">amps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ctrl_amps</span><span class="p">(</span><span class="n">final_param_vals</span><span class="p">)</span>
+            <span class="n">dyn</span><span class="o">.</span><span class="n">update_ctrl_amps</span><span class="p">(</span><span class="n">amps</span><span class="p">)</span>
+
+            <span class="c1"># Note the iterations are counted in this object as well</span>
+            <span class="c1"># so there are compared here for interest sake only</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">!=</span> <span class="n">num_iter</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The number of iterations counted </span><span class="si">{}</span><span class="s2"> &quot;</span>
+                            <span class="s2">&quot; does not match the number reported </span><span class="si">{}</span><span class="s2"> &quot;</span>
+                            <span class="s2">&quot;by </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iter</span><span class="p">,</span> <span class="n">num_iter</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">))</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">num_iter</span> <span class="o">=</span> <span class="n">num_iter</span>
+            <span class="k">if</span> <span class="n">warn_flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">termination_reason</span> <span class="o">=</span> \
+                    <span class="s2">&quot;Function converged (within tolerance)&quot;</span>
+            <span class="k">elif</span> <span class="n">warn_flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">termination_reason</span> <span class="o">=</span> \
+                    <span class="s2">&quot;Maximum number of function evaluations reached&quot;</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">max_fid_func_exceeded</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">warn_flag</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">termination_reason</span> <span class="o">=</span> \
+                    <span class="s2">&quot;Maximum number of iterations reached&quot;</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">max_iter_exceeded</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">termination_reason</span> <span class="o">=</span> \
+                    <span class="s2">&quot;Unknown (warn_flag=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">warn_flag</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">errors</span><span class="o">.</span><span class="n">OptimizationTerminate</span> <span class="k">as</span> <span class="n">except_term</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_interpret_term_exception</span><span class="p">(</span><span class="n">except_term</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_common_result_attribs</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">st_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+<div class="viewcode-block" id="OptimIterSummary"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.optimizer.OptimIterSummary">[docs]</a><span class="k">class</span> <span class="nc">OptimIterSummary</span><span class="p">(</span><span class="n">qtrldump</span><span class="o">.</span><span class="n">DumpSummaryItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A summary of the most recent iteration of the pulse optimisation</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    iter_num : int</span>
+<span class="sd">        Iteration number of the pulse optimisation</span>
+
+<span class="sd">    fid_func_call_num : int</span>
+<span class="sd">        Fidelity function call number of the pulse optimisation</span>
+
+<span class="sd">    grad_func_call_num : int</span>
+<span class="sd">        Gradient function call number of the pulse optimisation</span>
+
+<span class="sd">    fid_err : float</span>
+<span class="sd">        Fidelity error</span>
+
+<span class="sd">    grad_norm : float</span>
+<span class="sd">        fidelity gradient (wrt the control parameters) vector norm</span>
+<span class="sd">        that is the magnitude of the gradient</span>
+
+<span class="sd">    wall_time : float</span>
+<span class="sd">        Time spent computing the pulse optimisation so far</span>
+<span class="sd">        (in seconds of elapsed time)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Note there is some duplication here with Optimizer attributes</span>
+    <span class="c1"># this exists solely to be copied into the summary dump</span>
+    <span class="n">min_col_width</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">summary_property_names</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;idx&quot;</span><span class="p">,</span> <span class="s2">&quot;iter_num&quot;</span><span class="p">,</span> <span class="s2">&quot;fid_func_call_num&quot;</span><span class="p">,</span> <span class="s2">&quot;grad_func_call_num&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fid_err&quot;</span><span class="p">,</span> <span class="s2">&quot;grad_norm&quot;</span><span class="p">,</span> <span class="s2">&quot;wall_time&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">summary_property_fmt_type</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span>
+        <span class="p">)</span>
+
+    <span class="n">summary_property_fmt_prec</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">qtrldump</span><span class="o">.</span><span class="n">DumpSummaryItem</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fid_func_call_num</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grad_func_call_num</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fid_err</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grad_norm</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wall_time</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

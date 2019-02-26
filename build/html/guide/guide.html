@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Users Guide &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Guide Overview" href="guide-overview.html" />
+    <link rel="prev" title="Installation" href="../installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Users Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-overview.html">Guide Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-basics.html">Basic Operations on Quantum Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html">Manipulating States and Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-tensor.html">Using Tensor Products and Partial Traces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-dynamics.html">Time Evolution and Quantum System Dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-steady.html">Solving for Steady-State Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-eseries.html">An Overview of the Eseries Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-correlation.html">Two-time correlation functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-control.html">Quantum Optimal Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-bloch.html">Plotting on the Bloch Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-visualization.html">Visualization of quantum states and processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-parfor.html">Parallel computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-saving.html">Saving QuTiP Objects and Data Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-random.html">Generating Random Quantum States &amp; Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-settings.html">Modifying Internal QuTiP Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Users Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/guide/guide.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="users-guide">
+<span id="guide"></span><h1>Users Guide<a class="headerlink" href="#users-guide" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="guide-overview.html">Guide Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-overview.html#organization">Organization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-basics.html">Basic Operations on Quantum Objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-basics.html#first-things-first">First things first</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-basics.html#the-quantum-object-class">The quantum object class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-basics.html#functions-operating-on-qobj-class">Functions operating on Qobj class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-states.html">Manipulating States and Operators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html#state-vectors-kets-or-bras">State Vectors (kets or bras)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html#density-matrices">Density matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html#qubit-two-level-systems">Qubit (two-level) systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html#expectation-values">Expectation values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html#superoperators-and-vectorized-operators">Superoperators and Vectorized Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html#choi-kraus-stinespring-and-chi-representations">Choi, Kraus, Stinespring and <span class="math notranslate nohighlight">\(\chi\)</span> Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html#properties-of-quantum-maps">Properties of Quantum Maps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-tensor.html">Using Tensor Products and Partial Traces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-tensor.html#tensor-products">Tensor products</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-tensor.html#example-constructing-composite-hamiltonians">Example: Constructing composite Hamiltonians</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-tensor.html#partial-trace">Partial trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-tensor.html#superoperators-and-tensor-manipulations">Superoperators and Tensor Manipulations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-dynamics.html">Time Evolution and Quantum System Dynamics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dynamics/dynamics-data.html">Dynamics Simulation Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dynamics/dynamics-master.html">Lindblad Master Equation Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dynamics/dynamics-monte.html">Monte Carlo Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dynamics/dynamics-time.html">Solving Problems with Time-dependent Hamiltonians</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dynamics/dynamics-bloch-redfield.html">Bloch-Redfield master equation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dynamics/dynamics-floquet.html">Floquet Formalism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dynamics/dynamics-options.html">Setting Options for the Dynamics Solvers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-steady.html">Solving for Steady-State Solutions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-steady.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-steady.html#steady-state-solvers-in-qutip">Steady State solvers in QuTiP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-steady.html#using-the-steadystate-solver">Using the Steadystate Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-steady.html#additional-solver-arguments">Additional Solver Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-steady.html#example-harmonic-oscillator-in-thermal-bath">Example: Harmonic Oscillator in Thermal Bath</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-eseries.html">An Overview of the Eseries Class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-eseries.html#exponential-series-representation-of-time-dependent-quantum-objects">Exponential-series representation of time-dependent quantum objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-eseries.html#applications-of-exponential-series">Applications of exponential series</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-correlation.html">Two-time correlation functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-correlation.html#steadystate-correlation-function">Steadystate correlation function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-correlation.html#emission-spectrum">Emission spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-correlation.html#non-steadystate-correlation-function">Non-steadystate correlation function</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-control.html">Quantum Optimal Control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-control.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-control.html#closed-quantum-systems">Closed Quantum Systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-control.html#the-grape-algorithm">The GRAPE algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-control.html#the-crab-algorithm">The CRAB Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-control.html#optimal-quantum-control-in-qutip">Optimal Quantum Control in QuTiP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-control.html#using-the-pulseoptim-functions">Using the pulseoptim functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-bloch.html">Plotting on the Bloch Sphere</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-bloch.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-bloch.html#the-bloch-and-bloch3d-classes">The Bloch and Bloch3d Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-bloch.html#configuring-the-bloch-sphere">Configuring the Bloch sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-bloch.html#animating-with-the-bloch-sphere">Animating with the Bloch sphere</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-visualization.html">Visualization of quantum states and processes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-visualization.html#fock-basis-probability-distribution">Fock-basis probability distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-visualization.html#quasi-probability-distributions">Quasi-probability distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-visualization.html#visualizing-operators">Visualizing operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-visualization.html#quantum-process-tomography">Quantum process tomography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-parfor.html">Parallel computation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-parfor.html#parallel-map-and-parallel-for-loop">Parallel map and parallel for-loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-parfor.html#ipython-based-parallel-map">IPython-based parallel_map</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-saving.html">Saving QuTiP Objects and Data Sets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-saving.html#storing-and-loading-qutip-objects">Storing and loading QuTiP objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-saving.html#storing-and-loading-datasets">Storing and loading datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-random.html">Generating Random Quantum States &amp; Operators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-random.html#random-objects-with-a-given-eigen-spectrum">Random objects with a given eigen spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-random.html#composite-random-objects">Composite random objects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-settings.html">Modifying Internal QuTiP Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide-settings.html#user-accessible-parameters">User Accessible Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-settings.html#example-changing-settings">Example: Changing Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-settings.html#persistent-settings">Persistent Settings</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="guide-overview.html" class="btn btn-neutral float-right" title="Guide Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

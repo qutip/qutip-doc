@@ -1,0 +1,568 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Visualization of quantum states and processes &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Parallel computation" href="guide-parfor.html" />
+    <link rel="prev" title="Plotting on the Bloch Sphere" href="guide-bloch.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="guide.html">Users Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="guide-overview.html">Guide Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-basics.html">Basic Operations on Quantum Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html">Manipulating States and Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-tensor.html">Using Tensor Products and Partial Traces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-dynamics.html">Time Evolution and Quantum System Dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-steady.html">Solving for Steady-State Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-eseries.html">An Overview of the Eseries Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-correlation.html">Two-time correlation functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-control.html">Quantum Optimal Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-bloch.html">Plotting on the Bloch Sphere</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Visualization of quantum states and processes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fock-basis-probability-distribution">Fock-basis probability distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quasi-probability-distributions">Quasi-probability distributions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#wigner-function">Wigner function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#husimi-q-function">Husimi Q-function</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#visualizing-operators">Visualizing operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quantum-process-tomography">Quantum process tomography</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#implementation-in-qutip">Implementation in QuTiP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="guide-parfor.html">Parallel computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-saving.html">Saving QuTiP Objects and Data Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-random.html">Generating Random Quantum States &amp; Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-settings.html">Modifying Internal QuTiP Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="guide.html">Users Guide</a> &raquo;</li>
+        
+      <li>Visualization of quantum states and processes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/guide/guide-visualization.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="visualization-of-quantum-states-and-processes">
+<span id="visual"></span><h1>Visualization of quantum states and processes<a class="headerlink" href="#visualization-of-quantum-states-and-processes" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qutip</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Visualization is often an important complement to a simulation of a quantum
+mechanical system. The first method of visualization that come to mind might be
+to plot the expectation values of a few selected operators. But on top of that,
+it can often be instructive to visualize for example the state vectors or
+density matices that describe the state of the system, or how the state is
+transformed as a function of time (see process tomography below). In this
+section we demonstrate how QuTiP and matplotlib can be used to perform a few
+types of  visualizations that often can provide additional understanding of
+quantum system.</p>
+<div class="section" id="fock-basis-probability-distribution">
+<span id="visual-fock"></span><h2>Fock-basis probability distribution<a class="headerlink" href="#fock-basis-probability-distribution" title="Permalink to this headline">¶</a></h2>
+<p>In quantum mechanics probability distributions plays an important role, and as
+in statistics, the expectation values computed from a probability distribution
+does not reveal the full story. For example, consider an quantum harmonic
+oscillator mode with Hamiltonian <span class="math notranslate nohighlight">\(H = \hbar\omega a^\dagger a\)</span>, which is
+in a state described by its density matrix <span class="math notranslate nohighlight">\(\rho\)</span>, and which on average
+is occupied by two photons, <span class="math notranslate nohighlight">\(\mathrm{Tr}[\rho a^\dagger a] = 2\)</span>. Given
+this information we cannot say whether the oscillator is in a Fock state,
+a thermal state, a coherent state, etc. By visualizing the photon distribution
+in the Fock state basis important clues about the underlying state can be
+obtained.</p>
+<p>One convenient way to visualize a probability distribution is to use histograms.
+Consider the following histogram visualization of the number-basis probability
+distribution, which can be obtained from the diagonal of the density matrix,
+for a few possible oscillator states with on average occupation of two photons.</p>
+<p>First we generate the density matrices for the coherent, thermal and fock states.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="n">rho_coherent</span> <span class="o">=</span> <span class="n">coherent_dm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">rho_thermal</span> <span class="o">=</span> <span class="n">thermal_dm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">rho_fock</span> <span class="o">=</span> <span class="n">fock_dm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Next, we plot histograms of the diagonals of the density matrices:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">bar0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span><span class="o">-.</span><span class="mi">5</span><span class="p">,</span> <span class="n">rho_coherent</span><span class="o">.</span><span class="n">diag</span><span class="p">())</span>
+
+<span class="n">lbl0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Coherent state&quot;</span><span class="p">)</span>
+
+<span class="n">lim0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-.</span><span class="mi">5</span><span class="p">,</span> <span class="n">N</span><span class="p">])</span>
+
+<span class="n">bar1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span><span class="o">-.</span><span class="mi">5</span><span class="p">,</span> <span class="n">rho_thermal</span><span class="o">.</span><span class="n">diag</span><span class="p">())</span>
+
+<span class="n">lbl1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Thermal state&quot;</span><span class="p">)</span>
+
+<span class="n">lim1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-.</span><span class="mi">5</span><span class="p">,</span> <span class="n">N</span><span class="p">])</span>
+
+<span class="n">bar2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span><span class="o">-.</span><span class="mi">5</span><span class="p">,</span> <span class="n">rho_fock</span><span class="o">.</span><span class="n">diag</span><span class="p">())</span>
+
+<span class="n">lbl2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Fock state&quot;</span><span class="p">)</span>
+
+<span class="n">lim2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-.</span><span class="mi">5</span><span class="p">,</span> <span class="n">N</span><span class="p">])</span>
+
+   <span class="nd">@savefig</span> <span class="n">visualization</span><span class="o">-</span><span class="n">distribution</span><span class="o">.</span><span class="n">png</span> <span class="n">width</span><span class="o">=</span><span class="mf">7.0</span><span class="ow">in</span> <span class="n">align</span><span class="o">=</span><span class="n">center</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>All these states correspond to an average of two photons, but by visualizing
+the photon distribution in Fock basis the differences between these states are
+easily appreciated.</p>
+<p>One frequently need to visualize the Fock-distribution in the way described
+above, so QuTiP provides a convenience function for doing this, see
+<a class="reference internal" href="../apidoc/functions.html#qutip.visualization.plot_fock_distribution" title="qutip.visualization.plot_fock_distribution"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.visualization.plot_fock_distribution()</span></code></a>, and the following example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">plot_fock_distribution</span><span class="p">(</span><span class="n">rho_coherent</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Coherent state&quot;</span><span class="p">);</span>
+
+<span class="n">plot_fock_distribution</span><span class="p">(</span><span class="n">rho_thermal</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Thermal state&quot;</span><span class="p">);</span>
+
+<span class="n">plot_fock_distribution</span><span class="p">(</span><span class="n">rho_fock</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Fock state&quot;</span><span class="p">);</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+   <span class="nd">@savefig</span> <span class="n">visualization</span><span class="o">-</span><span class="n">distribution</span><span class="o">-</span><span class="mf">2.</span><span class="n">png</span> <span class="n">width</span><span class="o">=</span><span class="mf">7.0</span><span class="ow">in</span> <span class="n">align</span><span class="o">=</span><span class="n">center</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="quasi-probability-distributions">
+<span id="visual-dist"></span><h2>Quasi-probability distributions<a class="headerlink" href="#quasi-probability-distributions" title="Permalink to this headline">¶</a></h2>
+<p>The probability distribution in the number (Fock) basis only describes the
+occupation probabilities for a discrete set of states. A more complete
+phase-space probability-distribution-like function for harmonic modes are
+the Wigner and Husumi Q-functions, which are full descriptions of the
+quantum state (equivalent to the density matrix). These are called
+quasi-distribution functions because unlike real probability distribution
+functions they can for example be negative. In addition to being more complete descriptions
+of a state (compared to only the occupation probabilities plotted above),
+these distributions are also great for demonstrating if a quantum state is
+quantum mechanical, since for example a negative Wigner function
+is a definite indicator that a state is distinctly nonclassical.</p>
+<div class="section" id="wigner-function">
+<h3>Wigner function<a class="headerlink" href="#wigner-function" title="Permalink to this headline">¶</a></h3>
+<p>In QuTiP, the Wigner function for a harmonic mode can be calculated with the
+function <a class="reference internal" href="../apidoc/functions.html#qutip.wigner.wigner" title="qutip.wigner.wigner"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.wigner.wigner()</span></code></a>. It takes a ket or a density matrix as
+input, together with arrays that define the ranges of the phase-space
+coordinates (in the x-y plane). In the following example the Wigner functions
+are calculated and plotted for the same three states as in the previous section.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="n">W_coherent</span> <span class="o">=</span> <span class="n">wigner</span><span class="p">(</span><span class="n">rho_coherent</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">)</span>
+
+<span class="n">W_thermal</span> <span class="o">=</span> <span class="n">wigner</span><span class="p">(</span><span class="n">rho_thermal</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">)</span>
+
+<span class="n">W_fock</span> <span class="o">=</span> <span class="n">wigner</span><span class="p">(</span><span class="n">rho_fock</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">)</span>
+
+<span class="c1"># plot the results</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">cont0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">W_coherent</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">lbl0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Coherent state&quot;</span><span class="p">)</span>
+
+<span class="n">cont1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">W_thermal</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">lbl1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Thermal state&quot;</span><span class="p">)</span>
+
+<span class="n">cont0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">W_fock</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">lbl2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Fock state&quot;</span><span class="p">)</span>
+
+   <span class="nd">@savefig</span> <span class="n">visualization</span><span class="o">-</span><span class="n">wigner</span><span class="o">.</span><span class="n">png</span> <span class="n">width</span><span class="o">=</span><span class="mf">7.0</span><span class="ow">in</span> <span class="n">align</span><span class="o">=</span><span class="n">center</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="custom-color-maps">
+<span id="visual-cmap"></span><h4>Custom Color Maps<a class="headerlink" href="#custom-color-maps" title="Permalink to this headline">¶</a></h4>
+<p>The main objective when plotting a Wigner function is to demonstrate that the underlying
+state is nonclassical, as indicated by negative values in the Wigner function.  Therefore,
+making these negative values stand out in a figure is helpful for both analysis and publication
+purposes.  Unfortunately, all of the color schemes used in Matplotlib (or any other plotting software)
+are linear colormaps where small negative values tend to be near the same color as the zero values, and
+are thus hidden.  To fix this dilemma, QuTiP includes a nonlinear colormap function <code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.visualization.wigner_cmap()</span></code>
+that colors all negative values differently than positive or zero values.  Below is a demonstration of how to use
+this function in your Wigner figures:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
+
+ <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+
+ <span class="n">psi</span> <span class="o">=</span> <span class="p">(</span><span class="n">basis</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">basis</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">basis</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span><span class="o">.</span><span class="n">unit</span><span class="p">()</span>
+
+ <span class="n">xvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+ <span class="n">W</span> <span class="o">=</span> <span class="n">wigner</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">)</span>
+
+ <span class="n">wmap</span> <span class="o">=</span> <span class="n">wigner_cmap</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>  <span class="c1"># Generate Wigner colormap</span>
+
+ <span class="n">nrm</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="o">-</span><span class="n">W</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">W</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+ <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+ <span class="n">plt1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">nrm</span><span class="p">)</span>
+
+ <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Standard Colormap&quot;</span><span class="p">);</span>
+
+ <span class="n">cb1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">plt1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+ <span class="n">plt2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">wmap</span><span class="p">)</span>  <span class="c1"># Apply Wigner colormap</span>
+
+ <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Wigner Colormap&quot;</span><span class="p">);</span>
+
+ <span class="n">cb2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">plt2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+ <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="nd">@savefig</span> <span class="n">wigner_cmap</span><span class="o">.</span><span class="n">png</span> <span class="n">width</span><span class="o">=</span><span class="mf">7.0</span><span class="ow">in</span> <span class="n">align</span><span class="o">=</span><span class="n">center</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="husimi-q-function">
+<h3>Husimi Q-function<a class="headerlink" href="#husimi-q-function" title="Permalink to this headline">¶</a></h3>
+<p>The Husimi Q function is, like the Wigner function, a quasiprobability
+distribution for harmonic modes. It is defined as</p>
+<div class="math notranslate nohighlight">
+\[Q(\alpha) = \frac{1}{\pi}\left&lt;\alpha|\rho|\alpha\right&gt;\]</div>
+<p>where <span class="math notranslate nohighlight">\(\left|\alpha\right&gt;\)</span> is a coherent state and
+<span class="math notranslate nohighlight">\(\alpha = x + iy\)</span>. In QuTiP, the Husimi Q function can be computed given
+a state ket or density matrix using the function <a class="reference internal" href="../apidoc/functions.html#qutip.wigner.qfunc" title="qutip.wigner.qfunc"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.wigner.qfunc()</span></code></a>, as
+demonstrated below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Q_coherent</span> <span class="o">=</span> <span class="n">qfunc</span><span class="p">(</span><span class="n">rho_coherent</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">)</span>
+
+<span class="n">Q_thermal</span> <span class="o">=</span> <span class="n">qfunc</span><span class="p">(</span><span class="n">rho_thermal</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">)</span>
+
+<span class="n">Q_fock</span> <span class="o">=</span> <span class="n">qfunc</span><span class="p">(</span><span class="n">rho_fock</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">cont0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">Q_coherent</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">lbl0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Coherent state&quot;</span><span class="p">)</span>
+
+<span class="n">cont1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">Q_thermal</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">lbl1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Thermal state&quot;</span><span class="p">)</span>
+
+<span class="n">cont0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xvec</span><span class="p">,</span> <span class="n">xvec</span><span class="p">,</span> <span class="n">Q_fock</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">lbl2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Fock state&quot;</span><span class="p">)</span>
+
+   <span class="nd">@savefig</span> <span class="n">visualization</span><span class="o">-</span><span class="n">q</span><span class="o">-</span><span class="n">func</span><span class="o">.</span><span class="n">png</span> <span class="n">width</span><span class="o">=</span><span class="mf">7.0</span><span class="ow">in</span> <span class="n">align</span><span class="o">=</span><span class="n">center</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="visualizing-operators">
+<span id="visual-oper"></span><h2>Visualizing operators<a class="headerlink" href="#visualizing-operators" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, it may also be useful to directly visualizing the underlying matrix
+representation of an operator. The density matrix, for example, is an operator
+whose elements can give insights about the state it represents, but one might
+also be interesting in plotting the matrix of an Hamiltonian to inspect the
+structure and relative importance of various elements.</p>
+<p>QuTiP offers a few functions for quickly visualizing matrix data in the
+form of histograms, <a class="reference internal" href="../apidoc/functions.html#qutip.visualization.matrix_histogram" title="qutip.visualization.matrix_histogram"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.visualization.matrix_histogram()</span></code></a> and
+<a class="reference internal" href="../apidoc/functions.html#qutip.visualization.matrix_histogram_complex" title="qutip.visualization.matrix_histogram_complex"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.visualization.matrix_histogram_complex()</span></code></a>, and as Hinton diagram of weighted
+squares, <a class="reference internal" href="../apidoc/functions.html#qutip.visualization.hinton" title="qutip.visualization.hinton"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.visualization.hinton()</span></code></a>. These functions takes a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">qutip.Qobj.Qobj</span></code> as first argument, and optional arguments to, for
+example, set the axis labels and figure title (see the function's documentation
+for details).</p>
+<p>For example, to illustrate the use of <a class="reference internal" href="../apidoc/functions.html#qutip.visualization.matrix_histogram" title="qutip.visualization.matrix_histogram"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.visualization.matrix_histogram()</span></code></a>,
+let's visualize of the Jaynes-Cummings Hamiltonian:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">destroy</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">qeye</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">destroy</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">sx</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">qeye</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">sigmax</span><span class="p">())</span>
+
+<span class="n">H</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">a</span> <span class="o">+</span> <span class="n">sx</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="c1"># visualize H</span>
+
+<span class="n">lbls_list</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)],</span> <span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">]]</span>
+
+<span class="n">xlabels</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">inds</span> <span class="ow">in</span> <span class="n">tomography</span><span class="o">.</span><span class="n">_index_permutations</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">lbls</span><span class="p">)</span> <span class="k">for</span> <span class="n">lbls</span> <span class="ow">in</span> <span class="n">lbls_list</span><span class="p">]):</span>
+  <span class="o">...</span><span class="p">:</span>     <span class="n">xlabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">lbls_list</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">inds</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
+  <span class="o">...</span><span class="p">:</span>                            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lbls_list</span><span class="p">))]))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">matrix_histogram</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">xlabels</span><span class="p">,</span> <span class="n">xlabels</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="n">azim</span><span class="o">=-</span><span class="mi">55</span><span class="p">,</span> <span class="n">elev</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+   <span class="nd">@savefig</span> <span class="n">visualization</span><span class="o">-</span><span class="n">H</span><span class="o">.</span><span class="n">png</span> <span class="n">width</span><span class="o">=</span><span class="mf">5.0</span><span class="ow">in</span> <span class="n">align</span><span class="o">=</span><span class="n">center</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Similarly, we can use the function <a class="reference internal" href="../apidoc/functions.html#qutip.visualization.hinton" title="qutip.visualization.hinton"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.visualization.hinton()</span></code></a>, which is
+used below to visualize the corresponding steadystate density matrix:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rho_ss</span> <span class="o">=</span> <span class="n">steadystate</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span> <span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.4</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">dag</span><span class="p">()])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">hinton</span><span class="p">(</span><span class="n">rho_ss</span><span class="p">)</span> <span class="c1"># xlabels=xlabels, ylabels=xlabels)</span>
+
+   <span class="nd">@savefig</span> <span class="n">visualization</span><span class="o">-</span><span class="n">rho</span><span class="o">-</span><span class="n">ss</span><span class="o">.</span><span class="n">png</span> <span class="n">width</span><span class="o">=</span><span class="mf">5.0</span><span class="ow">in</span> <span class="n">align</span><span class="o">=</span><span class="n">center</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="quantum-process-tomography">
+<span id="visual-qpt"></span><h2>Quantum process tomography<a class="headerlink" href="#quantum-process-tomography" title="Permalink to this headline">¶</a></h2>
+<p>Quantum process tomography (QPT) is a useful technique for characterizing experimental implementations of quantum gates involving a small number of qubits. It can also be a useful theoretical tool that can give insight in how a process transforms states, and it can be used for example to study how noise or other imperfections deteriorate a gate. Whereas a fidelity or distance measure can give a single number that indicates how far from ideal a gate is, a quantum process tomography analysis can give detailed information about exactly what kind of errors various imperfections introduce.</p>
+<p>The idea is to construct a transformation matrix for a quantum process (for example a quantum gate) that describes how the density matrix of a system is transformed by the process. We can then decompose the transformation in some operator basis that represent well-defined and easily interpreted transformations of the input states.</p>
+<p>To see how this works (see e.g. <a class="reference internal" href="../biblio.html#moh08" id="id1">[Moh08]</a> for more details), consider a process that is described by quantum map <span class="math notranslate nohighlight">\(\epsilon(\rho_{\rm in}) = \rho_{\rm out}\)</span>, which can be written</p>
+<div class="math notranslate nohighlight" id="equation-qpt-quantum-map">
+<span class="eqno">(1)<a class="headerlink" href="#equation-qpt-quantum-map" title="Permalink to this equation">¶</a></span>\[\epsilon(\rho_{\rm in}) = \rho_{\rm out} = \sum_{i}^{N^2} A_i \rho_{\rm in} A_i^\dagger,\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of states of the system (that is, <span class="math notranslate nohighlight">\(\rho\)</span> is represented by an <span class="math notranslate nohighlight">\([N\times N]\)</span> matrix). Given an orthogonal operator basis of our choice <span class="math notranslate nohighlight">\(\{B_i\}_i^{N^2}\)</span>, which satisfies <span class="math notranslate nohighlight">\({\rm Tr}[B_i^\dagger B_j] = N\delta_{ij}\)</span>, we can write the map as</p>
+<div class="math notranslate nohighlight" id="equation-qpt-quantum-map-transformed">
+<span class="eqno">(2)<a class="headerlink" href="#equation-qpt-quantum-map-transformed" title="Permalink to this equation">¶</a></span>\[\epsilon(\rho_{\rm in}) = \rho_{\rm out} = \sum_{mn} \chi_{mn} B_m \rho_{\rm in} B_n^\dagger.\]</div>
+<p>where <span class="math notranslate nohighlight">\(\chi_{mn} = \sum_{ij} b_{im}b_{jn}^*\)</span> and <span class="math notranslate nohighlight">\(A_i = \sum_{m} b_{im}B_{m}\)</span>. Here, matrix <span class="math notranslate nohighlight">\(\chi\)</span> is the transformation matrix we are after, since it describes how much <span class="math notranslate nohighlight">\(B_m \rho_{\rm in} B_n^\dagger\)</span> contributes to <span class="math notranslate nohighlight">\(\rho_{\rm out}\)</span>.</p>
+<p>In a numerical simulation of a quantum process we usually do not have access to the quantum map in the form Eq. <a class="reference internal" href="#equation-qpt-quantum-map">(1)</a>. Instead, what we usually can do is to calculate the propagator <span class="math notranslate nohighlight">\(U\)</span> for the density matrix in superoperator form, using for example the QuTiP function <a class="reference internal" href="../apidoc/functions.html#qutip.propagator.propagator" title="qutip.propagator.propagator"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.propagator.propagator()</span></code></a>. We can then write</p>
+<div class="math notranslate nohighlight">
+\[\epsilon(\tilde{\rho}_{\rm in}) = U \tilde{\rho}_{\rm in} = \tilde{\rho}_{\rm out}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{\rho}\)</span> is the vector representation of the density matrix <span class="math notranslate nohighlight">\(\rho\)</span>. If we write Eq. <a class="reference internal" href="#equation-qpt-quantum-map-transformed">(2)</a> in superoperator form as well we obtain</p>
+<div class="math notranslate nohighlight">
+\[\tilde{\rho}_{\rm out} = \sum_{mn} \chi_{mn} \tilde{B}_m \tilde{B}_n^\dagger \tilde{\rho}_{\rm in} = U \tilde{\rho}_{\rm in}.\]</div>
+<p>so we can identify</p>
+<div class="math notranslate nohighlight">
+\[U = \sum_{mn} \chi_{mn} \tilde{B}_m \tilde{B}_n^\dagger.\]</div>
+<p>Now this is a linear equation systems for the <span class="math notranslate nohighlight">\(N^2 \times N^2\)</span> elements in <span class="math notranslate nohighlight">\(\chi\)</span>. We can solve it by writing <span class="math notranslate nohighlight">\(\chi\)</span> and the superoperator propagator as <span class="math notranslate nohighlight">\([N^4]\)</span> vectors, and likewise write the superoperator product <span class="math notranslate nohighlight">\(\tilde{B}_m\tilde{B}_n^\dagger\)</span> as a <span class="math notranslate nohighlight">\([N^4\times N^4]\)</span> matrix <span class="math notranslate nohighlight">\(M\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[U_I = \sum_{J}^{N^4} M_{IJ} \chi_{J}\]</div>
+<p>with the solution</p>
+<div class="math notranslate nohighlight">
+\[\chi = M^{-1}U.\]</div>
+<p>Note that to obtain <span class="math notranslate nohighlight">\(\chi\)</span> with this method we have to construct a matrix <span class="math notranslate nohighlight">\(M\)</span> with a size that is the square of the size of the superoperator for the system. Obviously, this scales very badly with increasing system size, but this method can still be a very useful for small systems (such as system comprised of a small number of coupled qubits).</p>
+<div class="section" id="implementation-in-qutip">
+<h3>Implementation in QuTiP<a class="headerlink" href="#implementation-in-qutip" title="Permalink to this headline">¶</a></h3>
+<p>In QuTiP, the procedure described above is implemented in the function <a class="reference internal" href="../apidoc/functions.html#qutip.tomography.qpt" title="qutip.tomography.qpt"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.tomography.qpt()</span></code></a>, which returns the <span class="math notranslate nohighlight">\(\chi\)</span> matrix given a density matrix propagator. To illustrate how to use this function, let's consider the <span class="math notranslate nohighlight">\(i\)</span>-SWAP gate for two qubits. In QuTiP the function <code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.gates.iswap()</span></code> generates the unitary transformation for the state kets:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">U_psi</span> <span class="o">=</span> <span class="n">iswap</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To be able to use this unitary transformation matrix as input to the function <a class="reference internal" href="../apidoc/functions.html#qutip.tomography.qpt" title="qutip.tomography.qpt"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.tomography.qpt()</span></code></a>, we first need to convert it to a transformation matrix for the corresponding density matrix:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">U_rho</span> <span class="o">=</span> <span class="n">spre</span><span class="p">(</span><span class="n">U_psi</span><span class="p">)</span> <span class="o">*</span> <span class="n">spost</span><span class="p">(</span><span class="n">U_psi</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Next, we construct a list of operators that define the basis <span class="math notranslate nohighlight">\(\{B_i\}\)</span> in the form of a list of operators for each composite system. At the same time, we also construct a list of corresponding labels that will be used when plotting the <span class="math notranslate nohighlight">\(\chi\)</span> matrix.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">op_basis</span> <span class="o">=</span> <span class="p">[[</span><span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">sigmax</span><span class="p">(),</span> <span class="n">sigmay</span><span class="p">(),</span> <span class="n">sigmaz</span><span class="p">()]]</span> <span class="o">*</span> <span class="mi">2</span>
+
+<span class="n">op_label</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>We are now ready to compute <span class="math notranslate nohighlight">\(\chi\)</span> using <a class="reference internal" href="../apidoc/functions.html#qutip.tomography.qpt" title="qutip.tomography.qpt"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.tomography.qpt()</span></code></a>, and to plot it using <a class="reference internal" href="../apidoc/functions.html#qutip.tomography.qpt_plot_combined" title="qutip.tomography.qpt_plot_combined"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.tomography.qpt_plot_combined()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="n">chi</span> <span class="o">=</span> <span class="n">qpt</span><span class="p">(</span><span class="n">U_rho</span><span class="p">,</span> <span class="n">op_basis</span><span class="p">)</span>
+
+ <span class="n">fig</span> <span class="o">=</span> <span class="n">qpt_plot_combined</span><span class="p">(</span><span class="n">chi</span><span class="p">,</span> <span class="n">op_label</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$i$SWAP&#39;</span><span class="p">)</span>
+
+<span class="nd">@savefig</span> <span class="n">visualization</span><span class="o">-</span><span class="n">chi</span><span class="o">-</span><span class="n">iswap</span><span class="o">.</span><span class="n">png</span> <span class="n">width</span><span class="o">=</span><span class="mf">5.0</span><span class="ow">in</span> <span class="n">align</span><span class="o">=</span><span class="n">center</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For a slightly more advanced example, where the density matrix propagator is calculated from the dynamics of a system defined by its Hamiltonian and collapse operators using the function <a class="reference internal" href="../apidoc/functions.html#qutip.propagator.propagator" title="qutip.propagator.propagator"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.propagator.propagator()</span></code></a>, see notebook &quot;Time-dependent master equation: Landau-Zener transitions&quot; on the tutorials section on the QuTiP web site.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="guide-parfor.html" class="btn btn-neutral float-right" title="Parallel computation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="guide-bloch.html" class="btn btn-neutral float-left" title="Plotting on the Bloch Sphere" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

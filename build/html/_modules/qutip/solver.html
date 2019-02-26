@@ -1,0 +1,1093 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qutip.solver &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>qutip.solver</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qutip.solver</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of QuTiP: Quantum Toolbox in Python.</span>
+<span class="c1">#</span>
+<span class="c1">#    Copyright (c) 2011 and later, Paul D. Nation and Robert J. Johansson,</span>
+<span class="c1">#    All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Redistribution and use in source and binary forms, with or without</span>
+<span class="c1">#    modification, are permitted provided that the following conditions are</span>
+<span class="c1">#    met:</span>
+<span class="c1">#</span>
+<span class="c1">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="c1">#       this list of conditions and the following disclaimer.</span>
+<span class="c1">#</span>
+<span class="c1">#    2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="c1">#       notice, this list of conditions and the following disclaimer in the</span>
+<span class="c1">#       documentation and/or other materials provided with the distribution.</span>
+<span class="c1">#</span>
+<span class="c1">#    3. Neither the name of the QuTiP: Quantum Toolbox in Python nor the names</span>
+<span class="c1">#       of its contributors may be used to endorse or promote products derived</span>
+<span class="c1">#       from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1">#    &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A</span>
+<span class="c1">#    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1">#    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1">#    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1">#    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1">#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1">#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1">#    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">###############################################################################</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Options&#39;</span><span class="p">,</span> <span class="s1">&#39;Odeoptions&#39;</span><span class="p">,</span> <span class="s1">&#39;Odedata&#39;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">qutip</span> <span class="k">import</span> <span class="n">__version__</span>
+<span class="kn">from</span> <span class="nn">qutip.qobj</span> <span class="k">import</span> <span class="n">Qobj</span>
+<span class="kn">import</span> <span class="nn">qutip.settings</span> <span class="k">as</span> <span class="nn">qset</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="k">import</span> <span class="n">FunctionType</span><span class="p">,</span> <span class="n">BuiltinFunctionType</span>
+
+<div class="viewcode-block" id="Options"><a class="viewcode-back" href="../../apidoc/classes.html#qutip.solver.Options">[docs]</a><span class="k">class</span> <span class="nc">Options</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class of options for evolution solvers such as :func:`qutip.mesolve` and</span>
+<span class="sd">    :func:`qutip.mcsolve`. Options can be specified either as arguments to the</span>
+<span class="sd">    constructor::</span>
+
+<span class="sd">        opts = Options(order=10, ...)</span>
+
+<span class="sd">    or by changing the class attributes after creation::</span>
+
+<span class="sd">        opts = Options()</span>
+<span class="sd">        opts.order = 10</span>
+
+<span class="sd">    Returns options class to be used as options in evolution solvers.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    atol : float {1e-8}</span>
+<span class="sd">        Absolute tolerance.</span>
+<span class="sd">    rtol : float {1e-6}</span>
+<span class="sd">        Relative tolerance.</span>
+<span class="sd">    method : str {&#39;adams&#39;,&#39;bdf&#39;}</span>
+<span class="sd">        Integration method.</span>
+<span class="sd">    order : int {12}</span>
+<span class="sd">        Order of integrator (&lt;=12 &#39;adams&#39;, &lt;=5 &#39;bdf&#39;)</span>
+<span class="sd">    nsteps : int {2500}</span>
+<span class="sd">        Max. number of internal steps/call.</span>
+<span class="sd">    first_step : float {0}</span>
+<span class="sd">        Size of initial step (0 = automatic).</span>
+<span class="sd">    min_step : float {0}</span>
+<span class="sd">        Minimum step size (0 = automatic).</span>
+<span class="sd">    max_step : float {0}</span>
+<span class="sd">        Maximum step size (0 = automatic)</span>
+<span class="sd">    tidy : bool {True,False}</span>
+<span class="sd">        Tidyup Hamiltonian and initial state by removing small terms.</span>
+<span class="sd">    num_cpus : int</span>
+<span class="sd">        Number of cpus used by mcsolver (default = # of cpus).</span>
+<span class="sd">    norm_tol : float</span>
+<span class="sd">        Tolerance used when finding wavefunction norm in mcsolve.</span>
+<span class="sd">    norm_steps : int</span>
+<span class="sd">        Max. number of steps used to find wavefunction norm to within norm_tol</span>
+<span class="sd">        in mcsolve.</span>
+<span class="sd">    average_states : bool {False}</span>
+<span class="sd">        Average states values over trajectories in stochastic solvers.</span>
+<span class="sd">    average_expect : bool {True}</span>
+<span class="sd">        Average expectation values over trajectories for stochastic solvers.</span>
+<span class="sd">    mc_corr_eps : float {1e-10}</span>
+<span class="sd">        Arbitrarily small value for eliminating any divide-by-zero errors in</span>
+<span class="sd">        correlation calculations when using mcsolve.</span>
+<span class="sd">    ntraj : int {500}</span>
+<span class="sd">        Number of trajectories in stochastic solvers.</span>
+<span class="sd">    openmp_threads : int</span>
+<span class="sd">        Number of OPENMP threads to use. Default is number of cpu cores.</span>
+<span class="sd">    rhs_reuse : bool {False,True}</span>
+<span class="sd">        Reuse Hamiltonian data.</span>
+<span class="sd">    rhs_with_state : bool {False,True}</span>
+<span class="sd">        Whether or not to include the state in the Hamiltonian function</span>
+<span class="sd">        callback signature.</span>
+<span class="sd">    rhs_filename : str</span>
+<span class="sd">        Name for compiled Cython file.</span>
+<span class="sd">    seeds : ndarray</span>
+<span class="sd">        Array containing random number seeds for mcsolver.</span>
+<span class="sd">    store_final_state : bool {False, True}</span>
+<span class="sd">        Whether or not to store the final state of the evolution in the</span>
+<span class="sd">        result class.</span>
+<span class="sd">    store_states : bool {False, True}</span>
+<span class="sd">        Whether or not to store the state vectors or density matrices in the</span>
+<span class="sd">        result class, even if expectation values operators are given. If no</span>
+<span class="sd">        expectation are provided, then states are stored by default and this</span>
+<span class="sd">        option has no effect.</span>
+<span class="sd">    use_openmp : bool {True, False}</span>
+<span class="sd">        Use OPENMP for sparse matrix vector multiplication. Default</span>
+<span class="sd">        None means auto check.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;adams&#39;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+                 <span class="n">nsteps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">first_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">average_expect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">average_states</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tidy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">num_cpus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm_tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">norm_steps</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">rhs_reuse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">rhs_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ntraj</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">gui</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rhs_with_state</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">store_final_state</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">store_states</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seeds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">steady_state_average</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">normalize_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">use_openmp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">openmp_threads</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># Absolute tolerance (default = 1e-8)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atol</span> <span class="o">=</span> <span class="n">atol</span>
+        <span class="c1"># Relative tolerance (default = 1e-6)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rtol</span> <span class="o">=</span> <span class="n">rtol</span>
+        <span class="c1"># Integration method (default = &#39;adams&#39;, for stiff &#39;bdf&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="c1"># Max. number of internal steps/call</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nsteps</span> <span class="o">=</span> <span class="n">nsteps</span>
+        <span class="c1"># Size of initial step (0 = determined by solver)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_step</span> <span class="o">=</span> <span class="n">first_step</span>
+        <span class="c1"># Minimal step size (0 = determined by solver)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_step</span> <span class="o">=</span> <span class="n">min_step</span>
+        <span class="c1"># Max step size (0 = determined by solver)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_step</span> <span class="o">=</span> <span class="n">max_step</span>
+        <span class="c1"># Maximum order used by integrator (&lt;=12 for &#39;adams&#39;, &lt;=5 for &#39;bdf&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">order</span> <span class="o">=</span> <span class="n">order</span>
+        <span class="c1"># Average expectation values over trajectories (default = True)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">average_states</span> <span class="o">=</span> <span class="n">average_states</span>
+        <span class="c1"># average expectation values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">average_expect</span> <span class="o">=</span> <span class="n">average_expect</span>
+        <span class="c1"># Number of trajectories (default = 500)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ntraj</span> <span class="o">=</span> <span class="n">ntraj</span>
+        <span class="c1"># Holds seeds for rand num gen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seeds</span> <span class="o">=</span> <span class="n">seeds</span>
+        <span class="c1"># tidyup Hamiltonian before calculation (default = True)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tidy</span> <span class="o">=</span> <span class="n">tidy</span>
+        <span class="c1"># include the state in the function callback signature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rhs_with_state</span> <span class="o">=</span> <span class="n">rhs_with_state</span>
+        <span class="c1"># Use preexisting RHS function for time-dependent solvers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rhs_reuse</span> <span class="o">=</span> <span class="n">rhs_reuse</span>
+        <span class="c1"># Use filename for preexisting RHS function (will default to last</span>
+        <span class="c1"># compiled function if None &amp; rhs_exists=True)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rhs_filename</span> <span class="o">=</span> <span class="n">rhs_filename</span>
+        <span class="c1"># small value in mc solver for computing correlations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mc_corr_eps</span> <span class="o">=</span> <span class="mf">1e-10</span>
+        <span class="c1"># Number of processors to use (mcsolve only)</span>
+        <span class="k">if</span> <span class="n">num_cpus</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_cpus</span> <span class="o">=</span> <span class="n">num_cpus</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_cpus</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># Tolerance for wavefunction norm (mcsolve only)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">norm_tol</span> <span class="o">=</span> <span class="n">norm_tol</span>
+        <span class="c1"># Max. number of steps taken to find wavefunction norm to within</span>
+        <span class="c1"># norm_tol (mcsolve only)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">norm_steps</span> <span class="o">=</span> <span class="n">norm_steps</span>
+        <span class="c1"># Number of threads for openmp</span>
+        <span class="k">if</span> <span class="n">openmp_threads</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">openmp_threads</span> <span class="o">=</span> <span class="n">qset</span><span class="o">.</span><span class="n">num_cpus</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">openmp_threads</span> <span class="o">=</span> <span class="n">openmp_threads</span>
+        <span class="c1"># store final state?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store_final_state</span> <span class="o">=</span> <span class="n">store_final_state</span>
+        <span class="c1"># store states even if expectation operators are given?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store_states</span> <span class="o">=</span> <span class="n">store_states</span>
+        <span class="c1"># average mcsolver density matricies assuming steady state evolution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">steady_state_average</span> <span class="o">=</span> <span class="n">steady_state_average</span>
+        <span class="c1"># Normalize output of solvers (turned off for batch unitary propagator mode)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalize_output</span> <span class="o">=</span> <span class="n">normalize_output</span>
+        <span class="c1"># Use OPENMP for sparse matrix vector multiplication</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_openmp</span> <span class="o">=</span> <span class="n">use_openmp</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">seeds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">seed_length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">seed_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seeds</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;Options:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;-----------</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;atol:              &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atol</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;rtol:              &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rtol</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;method:            &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;order:             &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;nsteps:            &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nsteps</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;first_step:        &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">first_step</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;min_step:          &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_step</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;max_step:          &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_step</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;tidy:              &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tidy</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;num_cpus:          &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cpus</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;norm_tol:          &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">norm_tol</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;norm_steps:        &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">norm_steps</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;rhs_filename:      &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rhs_filename</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;rhs_reuse:         &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rhs_reuse</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;seeds:             &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">seed_length</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;rhs_with_state:    &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rhs_with_state</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;average_expect:    &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">average_expect</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;average_states:    &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">average_states</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;ntraj:             &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ntraj</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;store_states:      &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_states</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;store_final_state: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_final_state</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="n">s</span></div>
+
+
+<div class="viewcode-block" id="Result"><a class="viewcode-back" href="../../apidoc/classes.html#qutip.solver.Result">[docs]</a><span class="k">class</span> <span class="nc">Result</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Class for storing simulation results from any of the dynamics solvers.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    solver : str</span>
+<span class="sd">        Which solver was used [e.g., &#39;mesolve&#39;, &#39;mcsolve&#39;, &#39;brmesolve&#39;, ...]</span>
+<span class="sd">    times : list/array</span>
+<span class="sd">        Times at which simulation data was collected.</span>
+<span class="sd">    expect : list/array</span>
+<span class="sd">        Expectation values (if requested) for simulation.</span>
+<span class="sd">    states : array</span>
+<span class="sd">        State of the simulation (density matrix or ket) evaluated at ``times``.</span>
+<span class="sd">    num_expect : int</span>
+<span class="sd">        Number of expectation value operators in simulation.</span>
+<span class="sd">    num_collapse : int</span>
+<span class="sd">        Number of collapse operators in simualation.</span>
+<span class="sd">    ntraj : int/list</span>
+<span class="sd">        Number of trajectories (for stochastic solvers). A list indicates</span>
+<span class="sd">        that averaging of expectation values was done over a subset of total</span>
+<span class="sd">        number of trajectories.</span>
+<span class="sd">    col_times : list</span>
+<span class="sd">        Times at which state collpase occurred. Only for Monte Carlo solver.</span>
+<span class="sd">    col_which : list</span>
+<span class="sd">        Which collapse operator was responsible for each collapse in</span>
+<span class="sd">        ``col_times``. Only for Monte Carlo solver.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expect</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_expect</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_collapse</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ntraj</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seeds</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_times</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_which</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Result object &quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;with &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">+</span> <span class="s2">&quot; data.</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;missing solver information.</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;states = True</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">expect</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expect</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;expect = True</span><span class="se">\n</span><span class="s2">num_expect = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_expect</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;states = True, expect = True</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                <span class="s2">&quot;num_expect = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_expect</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;num_collapse = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_collapse</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">==</span> <span class="s1">&#39;mcsolve&#39;</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;, ntraj = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ntraj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># defines what happens when Qobj object gets pickled</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;qutip_version&#39;</span><span class="p">:</span> <span class="n">__version__</span><span class="p">[:</span><span class="mi">5</span><span class="p">]})</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span>
+
+    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="c1"># defines what happens when loading a pickled Qobj</span>
+        <span class="k">if</span> <span class="s1">&#39;qutip_version&#39;</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">del</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;qutip_version&#39;</span><span class="p">]</span>
+        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">SolverConfiguration</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cgen_num</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># General stuff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tlist</span> <span class="o">=</span> <span class="kc">None</span>       <span class="c1"># evaluations times</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ntraj</span> <span class="o">=</span> <span class="kc">None</span>       <span class="c1"># number / list of trajectories</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="kc">None</span>     <span class="c1"># options for solvers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">norm_tol</span> <span class="o">=</span> <span class="kc">None</span>    <span class="c1"># tolerance for wavefunction norm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">norm_steps</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># max. number of steps to take in finding</span>
+        <span class="c1"># Initial state stuff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">psi0</span> <span class="o">=</span> <span class="kc">None</span>        <span class="c1"># initial state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">psi0_dims</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># initial state dims</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">psi0_shape</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># initial state shape</span>
+
+        <span class="c1"># flags for setting time-dependence, collapse ops, and number of times</span>
+        <span class="c1"># codegen has been run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cflag</span> <span class="o">=</span> <span class="mi">0</span>     <span class="c1"># Flag signaling collapse operators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tflag</span> <span class="o">=</span> <span class="mi">0</span>     <span class="c1"># Flag signaling time-dependent problem</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">soft_reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">soft_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># Hamiltonian stuff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_td_inds</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># indicies of time-dependent Hamiltonian operators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_tdterms</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># List of td strs and funcs </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_data</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># List of sparse matrix data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_ind</span> <span class="o">=</span> <span class="kc">None</span>    <span class="c1"># List of sparse matrix indices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_ptr</span> <span class="o">=</span> <span class="kc">None</span>    <span class="c1"># List of sparse matrix ptrs</span>
+
+        <span class="c1"># Expectation operator stuff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_num</span> <span class="o">=</span> <span class="mi">0</span>        <span class="c1"># number of expect ops</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_ops_data</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># expect op data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_ops_ind</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># expect op indices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_ops_ptr</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># expect op indptrs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_ops_isherm</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># expect op isherm</span>
+
+        <span class="c1"># Collapse operator stuff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c_num</span> <span class="o">=</span> <span class="mi">0</span>          <span class="c1"># number of collapse ops</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c_const_inds</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># indicies of constant collapse operators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c_td_inds</span> <span class="o">=</span> <span class="p">[]</span>     <span class="c1"># indicies of time-dependent collapse operators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c_ops_data</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># collapse op data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c_ops_ind</span> <span class="o">=</span> <span class="p">[]</span>     <span class="c1"># collapse op indices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c_ops_ptr</span> <span class="o">=</span> <span class="p">[]</span>     <span class="c1"># collapse op indptrs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c_args</span> <span class="o">=</span> <span class="p">[]</span>        <span class="c1"># store args for time-dependent collapse func.</span>
+
+        <span class="c1"># Norm collapse operator stuff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_ops_data</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># norm collapse op data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_ops_ind</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># norm collapse op indices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_ops_ptr</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># norm collapse op indptrs</span>
+
+        <span class="c1"># holds executable strings for time-dependent collapse evaluation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_expect_code</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_spmv_code</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># hold stuff for function list based time dependence</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_td_inds</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_td_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_td_ind</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_td_ptr</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_funcs</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_func_args</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c_funcs</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c_func_args</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># time-dependent (TD) function stuff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tdfunc</span> <span class="o">=</span> <span class="kc">None</span>     <span class="c1"># Placeholder for TD RHS function.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tdname</span> <span class="o">=</span> <span class="kc">None</span>     <span class="c1"># Name of td .pyx file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colspmv</span> <span class="o">=</span> <span class="kc">None</span>    <span class="c1"># Placeholder for TD col-spmv function.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colexpect</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Placeholder for TD col_expect function.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="kc">None</span>     <span class="c1"># Holds string of variables passed to td solver</span>
+        
+
+<span class="k">def</span> <span class="nf">_format_time</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">tt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ttt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">time_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">t</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">tt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ttt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sect_percent</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">t</span><span class="o">/</span><span class="n">tt</span>
+        <span class="n">solve_percent</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">t</span><span class="o">/</span><span class="n">ttt</span>
+        <span class="n">time_str</span> <span class="o">+=</span> <span class="s2">&quot; (</span><span class="si">{:03.2f}% s</span><span class="s2">ection, </span><span class="si">{:03.2f}</span><span class="s2">% total)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                            <span class="n">sect_percent</span><span class="p">,</span> <span class="n">solve_percent</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sect_percent</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">t</span><span class="o">/</span><span class="n">tt</span>
+        <span class="n">time_str</span> <span class="o">+=</span> <span class="s2">&quot; (</span><span class="si">{:03.2f}% s</span><span class="s2">ection)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sect_percent</span><span class="p">)</span>
+        
+    <span class="k">elif</span> <span class="n">ttt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">solve_percent</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">t</span><span class="o">/</span><span class="n">ttt</span>
+        <span class="n">time_str</span> <span class="o">+=</span> <span class="s2">&quot; (</span><span class="si">{:03.2f}</span><span class="s2">% total)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solve_percent</span><span class="p">)</span>
+                                            
+    <span class="k">return</span> <span class="n">time_str</span>
+
+<div class="viewcode-block" id="Stats"><a class="viewcode-back" href="../../apidoc/classes.html#qutip.solver.Stats">[docs]</a><span class="k">class</span> <span class="nc">Stats</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Statistical information on the solver performance</span>
+<span class="sd">    Statistics can be grouped into sections.</span>
+<span class="sd">    If no section names are given in the the contructor, then all statistics</span>
+<span class="sd">    will be added to one section &#39;main&#39;</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    section_names : list</span>
+<span class="sd">        list of keys that will be used as keys for the sections</span>
+<span class="sd">        These keys will also be used as names for the sections</span>
+<span class="sd">        The text in the output can be overidden by setting the header property</span>
+<span class="sd">        of the section</span>
+<span class="sd">        If no names are given then one section called &#39;main&#39; is created</span>
+<span class="sd">        </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sections : OrderedDict of _StatsSection</span>
+<span class="sd">        These are the sections that are created automatically on instantiation</span>
+<span class="sd">        or added using add_section</span>
+<span class="sd">        </span>
+<span class="sd">    header : string</span>
+<span class="sd">        Some text that will be used as the heading in the report</span>
+<span class="sd">        By default there is None</span>
+<span class="sd">        </span>
+<span class="sd">    total_time : float</span>
+<span class="sd">        Time in seconds for the solver to complete processing</span>
+<span class="sd">        Can be None, meaning that total timing percentages will be reported</span>
+<span class="sd">        </span>
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    add_section</span>
+<span class="sd">        Add another section</span>
+<span class="sd">        </span>
+<span class="sd">    add_count</span>
+<span class="sd">        Add some stat that is an integer count</span>
+<span class="sd">        </span>
+<span class="sd">    add_timing</span>
+<span class="sd">        Add some timing statistics</span>
+<span class="sd">        </span>
+<span class="sd">    add_message</span>
+<span class="sd">        Add some text type for output in the report</span>
+<span class="sd">        </span>
+<span class="sd">    report:</span>
+<span class="sd">        Output the statistics report to console or file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_def_section_name</span> <span class="o">=</span> <span class="s1">&#39;main&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sections</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">section_names</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">section_names</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_StatsSection</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_def_section_name</span> <span class="o">=</span> <span class="n">name</span>
+                <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+                
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_def_section_name</span><span class="p">]</span> <span class="o">=</span> \
+                        <span class="n">_StatsSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_def_section_name</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_get_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">section</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_def_section_name</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">_StatsSection</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">section</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">sect</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown section </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">section</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">sect</span>
+                
+<div class="viewcode-block" id="Stats.add_section"><a class="viewcode-back" href="../../apidoc/classes.html#qutip.solver.Stats.add_section">[docs]</a>    <span class="k">def</span> <span class="nf">add_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add another section with the given name</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : string</span>
+<span class="sd">            will be used as key for sections dict</span>
+<span class="sd">            will also be the header for the section</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        section : `class` : _StatsSection</span>
+<span class="sd">            The new section</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sect</span> <span class="o">=</span> <span class="n">_StatsSection</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">sect</span>
+        <span class="k">return</span> <span class="n">sect</span></div>
+        
+<div class="viewcode-block" id="Stats.add_count"><a class="viewcode-back" href="../../apidoc/classes.html#qutip.solver.Stats.add_count">[docs]</a>    <span class="k">def</span> <span class="nf">add_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add value to count. If key does not already exist in section then</span>
+<span class="sd">        it is created with this value.</span>
+<span class="sd">        If key already exists it is increased by the give value</span>
+<span class="sd">        value is expected to be an integer</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key : string</span>
+<span class="sd">            key for the section.counts dictionary</span>
+<span class="sd">            reusing a key will result in numerical addition of value</span>
+<span class="sd">            </span>
+<span class="sd">        value : int</span>
+<span class="sd">            Initial value of the count, or added to an existing count</span>
+<span class="sd">        </span>
+<span class="sd">        section: string or `class` : _StatsSection</span>
+<span class="sd">            Section which to add the count to.</span>
+<span class="sd">            If None given, the default (first) section will be used</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+                
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_section</span><span class="p">(</span><span class="n">section</span><span class="p">)</span><span class="o">.</span><span class="n">add_count</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="Stats.add_timing"><a class="viewcode-back" href="../../apidoc/classes.html#qutip.solver.Stats.add_timing">[docs]</a>    <span class="k">def</span> <span class="nf">add_timing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add value to timing. If key does not already exist in section then</span>
+<span class="sd">        it is created with this value.</span>
+<span class="sd">        If key already exists it is increased by the give value</span>
+<span class="sd">        value is expected to be a float, and given in seconds.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key : string</span>
+<span class="sd">            key for the section.timings dictionary</span>
+<span class="sd">            reusing a key will result in numerical addition of value</span>
+<span class="sd">            </span>
+<span class="sd">        value : int</span>
+<span class="sd">            Initial value of the timing, or added to an existing timing</span>
+<span class="sd">        </span>
+<span class="sd">        section: string or `class` : _StatsSection</span>
+<span class="sd">            Section which to add the timing to.</span>
+<span class="sd">            If None given, the default (first) section will be used</span>
+<span class="sd">        &quot;&quot;&quot;</span>               
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_section</span><span class="p">(</span><span class="n">section</span><span class="p">)</span><span class="o">.</span><span class="n">add_timing</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+            
+<div class="viewcode-block" id="Stats.add_message"><a class="viewcode-back" href="../../apidoc/classes.html#qutip.solver.Stats.add_message">[docs]</a>    <span class="k">def</span> <span class="nf">add_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add value to message. If key does not already exist in section then</span>
+<span class="sd">        it is created with this value.</span>
+<span class="sd">        If key already exists the value is added to the message</span>
+<span class="sd">        The value will be converted to a string</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key : string</span>
+<span class="sd">            key for the section.messages dictionary</span>
+<span class="sd">            reusing a key will result in concatenation of value</span>
+<span class="sd">            </span>
+<span class="sd">        value : int</span>
+<span class="sd">            Initial value of the message, or added to an existing message</span>
+<span class="sd">            </span>
+<span class="sd">        sep : string</span>
+<span class="sd">            Message will be prefixed with this string when concatenating</span>
+<span class="sd">        </span>
+<span class="sd">        section: string or `class` : _StatsSection</span>
+<span class="sd">            Section which to add the message to.</span>
+<span class="sd">            If None given, the default (first) section will be used</span>
+<span class="sd">        &quot;&quot;&quot;</span>                
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_section</span><span class="p">(</span><span class="n">section</span><span class="p">)</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Stats.set_total_time"><a class="viewcode-back" href="../../apidoc/classes.html#qutip.solver.Stats.set_total_time">[docs]</a>    <span class="k">def</span> <span class="nf">set_total_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the total time for the complete solve or for a specific section</span>
+<span class="sd">        value is expected to be a float, and given in seconds</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        value : float</span>
+<span class="sd">            Time in seconds to complete the solver section</span>
+<span class="sd">            </span>
+<span class="sd">        section : string or `class` : _StatsSection</span>
+<span class="sd">            Section which to set the total_time for</span>
+<span class="sd">            If None given, the total_time for complete solve is set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;value is expected to be a float&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">section</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_section</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+            <span class="n">sect</span><span class="o">.</span><span class="n">total_time</span> <span class="o">=</span> <span class="n">value</span></div>
+                
+<div class="viewcode-block" id="Stats.report"><a class="viewcode-back" href="../../apidoc/classes.html#qutip.solver.Stats.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Report the counts, timings and messages from the sections.</span>
+<span class="sd">        Sections are reported in the order that the names were supplied</span>
+<span class="sd">        in the constructor.</span>
+<span class="sd">        The counts, timings and messages are reported in the order that they</span>
+<span class="sd">        are added to the sections</span>
+<span class="sd">        The output can be written to anything that supports a write method,</span>
+<span class="sd">        e.g. a file or the console (default)</span>
+<span class="sd">        The output is intended to in markdown format</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        output : stream</span>
+<span class="sd">            file or console stream - anything that support write - where</span>
+<span class="sd">            the output will be written</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s1">&#39;write&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;output must have a write method&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">:</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">,</span> 
+                                     <span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">))))</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">sect</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">sect</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Summary</span><span class="se">\n</span><span class="s2">-------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="se">\t</span><span class="s2"> solver total time</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                            <span class="n">_format_time</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_time</span><span class="p">)))</span></div>
+                                            
+<div class="viewcode-block" id="Stats.clear"><a class="viewcode-back" href="../../apidoc/classes.html#qutip.solver.Stats.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear counts, timings and messages from all sections</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">sect</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">sect</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">=</span> <span class="kc">None</span></div></div>
+            
+<span class="k">class</span> <span class="nc">_StatsSection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Not intended to be directly instantiated</span>
+<span class="sd">    This is the type for the SolverStats.sections values</span>
+<span class="sd">    </span>
+<span class="sd">    The method parameter descriptions are the same as for those the parent </span>
+<span class="sd">    with the same method name</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : string</span>
+<span class="sd">        key for the parent sections dictionary</span>
+<span class="sd">        will also be used as the header</span>
+<span class="sd">    </span>
+<span class="sd">    parent : `class` :  SolverStats</span>
+<span class="sd">        The container for all the sections</span>
+<span class="sd">        </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : string</span>
+<span class="sd">        key for the parent sections dictionary</span>
+<span class="sd">        will also be used as the header</span>
+<span class="sd">    </span>
+<span class="sd">    parent : `class` :  SolverStats</span>
+<span class="sd">        The container for all the sections</span>
+<span class="sd">        </span>
+<span class="sd">    header : string</span>
+<span class="sd">        Used as heading for section in report</span>
+<span class="sd">        </span>
+<span class="sd">    counts : OrderedDict</span>
+<span class="sd">        The integer type statistics for the stats section</span>
+<span class="sd">        </span>
+<span class="sd">    timings : OrderedDict</span>
+<span class="sd">        The timing type statistics for the stats section</span>
+<span class="sd">        Expected to contain float values representing values in seconds</span>
+<span class="sd">        </span>
+<span class="sd">    messages : OrderedDict</span>
+<span class="sd">        Text type output to be reported</span>
+<span class="sd">    </span>
+<span class="sd">    total_time : float</span>
+<span class="sd">        Total time for processing in the section</span>
+<span class="sd">        Can be None, meaning that section timing percentages will be reported</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counts</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timings</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">messages</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">add_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add value to count. If key does not already exist in section then</span>
+<span class="sd">        it is created with this value.</span>
+<span class="sd">        If key already exists it is increased by the given value</span>
+<span class="sd">        value is expected to be an integer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;value is expected to be an integer&quot;</span><span class="p">)</span>
+                
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        
+    <span class="k">def</span> <span class="nf">add_timing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add value to timing. If key does not already exist in section then</span>
+<span class="sd">        it is created with this value.</span>
+<span class="sd">        If key already exists it is increased by the give value</span>
+<span class="sd">        value is expected to be a float, and given in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;value is expected to be a float&quot;</span><span class="p">)</span>
+                
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">timings</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            
+    <span class="k">def</span> <span class="nf">add_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add value to message. If key does not already exist in section then</span>
+<span class="sd">        it is created with this value.</span>
+<span class="sd">        If key already exists the value is added to the message</span>
+<span class="sd">        The value will be converted to a string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">sep</span> <span class="o">+</span> <span class="n">value</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;It is not possible to concatenate the value with &quot;</span>
+                                <span class="s2">&quot;the given seperator&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            
+    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Report the counts, timings and messages for this section.</span>
+<span class="sd">        Note the percentage of the section and solver total times will be</span>
+<span class="sd">        given if the parent and or section total_time is set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">:</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">,</span> 
+                                     <span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">))))</span>
+        
+        <span class="c1"># TODO: Make the timings and counts ouput in a table format</span>
+        <span class="c1">#       Generally make more pretty</span>
+        
+        <span class="c1"># Report timings</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ttt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">total_time</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">ttt</span> <span class="o">=</span> <span class="kc">None</span>
+            
+        <span class="n">tt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span>
+        
+        <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;### Timings:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">timings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="s2">&quot; - </span><span class="si">{}</span><span class="se">\t</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_format_time</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">tt</span><span class="p">,</span> <span class="n">ttt</span><span class="p">),</span> <span class="n">key</span><span class="p">)</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; - </span><span class="si">{}</span><span class="se">\t</span><span class="si">{}</span><span class="s2"> total time</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_format_time</span><span class="p">(</span><span class="n">tt</span><span class="p">),</span> 
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            
+        <span class="c1"># Report counts</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;### Counts:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="s2">&quot; - </span><span class="si">{}</span><span class="se">\t</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        
+        <span class="c1"># Report messages</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;### Messages:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="s2">&quot; - </span><span class="si">{}</span><span class="s2">:</span><span class="se">\t</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            
+
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear counts, timings and messages from this section</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timings</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_time</span> <span class="o">=</span> <span class="kc">None</span>
+        
+
+
+
+<span class="k">def</span> <span class="nf">_solver_safety_check</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c_ops</span><span class="o">=</span><span class="p">[],</span> <span class="n">e_ops</span><span class="o">=</span><span class="p">[],</span> <span class="n">args</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="c1"># Input is std Qobj (Hamiltonian or Liouvillian)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">Qobj</span><span class="p">):</span>
+        <span class="n">Hdims</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">dims</span>
+        <span class="n">Htype</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">type</span>
+        <span class="n">_structure_check</span><span class="p">(</span><span class="n">Hdims</span><span class="p">,</span> <span class="n">Htype</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+    <span class="c1"># Input H is function</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="p">(</span><span class="n">FunctionType</span><span class="p">,</span> <span class="n">BuiltinFunctionType</span><span class="p">)):</span>
+        <span class="n">Hdims</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">dims</span>
+        <span class="n">Htype</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+        <span class="n">_structure_check</span><span class="p">(</span><span class="n">Hdims</span><span class="p">,</span> <span class="n">Htype</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+    <span class="c1"># Input is td-list</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Qobj</span><span class="p">):</span>
+            <span class="n">Hdims</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dims</span>
+            <span class="n">Htype</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">Hdims</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dims</span>
+            <span class="n">Htype</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">FunctionType</span><span class="p">,</span> <span class="n">BuiltinFunctionType</span><span class="p">)):</span>
+            <span class="n">Hdims</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="mi">0</span><span class="p">,</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">dims</span>
+            <span class="n">Htype</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="mi">0</span><span class="p">,</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">type</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid td-list element.&#39;</span><span class="p">)</span>
+        <span class="c1"># Check all operators in list</span>
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">H</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">Qobj</span><span class="p">):</span>
+                <span class="n">_temp_dims</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">dims</span>
+                <span class="n">_temp_type</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">_temp_dims</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dims</span>
+                <span class="n">_temp_type</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="p">(</span><span class="n">FunctionType</span><span class="p">,</span> <span class="n">BuiltinFunctionType</span><span class="p">)):</span>
+                <span class="n">_temp_dims</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="n">ii</span><span class="p">](</span><span class="mi">0</span><span class="p">,</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">dims</span>
+                <span class="n">_temp_type</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="n">ii</span><span class="p">](</span><span class="mi">0</span><span class="p">,</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+            <span class="k">else</span><span class="p">:</span> 
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid td-list element.&#39;</span><span class="p">)</span>
+            <span class="n">_structure_check</span><span class="p">(</span><span class="n">_temp_dims</span><span class="p">,</span><span class="n">_temp_type</span><span class="p">,</span><span class="n">state</span><span class="p">)</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid time-dependent format.&#39;</span><span class="p">)</span>
+    
+    
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c_ops</span><span class="p">)):</span>
+        <span class="n">do_tests</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">Qobj</span><span class="p">):</span>
+            <span class="n">_temp_state</span> <span class="o">=</span> <span class="n">c_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">Qobj</span><span class="p">):</span>
+                <span class="n">_temp_state</span> <span class="o">=</span> <span class="n">c_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="n">do_tests</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">0</span><span class="p">])):</span>
+                    <span class="n">_temp_state</span> <span class="o">=</span> <span class="n">c_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">kk</span><span class="p">]</span>
+                    <span class="n">_structure_check</span><span class="p">(</span><span class="n">Hdims</span><span class="p">,</span> <span class="n">Htype</span><span class="p">,</span> <span class="n">_temp_state</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid td-list element.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">do_tests</span><span class="p">:</span>
+            <span class="n">_structure_check</span><span class="p">(</span><span class="n">Hdims</span><span class="p">,</span> <span class="n">Htype</span><span class="p">,</span> <span class="n">_temp_state</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e_ops</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> 
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">e_ops</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">Qobj</span><span class="p">):</span>
+                <span class="n">_temp_state</span> <span class="o">=</span> <span class="n">e_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">_temp_state</span> <span class="o">=</span> <span class="n">e_ops</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid td-list element.&#39;</span><span class="p">)</span>
+            <span class="n">_structure_check</span><span class="p">(</span><span class="n">Hdims</span><span class="p">,</span><span class="n">Htype</span><span class="p">,</span><span class="n">_temp_state</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e_ops</span><span class="p">,</span> <span class="n">FunctionType</span><span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid e_ops specification.&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_structure_check</span><span class="p">(</span><span class="n">Hdims</span><span class="p">,</span> <span class="n">Htype</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Input state is a ket vector</span>
+        <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;ket&#39;</span><span class="p">:</span>
+            <span class="c1"># Input is Hamiltonian</span>
+            <span class="k">if</span> <span class="n">Htype</span> <span class="o">==</span> <span class="s1">&#39;oper&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">Hdims</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">state</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Input operator and ket do not share same structure.&#39;</span><span class="p">)</span>
+            <span class="c1"># Input is super and state is ket</span>
+            <span class="k">elif</span> <span class="n">Htype</span> <span class="o">==</span> <span class="s1">&#39;super&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">Hdims</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">state</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Input operator and ket do not share same structure.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid input operator.&#39;</span><span class="p">)</span>
+        <span class="c1"># Input state is a density matrix</span>
+        <span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;oper&#39;</span><span class="p">:</span>
+            <span class="c1"># Input is Hamiltonian and state is density matrix</span>
+            <span class="k">if</span> <span class="n">Htype</span> <span class="o">==</span> <span class="s1">&#39;oper&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">Hdims</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">state</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Input operators do not share same structure.&#39;</span><span class="p">)</span>
+            <span class="c1"># Input is super op. and state is density matrix</span>
+            <span class="k">elif</span> <span class="n">Htype</span> <span class="o">==</span> <span class="s1">&#39;super&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">Hdims</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">state</span><span class="o">.</span><span class="n">dims</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Input operators do not share same structure.&#39;</span><span class="p">)</span>
+
+ 
+<span class="c1">#</span>
+<span class="c1"># create a global instance of the SolverConfiguration class</span>
+<span class="c1">#</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">SolverConfiguration</span><span class="p">()</span>
+
+<span class="c1"># for backwards compatibility</span>
+<span class="n">Odeoptions</span> <span class="o">=</span> <span class="n">Options</span>
+<span class="n">Odedata</span> <span class="o">=</span> <span class="n">Result</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

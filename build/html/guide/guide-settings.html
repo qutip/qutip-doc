@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Modifying Internal QuTiP Settings &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API documentation" href="../apidoc/apidoc.html" />
+    <link rel="prev" title="Generating Random Quantum States &amp; Operators" href="guide-random.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="guide.html">Users Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="guide-overview.html">Guide Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-basics.html">Basic Operations on Quantum Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html">Manipulating States and Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-tensor.html">Using Tensor Products and Partial Traces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-dynamics.html">Time Evolution and Quantum System Dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-steady.html">Solving for Steady-State Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-eseries.html">An Overview of the Eseries Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-correlation.html">Two-time correlation functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-control.html">Quantum Optimal Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-bloch.html">Plotting on the Bloch Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-visualization.html">Visualization of quantum states and processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-parfor.html">Parallel computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-saving.html">Saving QuTiP Objects and Data Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-random.html">Generating Random Quantum States &amp; Operators</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Modifying Internal QuTiP Settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#user-accessible-parameters">User Accessible Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-changing-settings">Example: Changing Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#persistent-settings">Persistent Settings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="guide.html">Users Guide</a> &raquo;</li>
+        
+      <li>Modifying Internal QuTiP Settings</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/guide/guide-settings.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="modifying-internal-qutip-settings">
+<span id="settings"></span><h1>Modifying Internal QuTiP Settings<a class="headerlink" href="#modifying-internal-qutip-settings" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="user-accessible-parameters">
+<span id="settings-params"></span><h2>User Accessible Parameters<a class="headerlink" href="#user-accessible-parameters" title="Permalink to this headline">¶</a></h2>
+<p>In this section we show how to modify a few of the internal parameters used by QuTiP. The settings that can be modified are given in the following table:</p>
+<table border="1" class="table-striped docutils">
+<colgroup>
+<col width="30%" />
+<col width="42%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Setting</th>
+<th class="head">Description</th>
+<th class="head">Options</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>auto_herm</cite></td>
+<td>Automatically calculate the hermicity of
+quantum objects.</td>
+<td>True / False</td>
+</tr>
+<tr class="row-odd"><td><cite>auto_tidyup</cite></td>
+<td>Automatically tidyup quantum objects.</td>
+<td>True / False</td>
+</tr>
+<tr class="row-even"><td><cite>auto_tidyup_atol</cite></td>
+<td>Tolerance used by tidyup</td>
+<td>any <cite>float</cite> value &gt; 0</td>
+</tr>
+<tr class="row-odd"><td><cite>atol</cite></td>
+<td>General tolerance</td>
+<td>any <cite>float</cite> value &gt; 0</td>
+</tr>
+<tr class="row-even"><td><cite>num_cpus</cite></td>
+<td>Number of CPU's used for multiprocessing.</td>
+<td><cite>int</cite> between 1 and # cpu's</td>
+</tr>
+<tr class="row-odd"><td><cite>debug</cite></td>
+<td>Show debug printouts.</td>
+<td>True / False</td>
+</tr>
+<tr class="row-even"><td><cite>openmp_thresh</cite></td>
+<td>NNZ matrix must have for OPENMP.</td>
+<td>Int</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="example-changing-settings">
+<span id="settings-usage"></span><h2>Example: Changing Settings<a class="headerlink" href="#example-changing-settings" title="Permalink to this headline">¶</a></h2>
+<p>The two most important settings are <code class="docutils literal notranslate"><span class="pre">auto_tidyup</span></code> and <code class="docutils literal notranslate"><span class="pre">auto_tidyup_atol</span></code> as they control whether the small elements of a quantum object should be removed, and what number should be considered as the cut-off tolerance. Modifying these, or any other parameters, is quite simple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qutip</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">auto_tidyup</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>These settings will be used for the current QuTiP session only and will need to be modified again when restarting QuTiP.  If running QuTiP from a script file, then place the <cite>qutip.setings.xxxx</cite> commands immediately after <cite>from qutip import *</cite> at the top of the script file.  If you want to reset the parameters back to their default values then call the reset command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qutip</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="persistent-settings">
+<h2>Persistent Settings<a class="headerlink" href="#persistent-settings" title="Permalink to this headline">¶</a></h2>
+<p>When QuTiP is imported, it looks for a file named <code class="docutils literal notranslate"><span class="pre">qutiprc</span></code> in a folder called <code class="docutils literal notranslate"><span class="pre">.qutip</span></code> user's home directory. If this file is found, it will be loaded and overwrite the QuTiP default settings, which allows for persistent changes in the QuTiP settings to be made. A sample <code class="docutils literal notranslate"><span class="pre">qutiprc</span></code> file is show below. The syntax is a simple key-value format, where the keys and possible values are described in the table above:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">qutip</span><span class="p">]</span>
+<span class="n">auto_tidyup</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">auto_herm</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">auto_tidyup_atol</span><span class="o">=</span><span class="mf">1e-12</span>
+<span class="n">num_cpus</span><span class="o">=</span><span class="mi">4</span>
+<span class="n">debug</span><span class="o">=</span><span class="kc">False</span>
+</pre></div>
+</div>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">openmp_thresh</span></code> value is automatically generatd by QuTiP.  It is also possible to set a specific compiler for QuTiP to use when generating runtime Cython code for time-dependent problems.  For example, the following section in the <code class="docutils literal notranslate"><span class="pre">qutiprc</span></code> file will set the compiler to be <code class="docutils literal notranslate"><span class="pre">clang-3.9</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">compiler</span><span class="p">]</span>
+<span class="n">cc</span> <span class="o">=</span> <span class="n">clang</span><span class="o">-</span><span class="mf">3.9</span>
+<span class="n">cxx</span> <span class="o">=</span> <span class="n">clang</span><span class="o">-</span><span class="mf">3.9</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../apidoc/apidoc.html" class="btn btn-neutral float-right" title="API documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="guide-random.html" class="btn btn-neutral float-left" title="Generating Random Quantum States &amp; Operators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

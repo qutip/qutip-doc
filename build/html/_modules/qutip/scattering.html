@@ -1,0 +1,569 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qutip.scattering &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>qutip.scattering</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qutip.scattering</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of QuTiP: Quantum Toolbox in Python.</span>
+<span class="c1">#</span>
+<span class="c1">#    Copyright (c) 2011 and later, Paul D. Nation and Robert J. Johansson.</span>
+<span class="c1">#    All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Redistribution and use in source and binary forms, with or without</span>
+<span class="c1">#    modification, are permitted provided that the following conditions are</span>
+<span class="c1">#    met:</span>
+<span class="c1">#</span>
+<span class="c1">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="c1">#       this list of conditions and the following disclaimer.</span>
+<span class="c1">#</span>
+<span class="c1">#    2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="c1">#       notice, this list of conditions and the following disclaimer in the</span>
+<span class="c1">#       documentation and/or other materials provided with the distribution.</span>
+<span class="c1">#</span>
+<span class="c1">#    3. Neither the name of the QuTiP: Quantum Toolbox in Python nor the names</span>
+<span class="c1">#       of its contributors may be used to endorse or promote products derived</span>
+<span class="c1">#       from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1">#    &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A</span>
+<span class="c1">#    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1">#    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1">#    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1">#    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1">#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1">#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1">#    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">###############################################################################</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Photon scattering in quantum optical systems</span>
+
+<span class="sd">This module includes a collection of functions for numerically computing photon</span>
+<span class="sd">scattering in driven arbitrary systems coupled to some configuration of output</span>
+<span class="sd">waveguides. The implementation of these functions closely follows the</span>
+<span class="sd">mathematical treatment given in K.A. Fischer, et. al., Scattering of Coherent</span>
+<span class="sd">Pulses from Quantum Optical Systems (2017, arXiv:1710.02875).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># Author:  Ben Bartlett</span>
+<span class="c1"># Contact: benbartlett@stanford.edu</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">product</span><span class="p">,</span> <span class="n">combinations_with_replacement</span>
+<span class="kn">from</span> <span class="nn">qutip</span> <span class="k">import</span> <span class="n">propagator</span><span class="p">,</span> <span class="n">Options</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">zero_ket</span><span class="p">,</span> <span class="n">Qobj</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;temporal_basis_vector&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;temporal_scattered_state&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;scattering_probability&#39;</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">Evolver</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A caching class which takes a Hamiltonian and a list of times to calculate</span>
+<span class="sd">    and memoize propagators for the system between any two times as demanded.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    H : :class: qutip.Qobj or list</span>
+<span class="sd">        System-waveguide(s) Hamiltonian or effective Hamiltonian in `Qobj` or</span>
+<span class="sd">        list-callback format. If construct_effective_hamiltonian is not</span>
+<span class="sd">        specified, an effective Hamiltonian is constructed from H and c_ops.</span>
+<span class="sd">    times : list-like</span>
+<span class="sd">        List of times to evaluate propagators over.</span>
+<span class="sd">    options : :class: qutip.Options</span>
+<span class="sd">        Solver options to use when computing propagators.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    H : :class: qutip.Qobj or list</span>
+<span class="sd">        System-waveguide(s) Hamiltonian, may be time-dependent.</span>
+<span class="sd">    tlist : list-like</span>
+<span class="sd">        List of times to evaluate propagators over.</span>
+<span class="sd">    propagators : (dict of float: (dict of float: :class: qutip.Qobj))</span>
+<span class="sd">        Dictionary of dictionaries of propagator objects with keys of</span>
+<span class="sd">        evaluation times, e.g. propagators[t2][t1] returns U[t2,t1].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="o">=</span> <span class="n">H</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tlist</span> <span class="o">=</span> <span class="n">tlist</span>
+        <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">(</span><span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">normalize_output</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span>
+        <span class="c1"># Make a blank nested dictionary to store propagators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propagators</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">tlist</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tlist</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">propagators</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">tlist</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">prop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="n">ti</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute U[t2,t1] where t2 &gt; t1 or return the cached operator.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tf : float</span>
+<span class="sd">            Final time to compute the propagator U[tf, ti].</span>
+<span class="sd">        ti : float</span>
+<span class="sd">            Initial time to compute the propagator U[tf,ti].</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        propagator : :class: qutip.Qobj</span>
+<span class="sd">            The propagation operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tlist</span><span class="p">,</span> <span class="p">[</span><span class="n">ti</span><span class="p">,</span> <span class="n">tf</span><span class="p">],</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+        <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tlist</span><span class="p">[</span><span class="n">left</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tlist</span><span class="p">[</span><span class="n">right</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">propagators</span><span class="p">[</span><span class="n">t2</span><span class="p">][</span><span class="n">t1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">propagators</span><span class="p">[</span><span class="n">t2</span><span class="p">][</span><span class="n">t1</span><span class="p">]</span> <span class="o">=</span> <span class="n">propagator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">],</span>
+                                                  <span class="n">options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">,</span>
+                                                  <span class="n">unitary_mode</span><span class="o">=</span><span class="s1">&#39;single&#39;</span><span class="p">)</span>
+            <span class="c1"># Something is still broken about batch unitary mode (see #807)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">propagators</span><span class="p">[</span><span class="n">t2</span><span class="p">][</span><span class="n">t1</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">set_partition</span><span class="p">(</span><span class="n">collection</span><span class="p">,</span> <span class="n">num_sets</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumerate all ways of partitioning collection into num_sets different lists,</span>
+<span class="sd">    e.g. list(set_partition([1,2], 2)) = [[[1, 2], []], [[1], [2]], [[2], [1]],</span>
+<span class="sd">    [[], [1, 2]]].</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    collection : iterable</span>
+<span class="sd">        Collection to generate a set partition of.</span>
+<span class="sd">    num_sets : int</span>
+<span class="sd">        Number of sets to partition collection into.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    partition : iterable</span>
+<span class="sd">        The partitioning of collection into num_sets sets.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">partitioning</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_sets</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">collection</span><span class="p">)):</span>
+        <span class="n">partition</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_sets</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">set_index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">partitioning</span><span class="p">):</span>
+            <span class="n">partition</span><span class="p">[</span><span class="n">set_index</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">collection</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="k">for</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">partition</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">photon_scattering_operator</span><span class="p">(</span><span class="n">evolver</span><span class="p">,</span> <span class="n">c_ops</span><span class="p">,</span> <span class="n">taus_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the scattering operator for a system emitting into multiple</span>
+<span class="sd">    waveguides.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    evolver : :class: qutip.scattering.Evolver</span>
+<span class="sd">        Evolver-wrapped Hamiltonian describing the system.</span>
+<span class="sd">    c_ops : list</span>
+<span class="sd">        list of collapse operators for each waveguide; these are assumed to</span>
+<span class="sd">        include spontaneous decay rates, e.g.</span>
+<span class="sd">        :math:`\\sigma = \\sqrt \\gamma \\cdot a`</span>
+<span class="sd">    taus_list : list-like</span>
+<span class="sd">        List of (list of emission times) for each waveguide.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    omega : :class: qutip.Qobj</span>
+<span class="sd">        The temporal scattering operator with dimensionality equal to the</span>
+<span class="sd">        system state.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># Extract the full list of taus</span>
+    <span class="n">taus</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>  <span class="c1"># temporal &quot;ground state&quot; for arbitrary waveguide</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tau_wg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">taus_list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">tau</span> <span class="ow">in</span> <span class="n">tau_wg</span><span class="p">:</span>
+            <span class="n">taus</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tau</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+    <span class="n">taus</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">tup</span><span class="p">:</span> <span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># sort taus by time</span>
+
+    <span class="c1"># Compute Prod Ueff(tq, tq-1)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">taus</span><span class="p">)):</span>
+        <span class="n">tq</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="n">taus</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">tprev</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">taus</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">omega</span> <span class="o">=</span> <span class="n">c_ops</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">*</span> <span class="n">evolver</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">tq</span><span class="p">,</span> <span class="n">tprev</span><span class="p">)</span> <span class="o">*</span> <span class="n">omega</span>
+
+    <span class="c1"># Add the &lt;0|Uff(TP, tm)|0&gt; term</span>
+    <span class="n">tmax</span> <span class="o">=</span> <span class="n">evolver</span><span class="o">.</span><span class="n">tlist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">taumax</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">taus</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># if taus[-1] &lt; tmax:</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="n">evolver</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="n">tmax</span><span class="p">,</span> <span class="n">taumax</span><span class="p">)</span> <span class="o">*</span> <span class="n">omega</span>
+
+    <span class="k">return</span> <span class="n">omega</span>
+
+
+<div class="viewcode-block" id="temporal_basis_vector"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.scattering.temporal_basis_vector">[docs]</a><span class="k">def</span> <span class="nf">temporal_basis_vector</span><span class="p">(</span><span class="n">waveguide_emission_indices</span><span class="p">,</span> <span class="n">n_time_bins</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a temporal basis vector for emissions at specified time bins into</span>
+<span class="sd">    specified waveguides.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    waveguide_emission_indices : list or tuple</span>
+<span class="sd">        List of indices where photon emission occurs for each waveguide,</span>
+<span class="sd">        e.g. [[t1_wg1], [t1_wg2, t2_wg2], [], [t1_wg4, t2_wg4, t3_wg4]].</span>
+<span class="sd">    n_time_bins : int</span>
+<span class="sd">        Number of time bins; the range over which each index can vary.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    temporal_basis_vector : :class: qutip.Qobj</span>
+<span class="sd">        A basis vector representing photon scattering at the specified indices.</span>
+<span class="sd">        If there are W waveguides, T times, and N photon emissions, then the</span>
+<span class="sd">        basis vector has dimensionality (W*T)^N.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Cast waveguide_emission_indices to list for mutability</span>
+    <span class="n">waveguide_emission_indices</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">waveguide_emission_indices</span><span class="p">]</span>
+
+    <span class="c1"># Calculate total number of waveguides</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">waveguide_emission_indices</span><span class="p">)</span>
+
+    <span class="c1"># Calculate total number of emissions</span>
+    <span class="n">num_emissions</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">waveguide_indices</span><span class="p">)</span> <span class="k">for</span> <span class="n">waveguide_indices</span> <span class="ow">in</span>
+                         <span class="n">waveguide_emission_indices</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">num_emissions</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">basis</span><span class="p">(</span><span class="n">W</span> <span class="o">*</span> <span class="n">n_time_bins</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Pad the emission indices with zeros</span>
+    <span class="n">offset_indices</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">wg_indices</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">waveguide_emission_indices</span><span class="p">):</span>
+        <span class="n">offset_indices</span> <span class="o">+=</span> <span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">n_time_bins</span><span class="p">)</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">wg_indices</span><span class="p">]</span>
+
+    <span class="c1"># Return an appropriate tensor product state</span>
+    <span class="k">return</span> <span class="n">tensor</span><span class="p">([</span><span class="n">basis</span><span class="p">(</span><span class="n">n_time_bins</span> <span class="o">*</span> <span class="n">W</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">offset_indices</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="temporal_scattered_state"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.scattering.temporal_scattered_state">[docs]</a><span class="k">def</span> <span class="nf">temporal_scattered_state</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">n_emissions</span><span class="p">,</span> <span class="n">c_ops</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span>
+                             <span class="n">system_zero_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">construct_effective_hamiltonian</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the scattered n-photon state projected onto the temporal basis.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    H : :class: qutip.Qobj or list</span>
+<span class="sd">        System-waveguide(s) Hamiltonian or effective Hamiltonian in Qobj or</span>
+<span class="sd">        list-callback format. If construct_effective_hamiltonian is not</span>
+<span class="sd">        specified, an effective Hamiltonian is constructed from `H` and</span>
+<span class="sd">        `c_ops`.</span>
+<span class="sd">    psi0 : :class: qutip.Qobj</span>
+<span class="sd">        Initial state density matrix :math:`\\rho(t_0)` or state vector</span>
+<span class="sd">        :math:`\\psi(t_0)`.</span>
+<span class="sd">    n_emissions : int</span>
+<span class="sd">        Number of photon emissions to calculate.</span>
+<span class="sd">    c_ops : list</span>
+<span class="sd">        List of collapse operators for each waveguide; these are assumed to</span>
+<span class="sd">        include spontaneous decay rates, e.g.</span>
+<span class="sd">        :math:`\\sigma = \\sqrt \\gamma \\cdot a`</span>
+<span class="sd">    tlist : array_like</span>
+<span class="sd">        List of times for :math:`\\tau_i`. tlist should contain 0 and exceed</span>
+<span class="sd">        the pulse duration / temporal region of interest.</span>
+<span class="sd">    system_zero_state : :class: qutip.Qobj</span>
+<span class="sd">        State representing zero excitations in the system. Defaults to</span>
+<span class="sd">        :math:`\\psi(t_0)`</span>
+<span class="sd">    construct_effective_hamiltonian : bool</span>
+<span class="sd">        Whether an effective Hamiltonian should be constructed from H and c_ops:</span>
+<span class="sd">        :math:`H_{eff} = H - \\frac{i}{2} \\sum_n \\sigma_n^\\dagger \\sigma_n`</span>
+<span class="sd">        Default: True.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    phi_n : :class: qutip.Qobj</span>
+<span class="sd">        The scattered bath state projected onto the temporal basis given by</span>
+<span class="sd">        tlist. If there are W waveguides, T times, and N photon emissions, then</span>
+<span class="sd">        the state is a tensor product state with dimensionality T^(W*N).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tlist</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">c_ops</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">n_emissions</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">phi_n</span> <span class="o">=</span> <span class="n">zero_ket</span><span class="p">(</span><span class="n">W</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">phi_n</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="n">zero_ket</span><span class="p">(</span><span class="n">W</span> <span class="o">*</span> <span class="n">T</span><span class="p">)]</span> <span class="o">*</span> <span class="n">n_emissions</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">construct_effective_hamiltonian</span><span class="p">:</span>
+        <span class="c1"># Construct an effective Hamiltonian from system hamiltonian and c_ops</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">H</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Qobj</span><span class="p">:</span>
+            <span class="n">Heff</span> <span class="o">=</span> <span class="n">H</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">([</span><span class="n">op</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">op</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">c_ops</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">H</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">Heff</span> <span class="o">=</span> <span class="n">H</span> <span class="o">+</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">([</span><span class="n">op</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">op</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">c_ops</span><span class="p">])]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Hamiltonian must be Qobj or list-callback format&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">Heff</span> <span class="o">=</span> <span class="n">H</span>
+
+    <span class="n">evolver</span> <span class="o">=</span> <span class="n">Evolver</span><span class="p">(</span><span class="n">Heff</span><span class="p">,</span> <span class="n">tlist</span><span class="p">)</span>
+
+    <span class="n">all_emission_indices</span> <span class="o">=</span> <span class="n">combinations_with_replacement</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">),</span> <span class="n">n_emissions</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">system_zero_state</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">system_zero_state</span> <span class="o">=</span> <span class="n">psi0</span>
+
+    <span class="c1"># Compute &lt;omega_tau&gt; for all combinations of tau</span>
+    <span class="k">for</span> <span class="n">emission_indices</span> <span class="ow">in</span> <span class="n">all_emission_indices</span><span class="p">:</span>
+        <span class="c1"># Consider unique partitionings of emission times into waveguides</span>
+        <span class="n">partition</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">set_partition</span><span class="p">(</span><span class="n">emission_indices</span><span class="p">,</span> <span class="n">W</span><span class="p">)))</span>
+        <span class="c1"># Consider all possible partitionings of time bins by waveguide</span>
+        <span class="k">for</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">partition</span><span class="p">:</span>
+            <span class="n">taus</span> <span class="o">=</span> <span class="p">[[</span><span class="n">tlist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">wg_indices</span><span class="p">]</span> <span class="k">for</span> <span class="n">wg_indices</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span>
+            <span class="n">omega</span> <span class="o">=</span> <span class="n">photon_scattering_operator</span><span class="p">(</span><span class="n">evolver</span><span class="p">,</span> <span class="n">c_ops</span><span class="p">,</span> <span class="n">taus</span><span class="p">)</span>
+            <span class="n">phi_n_amp</span> <span class="o">=</span> <span class="n">system_zero_state</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">psi0</span>
+            <span class="c1"># Add scatter amplitude times temporal basis to overall state</span>
+            <span class="n">phi_n</span> <span class="o">+=</span> <span class="n">phi_n_amp</span> <span class="o">*</span> <span class="n">temporal_basis_vector</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">phi_n</span></div>
+
+
+<div class="viewcode-block" id="scattering_probability"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.scattering.scattering_probability">[docs]</a><span class="k">def</span> <span class="nf">scattering_probability</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">n_emissions</span><span class="p">,</span> <span class="n">c_ops</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span>
+                           <span class="n">system_zero_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">construct_effective_hamiltonian</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the integrated probability of scattering n photons in an arbitrary</span>
+<span class="sd">    system. This function accepts a nonlinearly spaced array of times.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    H : :class: qutip.Qobj or list</span>
+<span class="sd">        System-waveguide(s) Hamiltonian or effective Hamiltonian in Qobj or</span>
+<span class="sd">        list-callback format. If construct_effective_hamiltonian is not</span>
+<span class="sd">        specified, an effective Hamiltonian is constructed from H and</span>
+<span class="sd">        `c_ops`.</span>
+<span class="sd">    psi0 : :class: qutip.Qobj</span>
+<span class="sd">        Initial state density matrix :math:`\\rho(t_0)` or state vector</span>
+<span class="sd">        :math:`\\psi(t_0)`.</span>
+<span class="sd">    n_emissions : int</span>
+<span class="sd">        Number of photons emitted by the system (into any combination of</span>
+<span class="sd">        waveguides).</span>
+<span class="sd">    c_ops : list</span>
+<span class="sd">        List of collapse operators for each waveguide; these are assumed to</span>
+<span class="sd">        include spontaneous decay rates, e.g.</span>
+<span class="sd">        :math:`\\sigma = \\sqrt \\gamma \\cdot a`.</span>
+<span class="sd">    tlist : array_like</span>
+<span class="sd">        List of times for :math:`\\tau_i`. tlist should contain 0 and exceed</span>
+<span class="sd">        the pulse duration / temporal region of interest; tlist need not be</span>
+<span class="sd">        linearly spaced.</span>
+<span class="sd">    system_zero_state : :class: qutip.Qobj</span>
+<span class="sd">        State representing zero excitations in the system. Defaults to</span>
+<span class="sd">        `basis(systemDims, 0)`.</span>
+<span class="sd">    construct_effective_hamiltonian : bool</span>
+<span class="sd">        Whether an effective Hamiltonian should be constructed from H and c_ops:</span>
+<span class="sd">        :math:`H_{eff} = H - \\frac{i}{2} \\sum_n \\sigma_n^\\dagger \\sigma_n`</span>
+<span class="sd">        Default: True.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    scattering_prob : float</span>
+<span class="sd">        The probability of scattering n photons from the system over the time</span>
+<span class="sd">        range specified.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">phi_n</span> <span class="o">=</span> <span class="n">temporal_scattered_state</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">n_emissions</span><span class="p">,</span> <span class="n">c_ops</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span>
+                                     <span class="n">system_zero_state</span><span class="p">,</span>
+                                     <span class="n">construct_effective_hamiltonian</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tlist</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">c_ops</span><span class="p">)</span>
+
+    <span class="c1"># Compute &lt;omega_tau&gt; for all combinations of tau</span>
+    <span class="n">all_emission_indices</span> <span class="o">=</span> <span class="n">combinations_with_replacement</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">),</span> <span class="n">n_emissions</span><span class="p">)</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">T</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_emissions</span><span class="p">)</span>
+
+    <span class="c1"># Project scattered state onto temporal basis</span>
+    <span class="k">for</span> <span class="n">emit_indices</span> <span class="ow">in</span> <span class="n">all_emission_indices</span><span class="p">:</span>
+        <span class="c1"># Consider unique emission time partitionings</span>
+        <span class="n">partition</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">set_partition</span><span class="p">(</span><span class="n">emit_indices</span><span class="p">,</span> <span class="n">W</span><span class="p">)))</span>
+        <span class="c1"># wg_indices_list = list(set_partition(indices, W))</span>
+        <span class="k">for</span> <span class="n">wg_indices</span> <span class="ow">in</span> <span class="n">partition</span><span class="p">:</span>
+            <span class="n">projector</span> <span class="o">=</span> <span class="n">temporal_basis_vector</span><span class="p">(</span><span class="n">wg_indices</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+            <span class="n">amplitude</span> <span class="o">=</span> <span class="p">(</span><span class="n">projector</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">phi_n</span><span class="p">)</span><span class="o">.</span><span class="n">full</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">probs</span><span class="p">[</span><span class="n">emit_indices</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">amplitude</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">*</span> <span class="n">amplitude</span><span class="p">)</span>
+
+    <span class="c1"># Iteratively integrate to obtain single value</span>
+    <span class="k">while</span> <span class="n">probs</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">():</span>
+        <span class="n">probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">probs</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">tlist</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

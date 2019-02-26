@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Dynamics Simulation Results &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lindblad Master Equation Solver" href="dynamics-master.html" />
+    <link rel="prev" title="Time Evolution and Quantum System Dynamics" href="../guide-dynamics.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html">Users Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../guide-overview.html">Guide Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-basics.html">Basic Operations on Quantum Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-states.html">Manipulating States and Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-tensor.html">Using Tensor Products and Partial Traces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../guide-dynamics.html">Time Evolution and Quantum System Dynamics</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Dynamics Simulation Results</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#the-solver-result-class">The solver.Result Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#accessing-result-data">Accessing Result Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#saving-and-loading-result-objects">Saving and Loading Result Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dynamics-master.html">Lindblad Master Equation Solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamics-monte.html">Monte Carlo Solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamics-time.html">Solving Problems with Time-dependent Hamiltonians</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamics-bloch-redfield.html">Bloch-Redfield master equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamics-floquet.html">Floquet Formalism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamics-options.html">Setting Options for the Dynamics Solvers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-steady.html">Solving for Steady-State Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-eseries.html">An Overview of the Eseries Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-correlation.html">Two-time correlation functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-control.html">Quantum Optimal Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-bloch.html">Plotting on the Bloch Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-visualization.html">Visualization of quantum states and processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-parfor.html">Parallel computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-saving.html">Saving QuTiP Objects and Data Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-random.html">Generating Random Quantum States &amp; Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-settings.html">Modifying Internal QuTiP Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../guide.html">Users Guide</a> &raquo;</li>
+        
+          <li><a href="../guide-dynamics.html">Time Evolution and Quantum System Dynamics</a> &raquo;</li>
+        
+      <li>Dynamics Simulation Results</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/guide/dynamics/dynamics-data.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dynamics-simulation-results">
+<span id="solver-result"></span><h1>Dynamics Simulation Results<a class="headerlink" href="#dynamics-simulation-results" title="Permalink to this headline">¶</a></h1>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">In QuTiP 2, the results from all of the dynamics solvers are returned as Odedata objects. This unified and significantly simplified postprocessing of simulation results from different solvers, compared to QuTiP 1. However, this change also results in the loss of backward compatibility with QuTiP version 1.x. In QuTiP 3, the Odedata class has been renamed to Result, but for backwards compatibility an alias between Result and Odedata is provided.</p>
+</div>
+<div class="section" id="the-solver-result-class">
+<span id="solver-result-class"></span><h2>The solver.Result Class<a class="headerlink" href="#the-solver-result-class" title="Permalink to this headline">¶</a></h2>
+<p>Before embarking on simulating the dynamics of quantum systems, we will first look at the data structure used for returning the simulation results to the user. This object is a <a class="reference internal" href="../../apidoc/classes.html#qutip.solver.Result" title="qutip.solver.Result"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.solver.Result()</span></code></a> class that stores all the crucial data needed for analyzing and plotting the results of a simulation.  Like the <a class="reference internal" href="../../apidoc/classes.html#qutip.Qobj" title="qutip.Qobj"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.Qobj()</span></code></a> class, the <code class="docutils literal notranslate"><span class="pre">Result</span></code> class has a collection of properties for storing information.  However, in contrast to the <code class="docutils literal notranslate"><span class="pre">Qobj</span></code> class, this structure contains no methods, and is therefore nothing but a container object.  A generic <code class="docutils literal notranslate"><span class="pre">Result</span></code> object <code class="docutils literal notranslate"><span class="pre">result</span></code> contains the following properties for storing simulation data:</p>
+<table border="1" class="table-striped docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Property</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">result.solver</span></code></td>
+<td>String indicating which solver was used to generate the data.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">result.times</span></code></td>
+<td>List/array of times at which simulation data is calculated.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">result.expect</span></code></td>
+<td>List/array of expectation values, if requested.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">result.states</span></code></td>
+<td>List/array of state vectors/density matrices calculated at <code class="docutils literal notranslate"><span class="pre">times</span></code>,
+if requested.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">result.num_expect</span></code></td>
+<td>The number of expectation value operators in the simulation.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">result.num_collapse</span></code></td>
+<td>The number of collapse operators in the simulation.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">result.ntraj</span></code></td>
+<td>Number of Monte Carlo trajectories run.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">result.col_times</span></code></td>
+<td>Times at which state collapse occurred. Only for Monte Carlo solver.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">result.col_which</span></code></td>
+<td>Which collapse operator was responsible for each collapse in
+in <code class="docutils literal notranslate"><span class="pre">col_times</span></code>. Only used by Monte Carlo solver.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">result.seeds</span></code></td>
+<td>Seeds used in generating random numbers for Monte Carlo solver.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="accessing-result-data">
+<span id="odedata-access"></span><h2>Accessing Result Data<a class="headerlink" href="#accessing-result-data" title="Permalink to this headline">¶</a></h2>
+<p>To understand how to access the data in a Result object we will use an example as a guide, although we do not worry about the simulation details at this stage.  Like all solvers, the Monte Carlo solver used in this example returns an Result object, here called simply <code class="docutils literal notranslate"><span class="pre">result</span></code>.  To see what is contained inside <code class="docutils literal notranslate"><span class="pre">result</span></code> we can use the print function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="go">    Result object with mcsolve data.</span>
+<span class="go">    ---------------------------------</span>
+<span class="go">    expect = True</span>
+<span class="go">    num_expect = 2, num_collapse = 2, ntraj = 500</span>
+</pre></div>
+</div>
+<p>The first line tells us that this data object was generated from the Monte Carlo solver <code class="docutils literal notranslate"><span class="pre">mcsolve</span></code> (discussed in <a class="reference internal" href="dynamics-monte.html#monte"><span class="std std-ref">Monte Carlo Solver</span></a>).  The next line (not the <code class="docutils literal notranslate"><span class="pre">---</span></code> line of course) indicates that this object contains expectation value data.  Finally, the last line gives the number of expectation value and collapse operators used in the simulation, along with the number of Monte Carlo trajectories run.  Note that the number of trajectories <code class="docutils literal notranslate"><span class="pre">ntraj</span></code> is only displayed when using the Monte Carlo solver.</p>
+<p>Now we have all the information needed to analyze the simulation results. To access the data for the two expectation values one can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expt0</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">expect</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expt1</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">expect</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Recall that Python uses C-style indexing that begins with zero (i.e., [0] =&gt; 1st collapse operator data). Together with the array of times at which these expectation values are calculated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">times</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">times</span>
+</pre></div>
+</div>
+<p>we can plot the resulting expectation values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">expt0</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">expt1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>State vectors, or density matrices, as well as <code class="docutils literal notranslate"><span class="pre">col_times</span></code> and <code class="docutils literal notranslate"><span class="pre">col_which</span></code>, are accessed in a similar manner, although typically one does not need an index (i.e [0]) since there is only one list for each of these components.  The one exception to this rule is if you choose to output state vectors from the Monte Carlo solver, in which case there are <code class="docutils literal notranslate"><span class="pre">ntraj</span></code> number of state vector arrays.</p>
+</div>
+<div class="section" id="saving-and-loading-result-objects">
+<span id="odedata-saving"></span><h2>Saving and Loading Result Objects<a class="headerlink" href="#saving-and-loading-result-objects" title="Permalink to this headline">¶</a></h2>
+<p>The main advantage in using the Result class as a data storage object comes from the simplicity in which simulation data can be stored and later retrieved. The <a class="reference internal" href="../../apidoc/functions.html#qutip.fileio.qsave" title="qutip.fileio.qsave"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.fileio.qsave()</span></code></a> and <a class="reference internal" href="../../apidoc/functions.html#qutip.fileio.qload" title="qutip.fileio.qload"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.fileio.qload()</span></code></a> functions are designed for this task.  To begin, let us save the <code class="docutils literal notranslate"><span class="pre">data</span></code> object from the previous section into a file called &quot;cavity+qubit-data&quot; in the current working directory by calling:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qsave</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s1">&#39;cavity+qubit-data&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All of the data results are then stored in a single file of the same name with a &quot;.qu&quot; extension.  Therefore, everything needed to later this data is stored in a single file.  Loading the file is just as easy as saving:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stored_result</span> <span class="o">=</span> <span class="n">qload</span><span class="p">(</span><span class="s1">&#39;cavity+qubit-data&#39;</span><span class="p">)</span>
+<span class="go">    Loaded Result object:</span>
+<span class="go">    Result object with mcsolve data.</span>
+<span class="go">    ---------------------------------</span>
+<span class="go">    expect = True</span>
+<span class="go">    num_expect = 2, num_collapse = 2, ntraj = 500</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">stored_result</span></code> is the new name of the Result object.  We can then extract the data and plot in the same manner as before:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expt0</span> <span class="o">=</span> <span class="n">stored_result</span><span class="o">.</span><span class="n">expect</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">expt1</span> <span class="o">=</span> <span class="n">stored_result</span><span class="o">.</span><span class="n">expect</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">times</span> <span class="o">=</span> <span class="n">stored_result</span><span class="o">.</span><span class="n">times</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">expt0</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">expt1</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Also see <a class="reference internal" href="../guide-saving.html#saving"><span class="std std-ref">Saving QuTiP Objects and Data Sets</span></a> for more information on saving quantum objects, as well as arrays for use in other programs.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dynamics-master.html" class="btn btn-neutral float-right" title="Lindblad Master Equation Solver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../guide-dynamics.html" class="btn btn-neutral float-left" title="Time Evolution and Quantum System Dynamics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

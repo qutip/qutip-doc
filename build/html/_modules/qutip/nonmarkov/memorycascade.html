@@ -1,0 +1,630 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qutip.nonmarkov.memorycascade &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>qutip.nonmarkov.memorycascade</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qutip.nonmarkov.memorycascade</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># This file is part of QuTiP: Quantum Toolbox in Python.</span>
+<span class="c1">#</span>
+<span class="c1">#    Copyright (c) 2015 and later, Arne L. Grimsmo</span>
+<span class="c1">#    All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Redistribution and use in source and binary forms, with or without</span>
+<span class="c1">#    modification, are permitted provided that the following conditions are</span>
+<span class="c1">#    met:</span>
+<span class="c1">#</span>
+<span class="c1">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="c1">#       this list of conditions and the following disclaimer.</span>
+<span class="c1">#</span>
+<span class="c1">#    2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="c1">#       notice, this list of conditions and the following disclaimer in the</span>
+<span class="c1">#       documentation and/or other materials provided with the distribution.</span>
+<span class="c1">#</span>
+<span class="c1">#    3. Neither the name of the QuTiP: Quantum Toolbox in Python nor the names</span>
+<span class="c1">#       of its contributors may be used to endorse or promote products derived</span>
+<span class="c1">#       from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1">#    &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A</span>
+<span class="c1">#    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1">#    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1">#    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1">#    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1">#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1">#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1">#    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">###############################################################################</span>
+
+<span class="c1"># @author: Arne L. Grimsmo</span>
+<span class="c1"># @email1: arne.grimsmo@gmail.com</span>
+<span class="c1"># @organization: University of Sherbrooke</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module is an implementation of the method introduced in [1], for</span>
+<span class="sd">solving open quantum systems subject to coherent feedback with a single</span>
+<span class="sd">discrete time-delay. This method is referred to as the ``memory cascade&#39;&#39;</span>
+<span class="sd">method in qutip.</span>
+
+<span class="sd">[1] Arne L. Grimsmo, Phys. Rev. Lett 115, 060402 (2015)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">qutip</span> <span class="k">as</span> <span class="nn">qt</span>
+
+
+<div class="viewcode-block" id="MemoryCascade"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.nonmarkov.memorycascade.MemoryCascade">[docs]</a><span class="k">class</span> <span class="nc">MemoryCascade</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class for running memory cascade simulations of open quantum systems</span>
+<span class="sd">    with time-delayed coherent feedback.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    H_S : :class:`qutip.Qobj`</span>
+<span class="sd">        System Hamiltonian (can also be a Liouvillian)</span>
+
+<span class="sd">    L1 : :class:`qutip.Qobj` / list of :class:`qutip.Qobj`</span>
+<span class="sd">        System operators coupling into the feedback loop. Can be a single</span>
+<span class="sd">        operator or a list of operators.</span>
+
+<span class="sd">    L2 : :class:`qutip.Qobj` / list of :class:`qutip.Qobj`</span>
+<span class="sd">        System operators coupling out of the feedback loop. Can be a single</span>
+<span class="sd">        operator or a list of operators. L2 must have the same length as L1.</span>
+
+<span class="sd">    S_matrix: *array*</span>
+<span class="sd">        S matrix describing which operators in L1 are coupled to which</span>
+<span class="sd">        operators in L2 by the feedback channel. Defaults to an n by n identity</span>
+<span class="sd">        matrix where n is the number of elements in L1/L2.</span>
+
+<span class="sd">    c_ops_markov : :class:`qutip.Qobj` / list of :class:`qutip.Qobj`</span>
+<span class="sd">        Decay operators describing conventional Markovian decay channels.</span>
+<span class="sd">        Can be a single operator or a list of operators.</span>
+
+<span class="sd">    integrator : str {&#39;propagator&#39;, &#39;mesolve&#39;}</span>
+<span class="sd">        Integrator method to use. Defaults to &#39;propagator&#39; which tends to be </span>
+<span class="sd">        faster for long times (i.e., large Hilbert space).</span>
+
+<span class="sd">    parallel : bool</span>
+<span class="sd">        Run integrator in parallel if True. Only implemented for &#39;propagator&#39;</span>
+<span class="sd">        as the integrator method.</span>
+
+<span class="sd">    options : :class:`qutip.solver.Options`</span>
+<span class="sd">        Generic solver options.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">H_S</span><span class="p">,</span> <span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">S_matrix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c_ops_markov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">integrator</span><span class="o">=</span><span class="s1">&#39;propagator&#39;</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">Options</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">H_S</span> <span class="o">=</span> <span class="n">H_S</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sysdims</span> <span class="o">=</span> <span class="n">H_S</span><span class="o">.</span><span class="n">dims</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">qt</span><span class="o">.</span><span class="n">Qobj</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">L1</span> <span class="o">=</span> <span class="p">[</span><span class="n">L1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">L1</span> <span class="o">=</span> <span class="n">L1</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">L2</span><span class="p">,</span> <span class="n">qt</span><span class="o">.</span><span class="n">Qobj</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">L2</span> <span class="o">=</span> <span class="p">[</span><span class="n">L2</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">L2</span> <span class="o">=</span> <span class="n">L2</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L2</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;L1 and L2 has to be of equal length.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c_ops_markov</span><span class="p">,</span> <span class="n">qt</span><span class="o">.</span><span class="n">Qobj</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c_ops_markov</span> <span class="o">=</span> <span class="p">[</span><span class="n">c_ops_markov</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c_ops_markov</span> <span class="o">=</span> <span class="n">c_ops_markov</span>
+
+        <span class="k">if</span> <span class="n">S_matrix</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">S_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L1</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">S_matrix</span> <span class="o">=</span> <span class="n">S_matrix</span>
+        <span class="c1"># create system identity superoperator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Id</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">qeye</span><span class="p">(</span><span class="n">H_S</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Id</span><span class="o">.</span><span class="n">dims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sysdims</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Id</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">sprepost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store_states</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">store_states</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">integrator</span> <span class="o">=</span> <span class="n">integrator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span> <span class="o">=</span> <span class="n">parallel</span>
+
+<div class="viewcode-block" id="MemoryCascade.propagator"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.nonmarkov.memorycascade.MemoryCascade.propagator">[docs]</a>    <span class="k">def</span> <span class="nf">propagator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">notrace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute propagator for time t and time-delay tau</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        t : *float*</span>
+<span class="sd">            current time</span>
+
+<span class="sd">        tau : *float*</span>
+<span class="sd">            time-delay</span>
+
+<span class="sd">        notrace : *bool* {False}</span>
+<span class="sd">            If this optional is set to True, a propagator is returned for a</span>
+<span class="sd">            cascade of k systems, where :math:`(k-1) tau &lt; t &lt; k tau`.</span>
+<span class="sd">            If set to False (default), a generalized partial trace is performed</span>
+<span class="sd">            and a propagator for a single system is returned.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        : :class:`qutip.Qobj`</span>
+<span class="sd">            time-propagator for reduced system dynamics</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="n">tau</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">t</span><span class="o">-</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">tau</span>
+        <span class="n">G1</span><span class="p">,</span> <span class="n">E0</span> <span class="o">=</span> <span class="n">_generator</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">H_S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S_matrix</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">c_ops_markov</span><span class="p">)</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="n">_integrate</span><span class="p">(</span><span class="n">G1</span><span class="p">,</span> <span class="n">E0</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">integrator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">integrator</span><span class="p">,</span>
+                       <span class="n">parallel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">G2</span><span class="p">,</span> <span class="n">null</span> <span class="o">=</span> <span class="n">_generator</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">H_S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L2</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">S_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_ops_markov</span><span class="p">)</span>
+            <span class="n">G2</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">composite</span><span class="p">(</span><span class="n">G2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Id</span><span class="p">)</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">_integrate</span><span class="p">(</span><span class="n">G2</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">integrator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">integrator</span><span class="p">,</span> 
+                    <span class="n">parallel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">E</span><span class="o">.</span><span class="n">dims</span> <span class="o">=</span> <span class="n">E0</span><span class="o">.</span><span class="n">dims</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">notrace</span><span class="p">:</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">_genptrace</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">E</span></div>
+
+<div class="viewcode-block" id="MemoryCascade.outfieldpropagator"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.nonmarkov.memorycascade.MemoryCascade.outfieldpropagator">[docs]</a>    <span class="k">def</span> <span class="nf">outfieldpropagator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blist</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">c1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">notrace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute propagator for computing output field expectation values</span>
+<span class="sd">        &lt;O_n(tn)...O_2(t2)O_1(t1)&gt; for times t1,t2,... and</span>
+<span class="sd">        O_i = I, b_out, b_out^\dagger, b_loop, b_loop^\dagger</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        blist : array_like</span>
+<span class="sd">            List of integers specifying the field operators:</span>
+<span class="sd">            0: I (nothing)</span>
+<span class="sd">            1: b_out</span>
+<span class="sd">            2: b_out^\dagger</span>
+<span class="sd">            3: b_loop</span>
+<span class="sd">            4: b_loop^\dagger</span>
+
+<span class="sd">        tlist : array_like</span>
+<span class="sd">            list of corresponding times t1,..,tn at which to evaluate the field</span>
+<span class="sd">            operators</span>
+
+<span class="sd">        tau : float</span>
+<span class="sd">            time-delay</span>
+
+<span class="sd">        c1 : :class:`qutip.Qobj`</span>
+<span class="sd">            system collapse operator that couples to the in-loop field in</span>
+<span class="sd">            question (only needs to be specified if self.L1 has more than one</span>
+<span class="sd">            element)</span>
+
+<span class="sd">        c2 : :class:`qutip.Qobj`</span>
+<span class="sd">            system collapse operator that couples to the output field in</span>
+<span class="sd">            question (only needs to be specified if self.L2 has more than one</span>
+<span class="sd">            element)</span>
+
+<span class="sd">        notrace : bool {False}</span>
+<span class="sd">            If this optional is set to True, a propagator is returned for a</span>
+<span class="sd">            cascade of k systems, where :math:`(k-1) tau &lt; t &lt; k tau`.</span>
+<span class="sd">            If set to False (default), a generalized partial trace is performed</span>
+<span class="sd">            and a propagator for a single system is returned.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        : :class:`qutip.Qobj`</span>
+<span class="sd">            time-propagator for computing field correlation function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">c1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">c1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">L1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Argument c1 has to be specified when more than&#39;</span> <span class="o">+</span>
+                             <span class="s1">&#39;one collapse operator couples to the feedback&#39;</span> <span class="o">+</span>
+                             <span class="s1">&#39;loop.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">c2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">L2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Argument c1 has to be specified when more than&#39;</span> <span class="o">+</span>
+                             <span class="s1">&#39;one collapse operator couples to the feedback&#39;</span> <span class="o">+</span>
+                             <span class="s1">&#39;loop.&#39;</span><span class="p">)</span>
+        <span class="n">klist</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">slist</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tlist</span><span class="p">:</span>
+            <span class="n">klist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="n">tau</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">slist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="p">(</span><span class="n">klist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">tau</span><span class="p">)</span>
+        <span class="n">kmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">klist</span><span class="p">)</span>
+        <span class="n">zipped</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">slist</span><span class="p">,</span> <span class="n">klist</span><span class="p">,</span> <span class="n">blist</span><span class="p">))</span>
+        <span class="n">slist</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">in</span> <span class="n">zipped</span><span class="p">]</span>
+        <span class="n">klist</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">in</span> <span class="n">zipped</span><span class="p">]</span>
+        <span class="n">blist</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">in</span> <span class="n">zipped</span><span class="p">]</span>
+
+        <span class="n">G1</span><span class="p">,</span> <span class="n">E0</span> <span class="o">=</span> <span class="n">_generator</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">H_S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S_matrix</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">c_ops_markov</span><span class="p">)</span>
+        <span class="n">sprev</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="n">E0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">slist</span><span class="p">):</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">_integrate</span><span class="p">(</span><span class="n">G1</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">sprev</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">integrator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">integrator</span><span class="p">,</span>
+                    <span class="n">parallel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">klist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">l1</span> <span class="o">=</span> <span class="mf">0.</span><span class="o">*</span><span class="n">qt</span><span class="o">.</span><span class="n">Qobj</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">l1</span> <span class="o">=</span> <span class="n">_localop</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">klist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">kmax</span><span class="p">)</span>
+            <span class="n">l2</span> <span class="o">=</span> <span class="n">_localop</span><span class="p">(</span><span class="n">c2</span><span class="p">,</span> <span class="n">klist</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">kmax</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">blist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">superop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Id</span>
+            <span class="k">elif</span> <span class="n">blist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">superop</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">spre</span><span class="p">(</span><span class="n">l1</span><span class="o">+</span><span class="n">l2</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">blist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">superop</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">spost</span><span class="p">(</span><span class="n">l1</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span><span class="o">+</span><span class="n">l2</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span>
+            <span class="k">elif</span> <span class="n">blist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">superop</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">spre</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">blist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">superop</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">spost</span><span class="p">(</span><span class="n">l1</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Allowed values in blist are 0, 1, 2, 3 &#39;</span> <span class="o">+</span>
+                                 <span class="s1">&#39;and 4.&#39;</span><span class="p">)</span>
+            <span class="n">superop</span><span class="o">.</span><span class="n">dims</span> <span class="o">=</span> <span class="n">E</span><span class="o">.</span><span class="n">dims</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">superop</span><span class="o">*</span><span class="n">E</span>
+            <span class="n">sprev</span> <span class="o">=</span> <span class="n">s</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="n">_integrate</span><span class="p">(</span><span class="n">G1</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">slist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">tau</span><span class="p">,</span> <span class="n">integrator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">integrator</span><span class="p">,</span>
+                <span class="n">parallel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+
+        <span class="n">E</span><span class="o">.</span><span class="n">dims</span> <span class="o">=</span> <span class="n">E0</span><span class="o">.</span><span class="n">dims</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">notrace</span><span class="p">:</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">_genptrace</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">kmax</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">E</span></div>
+
+<div class="viewcode-block" id="MemoryCascade.rhot"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.nonmarkov.memorycascade.MemoryCascade.rhot">[docs]</a>    <span class="k">def</span> <span class="nf">rhot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">tau</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the reduced system density matrix :math:`\\rho(t)`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        rho0 : :class:`qutip.Qobj`</span>
+<span class="sd">            initial density matrix or state vector (ket)</span>
+
+<span class="sd">        t : float</span>
+<span class="sd">            current time</span>
+
+<span class="sd">        tau : float</span>
+<span class="sd">            time-delay</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        : :class:`qutip.Qobj`</span>
+<span class="sd">            density matrix at time :math:`t`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">qt</span><span class="o">.</span><span class="n">isket</span><span class="p">(</span><span class="n">rho0</span><span class="p">):</span>
+            <span class="n">rho0</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">ket2dm</span><span class="p">(</span><span class="n">rho0</span><span class="p">)</span>
+
+        <span class="n">E</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">propagator</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">tau</span><span class="p">)</span>
+        <span class="n">rhovec</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">operator_to_vector</span><span class="p">(</span><span class="n">rho0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">qt</span><span class="o">.</span><span class="n">vector_to_operator</span><span class="p">(</span><span class="n">E</span><span class="o">*</span><span class="n">rhovec</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MemoryCascade.outfieldcorr"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.nonmarkov.memorycascade.MemoryCascade.outfieldcorr">[docs]</a>    <span class="k">def</span> <span class="nf">outfieldcorr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">blist</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">c1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute output field expectation value</span>
+<span class="sd">        &lt;O_n(tn)...O_2(t2)O_1(t1)&gt; for times t1,t2,... and</span>
+<span class="sd">        O_i = I, b_out, b_out^\dagger, b_loop, b_loop^\dagger</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        rho0 : :class:`qutip.Qobj`</span>
+<span class="sd">            initial density matrix or state vector (ket).</span>
+
+<span class="sd">        blist : array_like</span>
+<span class="sd">            List of integers specifying the field operators:</span>
+<span class="sd">            0: I (nothing)</span>
+<span class="sd">            1: b_out</span>
+<span class="sd">            2: b_out^\dagger</span>
+<span class="sd">            3: b_loop</span>
+<span class="sd">            4: b_loop^\dagger</span>
+
+<span class="sd">        tlist : array_like</span>
+<span class="sd">            list of corresponding times t1,..,tn at which to evaluate the field</span>
+<span class="sd">            operators</span>
+
+<span class="sd">        tau : float</span>
+<span class="sd">            time-delay</span>
+
+<span class="sd">        c1 : :class:`qutip.Qobj`</span>
+<span class="sd">            system collapse operator that couples to the in-loop field in</span>
+<span class="sd">            question (only needs to be specified if self.L1 has more than one</span>
+<span class="sd">            element)</span>
+
+<span class="sd">        c2 : :class:`qutip.Qobj`</span>
+<span class="sd">            system collapse operator that couples to the output field in</span>
+<span class="sd">            question (only needs to be specified if self.L2 has more than one</span>
+<span class="sd">            element)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        : complex</span>
+<span class="sd">            expectation value of field correlation function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outfieldpropagator</span><span class="p">(</span><span class="n">blist</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="n">tau</span><span class="p">)</span>
+        <span class="n">rhovec</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">operator_to_vector</span><span class="p">(</span><span class="n">rho0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">qt</span><span class="o">.</span><span class="n">vector_to_operator</span><span class="p">(</span><span class="n">E</span><span class="o">*</span><span class="n">rhovec</span><span class="p">))</span><span class="o">.</span><span class="n">tr</span><span class="p">()</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_localop</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a local operator on the l&#39;th system by tensoring</span>
+<span class="sd">    with identity operators on all the other k-1 systems</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">l</span> <span class="o">&gt;</span> <span class="n">k</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;index l out of range&#39;</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">op</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">qeye</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">I</span><span class="o">.</span><span class="n">dims</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">dims</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">h</span>
+
+
+<span class="k">def</span> <span class="nf">_genptrace</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform a gneralized partial trace on a superoperator E, tracing out all</span>
+<span class="sd">    subsystems but one.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">nsys</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">E</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">tensor_contract</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">nsys</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">nsys</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">nsys</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">E</span>
+
+
+<span class="k">def</span> <span class="nf">_generator</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c_ops_markov</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a Liouvillian for a cascaded chain of k system copies</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">qeye</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">Id</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">sprepost</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">S</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">L1</span><span class="p">))</span>
+    <span class="c1"># create Lindbladian</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">Qobj</span><span class="p">()</span>
+    <span class="n">E0</span> <span class="o">=</span> <span class="n">Id</span>
+    <span class="c1"># first system</span>
+    <span class="n">L</span> <span class="o">+=</span> <span class="n">qt</span><span class="o">.</span><span class="n">liouvillian</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="n">_localop</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">L2</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="c1"># Identiy superoperator</span>
+        <span class="n">E0</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">composite</span><span class="p">(</span><span class="n">E0</span><span class="p">,</span> <span class="n">Id</span><span class="p">)</span>
+        <span class="c1"># Bare Hamiltonian</span>
+        <span class="n">Hl</span> <span class="o">=</span> <span class="n">_localop</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="n">L</span> <span class="o">+=</span> <span class="n">qt</span><span class="o">.</span><span class="n">liouvillian</span><span class="p">(</span><span class="n">Hl</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="c1"># Markovian Decay channels</span>
+        <span class="k">if</span> <span class="n">c_ops_markov</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">c_ops_markov</span><span class="p">:</span>
+                <span class="n">cl</span> <span class="o">=</span> <span class="n">_localop</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">L</span> <span class="o">+=</span> <span class="n">qt</span><span class="o">.</span><span class="n">liouvillian</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="n">cl</span><span class="p">])</span>
+        <span class="c1"># Cascade coupling</span>
+        <span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">_localop</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">L1</span><span class="p">])</span>
+        <span class="n">c2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">_localop</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">L2</span><span class="p">])</span>
+        <span class="n">c2dag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">c2</span><span class="p">])</span>
+        <span class="n">Hcasc</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">c2dag</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">c1</span><span class="p">))</span>
+        <span class="n">Hcasc</span> <span class="o">+=</span> <span class="n">Hcasc</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span>
+        <span class="n">Lvec</span> <span class="o">=</span> <span class="n">c2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">c1</span><span class="p">)</span>
+        <span class="n">L</span> <span class="o">+=</span> <span class="n">qt</span><span class="o">.</span><span class="n">liouvillian</span><span class="p">(</span><span class="n">Hcasc</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">Lvec</span><span class="p">])</span>
+    <span class="c1"># last system</span>
+    <span class="n">L</span> <span class="o">+=</span> <span class="n">qt</span><span class="o">.</span><span class="n">liouvillian</span><span class="p">(</span><span class="n">_localop</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span> <span class="p">[</span><span class="n">_localop</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">L1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">c_ops_markov</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">c_ops_markov</span><span class="p">:</span>
+            <span class="n">cl</span> <span class="o">=</span> <span class="n">_localop</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+            <span class="n">L</span> <span class="o">+=</span> <span class="n">qt</span><span class="o">.</span><span class="n">liouvillian</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="n">cl</span><span class="p">])</span>
+    <span class="n">E0</span><span class="o">.</span><span class="n">dims</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">dims</span>
+    <span class="c1"># return generator and identity superop E0</span>
+    <span class="k">return</span> <span class="n">L</span><span class="p">,</span> <span class="n">E0</span>
+
+
+<span class="k">def</span> <span class="nf">_integrate</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">E0</span><span class="p">,</span> <span class="n">ti</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="n">integrator</span><span class="o">=</span><span class="s1">&#39;propagator&#39;</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">opt</span><span class="o">=</span><span class="n">qt</span><span class="o">.</span><span class="n">Options</span><span class="p">()):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Basic ode integrator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">tf</span> <span class="o">&gt;</span> <span class="n">ti</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s1">&#39;mesolve&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;parallelization not implemented for &quot;mesolve&quot;&#39;</span><span class="p">)</span>
+            <span class="n">opt</span><span class="o">.</span><span class="n">store_final_state</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">sol</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">mesolve</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">E0</span><span class="p">,</span> <span class="p">[</span><span class="n">ti</span><span class="p">,</span> <span class="n">tf</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="n">options</span><span class="o">=</span><span class="n">opt</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">sol</span><span class="o">.</span><span class="n">final_state</span>
+        <span class="k">elif</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s1">&#39;propagator&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">qt</span><span class="o">.</span><span class="n">propagator</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="p">(</span><span class="n">tf</span><span class="o">-</span><span class="n">ti</span><span class="p">),</span> <span class="p">[],</span> <span class="p">[],</span> <span class="n">parallel</span><span class="o">=</span><span class="n">parallel</span><span class="p">,</span>
+                                 <span class="n">options</span><span class="o">=</span><span class="n">opt</span><span class="p">)</span><span class="o">*</span><span class="n">E0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;integrator keyword must be either &quot;propagator&quot;&#39;</span> <span class="o">+</span>
+                              <span class="s1">&#39;or &quot;mesolve&quot;&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">E0</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

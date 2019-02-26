@@ -1,0 +1,643 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qutip.control.propcomp &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>qutip.control.propcomp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qutip.control.propcomp</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># This file is part of QuTiP: Quantum Toolbox in Python.</span>
+<span class="c1">#</span>
+<span class="c1">#    Copyright (c) 2014 and later, Alexander J G Pitchford</span>
+<span class="c1">#    All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Redistribution and use in source and binary forms, with or without</span>
+<span class="c1">#    modification, are permitted provided that the following conditions are</span>
+<span class="c1">#    met:</span>
+<span class="c1">#</span>
+<span class="c1">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="c1">#       this list of conditions and the following disclaimer.</span>
+<span class="c1">#</span>
+<span class="c1">#    2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="c1">#       notice, this list of conditions and the following disclaimer in the</span>
+<span class="c1">#       documentation and/or other materials provided with the distribution.</span>
+<span class="c1">#</span>
+<span class="c1">#    3. Neither the name of the QuTiP: Quantum Toolbox in Python nor the names</span>
+<span class="c1">#       of its contributors may be used to endorse or promote products derived</span>
+<span class="c1">#       from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1">#    &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A</span>
+<span class="c1">#    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1">#    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1">#    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1">#    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1">#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1">#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1">#    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">###############################################################################</span>
+
+<span class="c1"># @author: Alexander Pitchford</span>
+<span class="c1"># @email1: agp1@aber.ac.uk</span>
+<span class="c1"># @email2: alex.pitchford@gmail.com</span>
+<span class="c1"># @organization: Aberystwyth University</span>
+<span class="c1"># @supervisor: Daniel Burgarth</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Propagator Computer</span>
+<span class="sd">Classes used to calculate the propagators,</span>
+<span class="sd">and also the propagator gradient when exact gradient methods are used</span>
+
+<span class="sd">Note the methods in the _Diag class was inspired by:</span>
+<span class="sd">DYNAMO - Dynamic Framework for Quantum Optimal Control</span>
+<span class="sd">See Machnes et.al., arXiv.1011.4874</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># import os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="nn">la</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="c1"># QuTiP</span>
+<span class="kn">from</span> <span class="nn">qutip</span> <span class="k">import</span> <span class="n">Qobj</span>
+<span class="c1"># QuTiP logging</span>
+<span class="kn">import</span> <span class="nn">qutip.logging_utils</span> <span class="k">as</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span>
+<span class="c1"># QuTiP control modules</span>
+<span class="kn">from</span> <span class="nn">qutip.control</span> <span class="k">import</span> <span class="n">errors</span>
+
+<span class="k">def</span> <span class="nf">_func_deprecation</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Issue deprecation warning</span>
+<span class="sd">    Using stacklevel=3 will ensure message refers the function</span>
+<span class="sd">    calling with the deprecated parameter,</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="n">stacklevel</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PropagatorComputer"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.propcomp.PropagatorComputer">[docs]</a><span class="k">class</span> <span class="nc">PropagatorComputer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base for all  Propagator Computer classes</span>
+<span class="sd">    that are used to calculate the propagators,</span>
+<span class="sd">    and also the propagator gradient when exact gradient methods are used</span>
+<span class="sd">    Note: they must be instantiated with a Dynamics object, that is the</span>
+<span class="sd">    container for the data that the functions operate on</span>
+<span class="sd">    This base class cannot be used directly. See subclass descriptions</span>
+<span class="sd">    and choose the appropriate one for the application</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    log_level : integer</span>
+<span class="sd">        level of messaging output from the logger.</span>
+<span class="sd">        Options are attributes of qutip_utils.logging,</span>
+<span class="sd">        in decreasing levels of messaging, are:</span>
+<span class="sd">        DEBUG_INTENSE, DEBUG_VERBOSE, DEBUG, INFO, WARN, ERROR, CRITICAL</span>
+<span class="sd">        Anything WARN or above is effectively &#39;quiet&#39; execution,</span>
+<span class="sd">        assuming everything runs as expected.</span>
+<span class="sd">        The default NOTSET implies that the level will be taken from</span>
+<span class="sd">        the QuTiP settings file, which by default is WARN</span>
+
+<span class="sd">    grad_exact : boolean</span>
+<span class="sd">        indicates whether the computer class instance is capable</span>
+<span class="sd">        of computing propagator gradients. It is used to determine</span>
+<span class="sd">        whether to create the Dynamics prop_grad array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dynamics</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">dynamics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+<div class="viewcode-block" id="PropagatorComputer.reset"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.propcomp.PropagatorComputer.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        reset any configuration data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_text</span> <span class="o">=</span> <span class="s1">&#39;PROP_COMP_BASE&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">log_level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grad_exact</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="PropagatorComputer.apply_params"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.propcomp.PropagatorComputer.apply_params">[docs]</a>    <span class="k">def</span> <span class="nf">apply_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set object attributes based on the dictionary (if any) passed in the</span>
+<span class="sd">        instantiation, or passed as a parameter</span>
+<span class="sd">        This is called during the instantiation automatically.</span>
+<span class="sd">        The key value pairs are the attribute name and value</span>
+<span class="sd">        Note: attributes are created if they do not exist already,</span>
+<span class="sd">        and are overwritten if they do.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">log_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span>
+
+    <span class="nd">@log_level</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">log_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lvl</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the log_level attribute and set the level of the logger</span>
+<span class="sd">        that is call logger.setLevel(lvl)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">lvl</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">grad_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_exact</span>
+
+    <span class="k">def</span> <span class="nf">compute_propagator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="n">_func_deprecation</span><span class="p">(</span><span class="s2">&quot;&#39;compute_propagator&#39; has been replaced &quot;</span>
+                        <span class="s2">&quot;by &#39;_compute_propagator&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_propagator</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                               
+    <span class="k">def</span> <span class="nf">_compute_propagator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate the progator between X(k) and X(k+1)</span>
+<span class="sd">        Uses matrix expm of the dyn_gen at that point (in time)</span>
+<span class="sd">        Assumes that the dyn_gen have been been calculated,</span>
+<span class="sd">        i.e. drift and ctrls combined</span>
+<span class="sd">        Return the propagator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">dgt</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">dyn</span><span class="o">.</span><span class="n">oper_dtype</span> <span class="o">==</span> <span class="n">Qobj</span><span class="p">:</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">dgt</span><span class="o">.</span><span class="n">expm</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">expm</span><span class="p">(</span><span class="n">dgt</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">prop</span>
+
+    <span class="k">def</span> <span class="nf">compute_diff_prop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+        <span class="n">_func_deprecation</span><span class="p">(</span><span class="s2">&quot;&#39;compute_diff_prop&#39; has been replaced &quot;</span>
+                        <span class="s2">&quot;by &#39;_compute_diff_prop&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_diff_prop</span><span class="p">(</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_compute_diff_prop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the propagator from the current point to a trial point</span>
+<span class="sd">        a distance &#39;epsilon&#39; (change in amplitude)</span>
+<span class="sd">        in the direction the given control j in timeslot k</span>
+<span class="sd">        Returns the propagator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">UsageError</span><span class="p">(</span><span class="s2">&quot;Not implemented in the baseclass.&quot;</span>
+                                <span class="s2">&quot; Choose a subclass&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">compute_prop_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">compute_prop</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">_func_deprecation</span><span class="p">(</span><span class="s2">&quot;&#39;compute_prop_grad&#39; has been replaced &quot;</span>
+                        <span class="s2">&quot;by &#39;_compute_prop_grad&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_prop_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">compute_prop</span><span class="o">=</span><span class="n">compute_prop</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_compute_prop_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">compute_prop</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the gradient of propagator wrt the control amplitude</span>
+<span class="sd">        in the timeslot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">UsageError</span><span class="p">(</span><span class="s2">&quot;Not implemented in the baseclass.&quot;</span>
+                                <span class="s2">&quot; Choose a subclass&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PropCompApproxGrad"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.propcomp.PropCompApproxGrad">[docs]</a><span class="k">class</span> <span class="nc">PropCompApproxGrad</span><span class="p">(</span><span class="n">PropagatorComputer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This subclass can be used when the propagator is calculated simply</span>
+<span class="sd">    by expm of the dynamics generator, i.e. when gradients will be calculated</span>
+<span class="sd">    using approximate methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PropCompApproxGrad.reset"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.propcomp.PropCompApproxGrad.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        reset any configuration data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">PropagatorComputer</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_text</span> <span class="o">=</span> <span class="s1">&#39;APPROX&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grad_exact</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_params</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_compute_diff_prop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the propagator from the current point to a trial point</span>
+<span class="sd">        a distance &#39;epsilon&#39; (change in amplitude)</span>
+<span class="sd">        in the direction the given control j in timeslot k</span>
+<span class="sd">        Returns the propagator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">dgt_eps</span> <span class="o">=</span> <span class="p">(</span><span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span>
+                <span class="n">epsilon</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_ctrl_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">dyn</span><span class="o">.</span><span class="n">oper_dtype</span> <span class="o">==</span> <span class="n">Qobj</span><span class="p">:</span>
+            <span class="n">prop_eps</span> <span class="o">=</span> <span class="n">dgt_eps</span><span class="o">.</span><span class="n">expm</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prop_eps</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">expm</span><span class="p">(</span><span class="n">dgt_eps</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">prop_eps</span></div>
+
+
+<div class="viewcode-block" id="PropCompDiag"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.propcomp.PropCompDiag">[docs]</a><span class="k">class</span> <span class="nc">PropCompDiag</span><span class="p">(</span><span class="n">PropagatorComputer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Coumputes the propagator exponentiation using diagonalisation of</span>
+<span class="sd">    of the dynamics generator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PropCompDiag.reset"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.propcomp.PropCompDiag.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        reset any configuration data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">PropagatorComputer</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_text</span> <span class="o">=</span> <span class="s1">&#39;DIAG&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grad_exact</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_params</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_compute_propagator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the exponentiation of the dynamics generator (H)</span>
+<span class="sd">        As part of the calc the the eigen decomposition is required, which</span>
+<span class="sd">        is reused in the propagator gradient calculation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">dyn</span><span class="o">.</span><span class="n">_ensure_decomp_curr</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dyn</span><span class="o">.</span><span class="n">oper_dtype</span> <span class="o">==</span> <span class="n">Qobj</span><span class="p">:</span>
+
+            <span class="n">prop</span> <span class="o">=</span> <span class="p">(</span><span class="n">dyn</span><span class="o">.</span><span class="n">_dyn_gen_eigenvectors</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">_prop_eigen</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">*</span>
+                                <span class="n">dyn</span><span class="o">.</span><span class="n">_get_dyn_gen_eigenvectors_adj</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_dyn_gen_eigenvectors</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                                    <span class="n">dyn</span><span class="o">.</span><span class="n">_prop_eigen</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                                <span class="n">dyn</span><span class="o">.</span><span class="n">_get_dyn_gen_eigenvectors_adj</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">prop</span>
+
+    <span class="k">def</span> <span class="nf">_compute_prop_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">compute_prop</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the gradient of propagator wrt the control amplitude</span>
+<span class="sd">        in the timeslot.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            [prop], prop_grad</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">dyn</span><span class="o">.</span><span class="n">_ensure_decomp_curr</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">compute_prop</span><span class="p">:</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_propagator</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dyn</span><span class="o">.</span><span class="n">oper_dtype</span> <span class="o">==</span> <span class="n">Qobj</span><span class="p">:</span>
+            <span class="c1"># put control dyn_gen in combined dg diagonal basis</span>
+            <span class="n">cdg</span> <span class="o">=</span>  <span class="p">(</span><span class="n">dyn</span><span class="o">.</span><span class="n">_get_dyn_gen_eigenvectors_adj</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">*</span>
+                        <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_ctrl_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span><span class="o">*</span>
+                        <span class="n">dyn</span><span class="o">.</span><span class="n">_dyn_gen_eigenvectors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+            <span class="c1"># multiply (elementwise) by timeslice and factor matrix</span>
+            <span class="n">cdg</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">cdg</span><span class="o">.</span><span class="n">full</span><span class="p">()</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">],</span>
+                        <span class="n">dyn</span><span class="o">.</span><span class="n">_dyn_gen_factormatrix</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span> <span class="n">dims</span><span class="o">=</span><span class="n">dyn</span><span class="o">.</span><span class="n">dyn_dims</span><span class="p">)</span>
+            <span class="c1"># Return to canonical basis</span>
+            <span class="n">prop_grad</span> <span class="o">=</span> <span class="p">(</span><span class="n">dyn</span><span class="o">.</span><span class="n">_dyn_gen_eigenvectors</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="n">cdg</span><span class="o">*</span>
+                        <span class="n">dyn</span><span class="o">.</span><span class="n">_get_dyn_gen_eigenvectors_adj</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># put control dyn_gen in combined dg diagonal basis</span>
+            <span class="n">cdg</span> <span class="o">=</span>  <span class="n">dyn</span><span class="o">.</span><span class="n">_get_dyn_gen_eigenvectors_adj</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                        <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_ctrl_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                        <span class="n">dyn</span><span class="o">.</span><span class="n">_dyn_gen_eigenvectors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+            <span class="c1"># multiply (elementwise) by timeslice and factor matrix</span>
+            <span class="n">cdg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">cdg</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_dyn_gen_factormatrix</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+            <span class="c1"># Return to canonical basis</span>
+            <span class="n">prop_grad</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_dyn_gen_eigenvectors</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">cdg</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                        <span class="n">dyn</span><span class="o">.</span><span class="n">_get_dyn_gen_eigenvectors_adj</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">compute_prop</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">prop</span><span class="p">,</span> <span class="n">prop_grad</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">prop_grad</span></div>
+
+
+<span class="k">class</span> <span class="nc">PropCompAugMat</span><span class="p">(</span><span class="n">PropagatorComputer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Augmented Matrix (deprecated - see _Frechet)</span>
+
+<span class="sd">    It should work for all systems, e.g. open, symplectic</span>
+<span class="sd">    There will be other PropagatorComputer subclasses that are more efficient</span>
+<span class="sd">    The _Frechet class should provide exactly the same functionality</span>
+<span class="sd">    more efficiently.</span>
+
+<span class="sd">    Note the propagator gradient calculation using the augmented matrix</span>
+<span class="sd">    is taken from:</span>
+<span class="sd">    &#39;Robust quantum gates for open systems via optimal control:</span>
+<span class="sd">    Markovian versus non-Markovian dynamics&#39;</span>
+<span class="sd">    Frederik F Floether, Pierre de Fouquieres, and Sophie G Schirmer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">PropagatorComputer</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_text</span> <span class="o">=</span> <span class="s1">&#39;AUG_MAT&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grad_exact</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_params</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_aug_mat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate the matrix [[A, E], [0, A]] where</span>
+<span class="sd">            A is the overall dynamics generator</span>
+<span class="sd">            E is the control dynamics generator</span>
+<span class="sd">        for a given timeslot and control</span>
+<span class="sd">        returns this augmented matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">dg</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dyn</span><span class="o">.</span><span class="n">oper_dtype</span> <span class="o">==</span> <span class="n">Qobj</span><span class="p">:</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">dg</span><span class="o">.</span><span class="n">data</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_ctrl_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">dg</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">aug</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">sp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">E</span><span class="p">]),</span> <span class="n">sp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">Z</span><span class="p">,</span> <span class="n">A</span><span class="p">])]))</span>
+        <span class="k">elif</span> <span class="n">dyn</span><span class="o">.</span><span class="n">oper_dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">dg</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_ctrl_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dg</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">aug</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">E</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">Z</span><span class="p">,</span> <span class="n">A</span><span class="p">])])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">dg</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_ctrl_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">dg</span><span class="o">*</span><span class="mf">0.0</span>
+            <span class="n">aug</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">sp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">E</span><span class="p">]),</span> <span class="n">sp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">Z</span><span class="p">,</span> <span class="n">A</span><span class="p">])])</span>
+        <span class="k">return</span> <span class="n">aug</span>
+
+    <span class="k">def</span> <span class="nf">_compute_prop_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">compute_prop</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the gradient of propagator wrt the control amplitude</span>
+<span class="sd">        in the timeslot using the exponentiation of the the augmented</span>
+<span class="sd">        matrix.</span>
+<span class="sd">        The propagtor is calculated for &#39;free&#39; in this method</span>
+<span class="sd">        and hence it is returned if compute_prop==True</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            [prop], prop_grad</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">dg</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">aug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_aug_mat</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+
+
+        <span class="k">if</span> <span class="n">dyn</span><span class="o">.</span><span class="n">oper_dtype</span> <span class="o">==</span> <span class="n">Qobj</span><span class="p">:</span>
+            <span class="n">aug_exp</span> <span class="o">=</span> <span class="n">aug</span><span class="o">.</span><span class="n">expm</span><span class="p">()</span>
+            <span class="n">prop_grad</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">aug_exp</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="n">dg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:],</span>
+                         <span class="n">dims</span><span class="o">=</span><span class="n">dyn</span><span class="o">.</span><span class="n">dyn_dims</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">compute_prop</span><span class="p">:</span>
+                <span class="n">prop</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">aug_exp</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="n">dg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:</span><span class="n">dg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                            <span class="n">dims</span><span class="o">=</span><span class="n">dyn</span><span class="o">.</span><span class="n">dyn_dims</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">aug_exp</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">expm</span><span class="p">(</span><span class="n">aug</span><span class="p">)</span>
+            <span class="n">prop_grad</span> <span class="o">=</span> <span class="n">aug_exp</span><span class="p">[:</span><span class="n">dg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:]</span>
+            <span class="k">if</span> <span class="n">compute_prop</span><span class="p">:</span>
+                <span class="n">prop</span> <span class="o">=</span> <span class="n">aug_exp</span><span class="p">[:</span><span class="n">dg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:</span><span class="n">dg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+
+        <span class="k">if</span> <span class="n">compute_prop</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">prop</span><span class="p">,</span> <span class="n">prop_grad</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">prop_grad</span>
+
+
+<div class="viewcode-block" id="PropCompFrechet"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.propcomp.PropCompFrechet">[docs]</a><span class="k">class</span> <span class="nc">PropCompFrechet</span><span class="p">(</span><span class="n">PropagatorComputer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Frechet method for calculating the propagator:</span>
+<span class="sd">        exponentiating the combined dynamics generator</span>
+<span class="sd">    and the propagator gradient</span>
+<span class="sd">    It should work for all systems, e.g. unitary, open, symplectic</span>
+<span class="sd">    There are other PropagatorComputer subclasses that may be more efficient</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PropCompFrechet.reset"><a class="viewcode-back" href="../../../apidoc/classes.html#qutip.control.propcomp.PropCompFrechet.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">PropagatorComputer</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_text</span> <span class="o">=</span> <span class="s1">&#39;FRECHET&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grad_exact</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_params</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_compute_prop_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">compute_prop</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the gradient of propagator wrt the control amplitude</span>
+<span class="sd">        in the timeslot using the expm_frechet method</span>
+<span class="sd">        The propagtor is calculated (almost) for &#39;free&#39; in this method</span>
+<span class="sd">        and hence it is returned if compute_prop==True</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            [prop], prop_grad</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dyn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+
+        <span class="k">if</span> <span class="n">dyn</span><span class="o">.</span><span class="n">oper_dtype</span> <span class="o">==</span> <span class="n">Qobj</span><span class="p">:</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">full</span><span class="p">()</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_ctrl_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span><span class="o">.</span><span class="n">full</span><span class="p">()</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">compute_prop</span><span class="p">:</span>
+                <span class="n">prop_dense</span><span class="p">,</span> <span class="n">prop_grad_dense</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">expm_frechet</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
+                <span class="n">prop</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">prop_dense</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">dyn</span><span class="o">.</span><span class="n">dyn_dims</span><span class="p">)</span>
+                <span class="n">prop_grad</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">prop_grad_dense</span><span class="p">,</span>
+                                            <span class="n">dims</span><span class="o">=</span><span class="n">dyn</span><span class="o">.</span><span class="n">dyn_dims</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prop_grad_dense</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">expm_frechet</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">compute_expm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">prop_grad</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">prop_grad_dense</span><span class="p">,</span>
+                                            <span class="n">dims</span><span class="o">=</span><span class="n">dyn</span><span class="o">.</span><span class="n">dyn_dims</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dyn</span><span class="o">.</span><span class="n">oper_dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_ctrl_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">compute_prop</span><span class="p">:</span>
+                <span class="n">prop</span><span class="p">,</span> <span class="n">prop_grad</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">expm_frechet</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prop_grad</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">expm_frechet</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span>
+                                                    <span class="n">compute_expm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Assuming some sparse matrix</span>
+            <span class="n">spcls</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">.</span><span class="n">_dyn_gen</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="vm">__class__</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="p">(</span><span class="n">dyn</span><span class="o">.</span><span class="n">_get_phased_ctrl_dyn_gen</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">dyn</span><span class="o">.</span><span class="n">tau</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">compute_prop</span><span class="p">:</span>
+                <span class="n">prop_dense</span><span class="p">,</span> <span class="n">prop_grad_dense</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">expm_frechet</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
+                <span class="n">prop</span> <span class="o">=</span> <span class="n">spcls</span><span class="p">(</span><span class="n">prop_dense</span><span class="p">)</span>
+                <span class="n">prop_grad</span> <span class="o">=</span> <span class="n">spcls</span><span class="p">(</span><span class="n">prop_grad_dense</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prop_grad_dense</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">expm_frechet</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">compute_expm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">prop_grad</span> <span class="o">=</span> <span class="n">spcls</span><span class="p">(</span><span class="n">prop_grad_dense</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">compute_prop</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">prop</span><span class="p">,</span> <span class="n">prop_grad</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">prop_grad</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

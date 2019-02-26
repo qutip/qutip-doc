@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Generating Random Quantum States &amp; Operators &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Modifying Internal QuTiP Settings" href="guide-settings.html" />
+    <link rel="prev" title="Saving QuTiP Objects and Data Sets" href="guide-saving.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="guide.html">Users Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="guide-overview.html">Guide Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-basics.html">Basic Operations on Quantum Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-states.html">Manipulating States and Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-tensor.html">Using Tensor Products and Partial Traces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-dynamics.html">Time Evolution and Quantum System Dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-steady.html">Solving for Steady-State Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-eseries.html">An Overview of the Eseries Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-correlation.html">Two-time correlation functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-control.html">Quantum Optimal Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-bloch.html">Plotting on the Bloch Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-visualization.html">Visualization of quantum states and processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-parfor.html">Parallel computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide-saving.html">Saving QuTiP Objects and Data Sets</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Generating Random Quantum States &amp; Operators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#random-objects-with-a-given-eigen-spectrum">Random objects with a given eigen spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#composite-random-objects">Composite random objects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="guide-settings.html">Modifying Internal QuTiP Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="guide.html">Users Guide</a> &raquo;</li>
+        
+      <li>Generating Random Quantum States &amp; Operators</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/guide/guide-random.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="generating-random-quantum-states-operators">
+<span id="random"></span><h1>Generating Random Quantum States &amp; Operators<a class="headerlink" href="#generating-random-quantum-states-operators" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qutip</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>QuTiP includes a collection of random state, unitary and channel generators for simulations, Monte Carlo evaluation, theorem evaluation, and code testing.
+Each of these objects can be sampled from one of several different distributions including the default distributions
+used by QuTiP versions prior to 3.2.0.</p>
+<p>For example, a random Hermitian operator can be sampled by calling <cite>rand_herm</cite> function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rand_herm</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<table border="1" class="table-striped docutils">
+<colgroup>
+<col width="26%" />
+<col width="38%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Random Variable Type</th>
+<th class="head">Sampling Functions</th>
+<th class="head">Dimensions</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>State vector (<code class="docutils literal notranslate"><span class="pre">ket</span></code>)</td>
+<td><cite>rand_ket</cite>, <cite>rand_ket_haar</cite></td>
+<td><span class="math notranslate nohighlight">\(N \times 1\)</span></td>
+</tr>
+<tr class="row-odd"><td>Hermitian operator (<code class="docutils literal notranslate"><span class="pre">oper</span></code>)</td>
+<td><cite>rand_herm</cite></td>
+<td><span class="math notranslate nohighlight">\(N \times 1\)</span></td>
+</tr>
+<tr class="row-even"><td>Density operator (<code class="docutils literal notranslate"><span class="pre">oper</span></code>)</td>
+<td><cite>rand_dm</cite>, <cite>rand_dm_hs</cite>, <cite>rand_dm_ginibre</cite></td>
+<td><span class="math notranslate nohighlight">\(N \times N\)</span></td>
+</tr>
+<tr class="row-odd"><td>Unitary operator (<code class="docutils literal notranslate"><span class="pre">oper</span></code>)</td>
+<td><cite>rand_unitary</cite>, <cite>rand_unitary_haar</cite></td>
+<td><span class="math notranslate nohighlight">\(N \times N\)</span></td>
+</tr>
+<tr class="row-even"><td>CPTP channel (<code class="docutils literal notranslate"><span class="pre">super</span></code>)</td>
+<td><cite>rand_super</cite>, <cite>rand_super_bcsz</cite></td>
+<td><span class="math notranslate nohighlight">\((N \times N) \times (N \times N)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>In all cases, these functions can be called with a single parameter <span class="math notranslate nohighlight">\(N\)</span> that dimension of the relevant Hilbert space. The optional
+<code class="docutils literal notranslate"><span class="pre">dims</span></code> keyword argument allows for the dimensions of a random state, unitary or channel to be broken down into subsystems.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span> <span class="n">rand_super_bcsz</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">dims</span>
+
+<span class="k">print</span> <span class="n">rand_super_bcsz</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]])</span><span class="o">.</span><span class="n">dims</span>
+</pre></div>
+</div>
+<p>Several of the distributions supported by QuTiP support additional parameters as well, namely <em>density</em> and <em>rank</em>. In particular,
+the <cite>rand_herm</cite> and <cite>rand_dm</cite> functions return quantum objects such that a fraction of the elements are identically equal to zero.
+The ratio of nonzero elements is passed as the <code class="docutils literal notranslate"><span class="pre">density</span></code> keyword argument. By contrast, the <cite>rand_dm_ginibre</cite> and
+<cite>rand_super_bcsz</cite> take as an argument the rank of the generated object, such that passing <code class="docutils literal notranslate"><span class="pre">rank=1</span></code> returns a random
+pure state or unitary channel, respectively. Passing <code class="docutils literal notranslate"><span class="pre">rank=None</span></code> specifies that the generated object should be
+full-rank for the given dimension.</p>
+<p>For example,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rand_dm</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">rand_dm_ginibre</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See the API documentation: <a class="reference internal" href="../apidoc/functions.html#functions-rand"><span class="std std-ref">Random Operators and States</span></a> for details.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When using the <code class="docutils literal notranslate"><span class="pre">density</span></code> keyword argument, setting the density too low may result in not enough diagonal elements to satisfy trace
+constraints.</p>
+</div>
+<div class="section" id="random-objects-with-a-given-eigen-spectrum">
+<h2>Random objects with a given eigen spectrum<a class="headerlink" href="#random-objects-with-a-given-eigen-spectrum" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">New in QuTiP 3.2</p>
+</div>
+<p>It is also possible to generate random Hamiltonian (<code class="docutils literal notranslate"><span class="pre">rand_herm</span></code>) and densitiy matrices (<code class="docutils literal notranslate"><span class="pre">rand_dm</span></code>) with a given eigen spectrum.  This is done by passing an array of eigenvalues as the first argument to either function.  For example,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="n">eigs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+ <span class="n">H</span> <span class="o">=</span> <span class="n">rand_herm</span><span class="p">(</span><span class="n">eigs</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+ <span class="n">H</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="n">H</span><span class="o">.</span><span class="n">eigenenergies</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In order to generate a random object with a given spectrum QuTiP applies a series of random complex Jacobi rotations.  This technique requires many steps to build the desired quantum object, and is thus suitable only for objects with Hilbert dimensionality <span class="math notranslate nohighlight">\(\lesssim 1000\)</span>.</p>
+</div>
+<div class="section" id="composite-random-objects">
+<h2>Composite random objects<a class="headerlink" href="#composite-random-objects" title="Permalink to this headline">¶</a></h2>
+<p>In many cases, one is interested in generating random quantum objects that correspond to composite systems generated using the <a class="reference internal" href="../apidoc/functions.html#qutip.tensor.tensor" title="qutip.tensor.tensor"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.tensor.tensor()</span></code></a> function.  Specifying the tensor structure of a quantum object is done using the <cite>dims</cite> keyword argument in the same fashion as one would do for a <a class="reference internal" href="../apidoc/classes.html#qutip.Qobj" title="qutip.Qobj"><code class="xref py py-class docutils literal notranslate"><span class="pre">qutip.Qobj</span></code></a> object:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rand_dm</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="guide-settings.html" class="btn btn-neutral float-right" title="Modifying Internal QuTiP Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="guide-saving.html" class="btn btn-neutral float-left" title="Saving QuTiP Objects and Data Sets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

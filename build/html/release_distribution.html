@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Release and Distribution &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Release and Distribution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/release_distribution.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="release-and-distribution">
+<span id="release-distribution"></span><h1>Release and Distribution<a class="headerlink" href="#release-and-distribution" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="preamble">
+<h2>Preamble<a class="headerlink" href="#preamble" title="Permalink to this headline">¶</a></h2>
+<p>This document covers the process for managing updates to the current minor release and making new releases.</p>
+<p>If just an update (bug fix) to the current minor release is required,
+then just <a class="reference internal" href="#bugfix">bugfix</a> is needed.</p>
+<p>To make a micro (patch) release follow <a class="reference internal" href="#distbuild">distbuild</a>, <a class="reference internal" href="#docbuild">docbuild</a>, <a class="reference internal" href="#web">web</a>, <a class="reference internal" href="#cforge">cforge</a>, <a class="reference internal" href="#pypi">pypi</a></p>
+<p>For a minor or major release follow <a class="reference internal" href="#newrelease">newrelease</a>, <a class="reference internal" href="#distbuild">distbuild</a>, <a class="reference internal" href="#docbuild">docbuild</a>, <a class="reference internal" href="#web">web</a>, <a class="reference internal" href="#cforge">cforge</a>, <a class="reference internal" href="#pypi">pypi</a></p>
+</div>
+<div class="section" id="git-workflow">
+<span id="gitwf"></span><h2>Git workflow<a class="headerlink" href="#git-workflow" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="apply-bug-fix-to-latest-release">
+<span id="bugfix"></span><h3>Apply bug fix to latest release<a class="headerlink" href="#apply-bug-fix-to-latest-release" title="Permalink to this headline">¶</a></h3>
+<p>Assuming that bug has been fixed in some branch from the master called 'fix_bug12'.
+This bug fix should now be applied to the latest release.</p>
+<p>Check out latest version branch, e.g.</p>
+<p>If you have checked out this branch previously, then</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout qutip-4.0.X
+$ git pull upstream qutip-4.0.X
+</pre></div>
+</div>
+<p>Otherwise</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git fetch upstream
+$ git checkout -b qutip-4.0.X upstream/qutip-4.0.X
+$ git push -u origin qutip-4.0.X
+</pre></div>
+</div>
+<p>Create a branch for the patch</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout -b patch4.0-fix_bug123 qutip-4.0.X
+</pre></div>
+</div>
+<p>pick the commit(s) from the fix_bug123 branch to be applied to the release, e.g.</p>
+<p>This will take the last commit only</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git cherry-pick fix_bug123
+</pre></div>
+</div>
+<p>This will take the last two commits only:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git cherry-pick fix_bug123 fix_bug123~1
+</pre></div>
+</div>
+<p>for further options see <a class="reference external" href="https://www.kernel.org/pub/software/scm/git/docs/git-cherry-pick.html">https://www.kernel.org/pub/software/scm/git/docs/git-cherry-pick.html</a></p>
+<p>push changes to your fork</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git push --set-upstream origin patch4.0-fix_bug123
+</pre></div>
+</div>
+<p>Make a Pull Request to the latest release branch</p>
+</div>
+<div class="section" id="create-a-new-minor-or-major-release">
+<span id="newrelease"></span><h3>Create a new minor or major release<a class="headerlink" href="#create-a-new-minor-or-major-release" title="Permalink to this headline">¶</a></h3>
+<p>Create a new branch on qutip repository using the website, e.g. 'qutip-4.1.X'.</p>
+<p>Checkout the branch and push to your fork</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git fetch upstream
+$ git checkout -b qutip-4.1.X upstream/qutip-4.1.X
+$ git push -u origin qutip-4.1.X
+</pre></div>
+</div>
+<p>Create a new branch from this, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout -b 4.1-release_ready qutip-4.1.X
+</pre></div>
+</div>
+<p>Edit the main setup.py for the project.
+Update the <code class="docutils literal notranslate"><span class="pre">CLASSIFIERS</span></code> to the correct <code class="docutils literal notranslate"><span class="pre">Development</span> <span class="pre">Status</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CLASSIFIERS</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">Development Status :: 5 - Production/Stable</span>
+</pre></div>
+</div>
+<p>Update the version and <code class="docutils literal notranslate"><span class="pre">ISRELEASED</span></code> flag</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAJOR</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">MINOR</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">MICRO</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">ISRELEASED</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>push changes to your fork</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git push --set-upstream origin 4.1-release_ready
+</pre></div>
+</div>
+<p>Make a Pull Request to the release branch</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">master</span></code> branch minor version should be bumped up and should remain in Beta status, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Development</span> <span class="n">Status</span> <span class="p">::</span> <span class="mi">4</span> <span class="o">-</span> <span class="n">Beta</span>
+<span class="o">...</span>
+<span class="n">MAJOR</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">MINOR</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">MICRO</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">ISRELEASED</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="build-distribution">
+<span id="distbuild"></span><h2>Build distribution<a class="headerlink" href="#build-distribution" title="Permalink to this headline">¶</a></h2>
+<p>Check out branch to be distributed, e.g.</p>
+<p>If you have checked out this branch previously, then</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout qutip-4.0.X
+$ git pull upstream qutip-4.0.X
+</pre></div>
+</div>
+<p>Otherwise</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git fetch upstream
+$ git checkout -b qutip-4.0.X upstream/qutip-4.0.X
+$ git push -u origin qutip-4.0.X
+</pre></div>
+</div>
+<p>The next steps are based instructions from <a class="reference external" href="https://packaging.python.org/distributing/">https://packaging.python.org/distributing/</a></p>
+<div class="section" id="build-the-source-code-distribution">
+<span id="sdist"></span><h3>Build the source code distribution<a class="headerlink" href="#build-the-source-code-distribution" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py egg_info --egg-base ~/tmp sdist --formats=gztar,zip
+</pre></div>
+</div>
+<p>Note the <code class="docutils literal notranslate"><span class="pre">egg_info</span> <span class="pre">--egg-base</span> <span class="pre">~/tmp</span></code> here will create the qutip.egg-info in a subfolder <code class="docutils literal notranslate"><span class="pre">tmp</span></code> in your home directory.
+This is to avoid the egg-info being included in the gztar / zip, which otherwise causes issues, as it contains absolute paths to some sources.</p>
+<p>Test the distribution that is now in the <code class="docutils literal notranslate"><span class="pre">dist</span></code> folder. Should try at least two environments, e.g. Windows and Linux / MacOS.</p>
+</div>
+</div>
+<div class="section" id="documentation-build">
+<span id="docbuild"></span><h2>Documentation build<a class="headerlink" href="#documentation-build" title="Permalink to this headline">¶</a></h2>
+<p>Documentation should be rebuilt for a minor or major release. If there have been any documentation updates as part of a micro release, then it should also be built for this.</p>
+<p>First:</p>
+<ul class="simple">
+<li>The version should be changed in <code class="docutils literal notranslate"><span class="pre">conf.py</span></code>.</li>
+<li>Update <code class="docutils literal notranslate"><span class="pre">api_doc/classes.rst</span></code> for any new / deleted classes.</li>
+<li>Update <code class="docutils literal notranslate"><span class="pre">api_doc/functions.rst</span></code> for any new / deleted functions.</li>
+</ul>
+<p>Rebuilding of the QuTiP documentation is fully documented in:
+<a class="reference external" href="https://github.com/qutip/qutip-doc/blob/master/README.md">https://github.com/qutip/qutip-doc/blob/master/README.md</a></p>
+</div>
+<div class="section" id="website">
+<span id="web"></span><h2>Website<a class="headerlink" href="#website" title="Permalink to this headline">¶</a></h2>
+<p>This assumes that qutip.github.io has already been forked and familiarity with the website updating workflow.
+The documentation may not be updated for every micro release.</p>
+<div class="section" id="copying-new-files">
+<h3>Copying new files<a class="headerlink" href="#copying-new-files" title="Permalink to this headline">¶</a></h3>
+<p>All released versions will be saved in a subfolder like</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">downloads</span><span class="o">/&lt;</span><span class="n">MAJOR</span><span class="o">&gt;.&lt;</span><span class="n">MINOR</span><span class="o">&gt;.&lt;</span><span class="n">MICRO</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Links will be kept to the highest micro release of the current and all legacy minor release.
+For a micro release the qutip.github.io will need to be updated as follows:</p>
+<ul class="simple">
+<li>copy the <code class="docutils literal notranslate"><span class="pre">.tar.gz</span></code> and <code class="docutils literal notranslate"><span class="pre">.zip</span></code> created using <a class="reference internal" href="#sdist">sdist</a> into the downloads folder.</li>
+<li>alse copy the <code class="docutils literal notranslate"><span class="pre">qutip-doc-&lt;version&gt;.pdf</span></code> into this folder.</li>
+</ul>
+<p>The html documentation will be in a subfolder like</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docs</span><span class="o">/&lt;</span><span class="n">MAJOR</span><span class="o">&gt;.&lt;</span><span class="n">MINOR</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>copy the contents <code class="docutils literal notranslate"><span class="pre">qutip-doc/_build/html</span></code> into this folder. <strong>Note that the underscores at start of the subfolder names will need to be removed, otherwise Jekyll will ignore the folders</strong>. There is a script in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> folder for this.</li>
+</ul>
+</div>
+<div class="section" id="html-file-updates">
+<h3>HTML file updates<a class="headerlink" href="#html-file-updates" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Edit <code class="docutils literal notranslate"><span class="pre">download.html</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li>The 'Latest release' version and date should be updated.</li>
+<li>The gztar and zip links will need the micro release number updating in the tractEvent, file name and label.</li>
+<li>For a minor or major release links to the last micro release of the previous version will need to be moved (copied) to the 'Previous releases' section.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Edit <code class="docutils literal notranslate"><span class="pre">_includes/sidebar.html</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li>The 'Latest release' version should be updated. The gztar and zip file links will need the micro release number updating in the traceEvent and file name.</li>
+<li>The link to the documentation folder and PDF file (if created) should be updated.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Edit <code class="docutils literal notranslate"><span class="pre">documentation.html</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li>The previous release tags should be moved (copied) to the 'Previous releases' section.</li>
+<li>The 'Current release' tags and links should be updated.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="conda-forge">
+<span id="cforge"></span><h2>Conda-forge<a class="headerlink" href="#conda-forge" title="Permalink to this headline">¶</a></h2>
+<p>If not done previously then fork the qutip-feedstock:
+<a class="reference external" href="https://github.com/conda-forge/qutip-feedstock">https://github.com/conda-forge/qutip-feedstock</a></p>
+<p>You may have to add CircleCI to your fork using 'Services &amp; Integrations' in the settings.
+This is unless conda-forge have resolved the issue, for which you can check: <a class="reference external" href="https://conda-forge.github.io/status/">https://conda-forge.github.io/status/</a></p>
+<p>At time of writing CircleCI was reporting 'Major outage'. However, this was circumvented by adding CircleCI to the fork.</p>
+<p>Checkout a new branch on your fork, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout -b version-4.0.2
+</pre></div>
+</div>
+<p>Generate a new sha256 code from the gztar for this version, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ openssl sha256 qutip-4.0.2.tar.gz
+</pre></div>
+</div>
+<p>Edit the <code class="docutils literal notranslate"><span class="pre">recipe/meta.yaml</span></code> file.
+Change the version. Update the sha256 code.
+Check that the recipe package version requirements at least match those in the setup.py.
+Also ensure that the build number is reset</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">build</span><span class="p">:</span>
+    <span class="n">number</span><span class="p">:</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Push changes to your fork, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git push --set-upstream origin version-4.0.2
+</pre></div>
+</div>
+<p>Make a Pull Request. This will trigger tests of the package. CircleCI tests the linux build and install. Likewise TravisCI does MacOS and AppVeyor does Windows.</p>
+<p>If (when) the tests pass, the PR can be merged, which will trigger the upload of the packages to the conda-forge channel.
+To test the packages, add the conda-forge channel with lowest priority</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda config --append channels conda-forge
+</pre></div>
+</div>
+<p>This should mean that the prerequistes come from the default channel, but the qutip packages are found in conda-forge.</p>
+</div>
+<div class="section" id="upload-source-distribution-to-pypi">
+<span id="pypi"></span><h2>Upload source distribution to PyPI<a class="headerlink" href="#upload-source-distribution-to-pypi" title="Permalink to this headline">¶</a></h2>
+<p>You will need a PyPI account that is assigned as an owner on the project.
+(see <a class="reference external" href="https://packaging.python.org/distributing/#create-an-account">https://packaging.python.org/distributing/#create-an-account</a>)</p>
+<p><strong>The next step cannot be undone</strong>, it can only be superceded by another (micro) version</p>
+<p>Upload the source distribution, e.g</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ twine upload dist/qutip-4.0.1.tar.gz
+</pre></div>
+</div>
+<p>The MICRO version in setup.py qutip-4.0.X branch should now be bumped up one,
+as no more changes can be made to this micro version.</p>
+<p>Create a new branch from this, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout -b bump_to-4.0.2 qutip-4.0.X
+</pre></div>
+</div>
+<p>Edit the main setup.py for the project. Update the version and release status e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MICRO</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">ISRELEASED</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>push changes to your fork</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git push --set-upstream origin bump_to-4.0.2
+</pre></div>
+</div>
+<p>Make a Pull Request to the release branch</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

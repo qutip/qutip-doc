@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Floquet Formalism &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Setting Options for the Dynamics Solvers" href="dynamics-options.html" />
+    <link rel="prev" title="Bloch-Redfield master equation" href="dynamics-bloch-redfield.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html">Users Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../guide-overview.html">Guide Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-basics.html">Basic Operations on Quantum Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-states.html">Manipulating States and Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-tensor.html">Using Tensor Products and Partial Traces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../guide-dynamics.html">Time Evolution and Quantum System Dynamics</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="dynamics-data.html">Dynamics Simulation Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamics-master.html">Lindblad Master Equation Solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamics-monte.html">Monte Carlo Solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamics-time.html">Solving Problems with Time-dependent Hamiltonians</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamics-bloch-redfield.html">Bloch-Redfield master equation</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Floquet Formalism</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#floquet-theory-for-unitary-evolution">Floquet theory for unitary evolution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#floquet-theory-for-dissipative-evolution">Floquet theory for dissipative evolution</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dynamics-options.html">Setting Options for the Dynamics Solvers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-steady.html">Solving for Steady-State Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-eseries.html">An Overview of the Eseries Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-correlation.html">Two-time correlation functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-control.html">Quantum Optimal Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-bloch.html">Plotting on the Bloch Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-visualization.html">Visualization of quantum states and processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-parfor.html">Parallel computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-saving.html">Saving QuTiP Objects and Data Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-random.html">Generating Random Quantum States &amp; Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide-settings.html">Modifying Internal QuTiP Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../guide.html">Users Guide</a> &raquo;</li>
+        
+          <li><a href="../guide-dynamics.html">Time Evolution and Quantum System Dynamics</a> &raquo;</li>
+        
+      <li>Floquet Formalism</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/guide/dynamics/dynamics-floquet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="floquet-formalism">
+<span id="floquet"></span><h1>Floquet Formalism<a class="headerlink" href="#floquet-formalism" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qutip</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="section" id="introduction">
+<span id="floquet-intro"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Many time-dependent problems of interest are periodic. The dynamics of such systems can be solved for directly by numerical integration of the Schrödinger or Master equation, using the time-dependent Hamiltonian. But they can also be transformed into time-independent problems using the Floquet formalism. Time-independent problems can be solve much more efficiently, so such a transformation is often very desirable.</p>
+<p>In the standard derivations of the Lindblad and Bloch-Redfield master equations the Hamiltonian describing the system under consideration is assumed to be time independent. Thus, strictly speaking, the standard forms of these master equation formalisms should not blindly be applied to system with time-dependent Hamiltonians. However, in many relevant cases, in particular for weak driving, the standard master equations still turns out to be useful for many time-dependent problems. But a more rigorous approach would be to rederive the master equation taking the time-dependent nature of the Hamiltonian into account from the start. The Floquet-Markov Master equation is one such a formalism, with important applications for strongly driven systems (see e.g., <a class="reference internal" href="../../biblio.html#gri98" id="id1">[Gri98]</a>).</p>
+<p>Here we give an overview of how the Floquet and Floquet-Markov formalisms can be used for solving time-dependent problems in QuTiP. To introduce the terminology and naming conventions used in QuTiP we first give a brief summary of quantum Floquet theory.</p>
+</div>
+<div class="section" id="floquet-theory-for-unitary-evolution">
+<span id="floquet-unitary"></span><h2>Floquet theory for unitary evolution<a class="headerlink" href="#floquet-theory-for-unitary-evolution" title="Permalink to this headline">¶</a></h2>
+<p>The Schrödinger equation with a time-dependent Hamiltonian <span class="math notranslate nohighlight">\(H(t)\)</span> is</p>
+<div class="math notranslate nohighlight" id="equation-eq-td-schrodinger">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-td-schrodinger" title="Permalink to this equation">¶</a></span>\[     H(t)\Psi(t) = i\hbar\frac{\partial}{\partial t}\Psi(t),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Psi(t)\)</span> is the wave function solution. Here we are interested in problems with periodic time-dependence, i.e., the Hamiltonian satisfies <span class="math notranslate nohighlight">\(H(t) = H(t+T)\)</span> where <span class="math notranslate nohighlight">\(T\)</span> is the period. According to the Floquet theorem, there exist solutions to <a class="reference internal" href="#equation-eq-td-schrodinger">(1)</a> on the form</p>
+<div class="math notranslate nohighlight" id="equation-eq-floquet-states">
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-floquet-states" title="Permalink to this equation">¶</a></span>\[ \Psi_\alpha(t) = \exp(-i\epsilon_\alpha t/\hbar)\Phi_\alpha(t),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Psi_\alpha(t)\)</span> are the <em>Floquet states</em> (i.e., the set of wave function solutions to the Schrödinger equation), <span class="math notranslate nohighlight">\(\Phi_\alpha(t)=\Phi_\alpha(t+T)\)</span> are the periodic <em>Floquet modes</em>, and <span class="math notranslate nohighlight">\(\epsilon_\alpha\)</span> are the <em>quasienergy levels</em>. The quasienergy levels are constants in time, but only uniquely defined up to multiples of <span class="math notranslate nohighlight">\(2\pi/T\)</span> (i.e., unique value in the interval <span class="math notranslate nohighlight">\([0, 2\pi/T]\)</span>).</p>
+<p>If we know the Floquet modes (for <span class="math notranslate nohighlight">\(t \in [0,T]\)</span>) and the quasienergies for a particular <span class="math notranslate nohighlight">\(H(t)\)</span>, we can easily decompose any initial wavefunction <span class="math notranslate nohighlight">\(\Psi(t=0)\)</span> in the Floquet states and immediately obtain the solution for arbitrary <span class="math notranslate nohighlight">\(t\)</span></p>
+<div class="math notranslate nohighlight" id="equation-eq-floquet-wavefunction-expansion">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-floquet-wavefunction-expansion" title="Permalink to this equation">¶</a></span>\[ \Psi(t) = \sum_\alpha c_\alpha \Psi_\alpha(t) = \sum_\alpha c_\alpha \exp(-i\epsilon_\alpha t/\hbar)\Phi_\alpha(t),\]</div>
+<p>where the coefficients <span class="math notranslate nohighlight">\(c_\alpha\)</span> are determined by the initial wavefunction <span class="math notranslate nohighlight">\(\Psi(0) = \sum_\alpha c_\alpha \Psi_\alpha(0)\)</span>.</p>
+<p>This formalism is useful for finding <span class="math notranslate nohighlight">\(\Psi(t)\)</span> for a given <span class="math notranslate nohighlight">\(H(t)\)</span> only if we can obtain the Floquet modes <span class="math notranslate nohighlight">\(\Phi_a(t)\)</span> and quasienergies <span class="math notranslate nohighlight">\(\epsilon_\alpha\)</span> more easily than directly solving <a class="reference internal" href="#equation-eq-td-schrodinger">(1)</a>. By substituting <a class="reference internal" href="#equation-eq-floquet-states">(2)</a> into the Schrödinger equation <a class="reference internal" href="#equation-eq-td-schrodinger">(1)</a> we obtain an eigenvalue equation for the Floquet modes and quasienergies</p>
+<div class="math notranslate nohighlight" id="equation-eq-floquet-eigen-problem">
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-floquet-eigen-problem" title="Permalink to this equation">¶</a></span>\[ \mathcal{H}(t)\Phi_\alpha(t) = \epsilon_\alpha\Phi_\alpha(t),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{H}(t) = H(t) - i\hbar\partial_t\)</span>. This eigenvalue problem could be solved analytically or numerically, but in QuTiP we use an alternative approach for numerically finding the Floquet states and quasienergies [see e.g. Creffield et al., Phys. Rev. B 67, 165301 (2003)]. Consider the propagator for the time-dependent Schrödinger equation <a class="reference internal" href="#equation-eq-td-schrodinger">(1)</a>, which by definition satisfies</p>
+<div class="math notranslate nohighlight">
+\[U(T+t,t)\Psi(t) = \Psi(T+t).\]</div>
+<p>Inserting the Floquet states from <a class="reference internal" href="#equation-eq-floquet-states">(2)</a> into this expression results in</p>
+<div class="math notranslate nohighlight">
+\[U(T+t,t)\exp(-i\epsilon_\alpha t/\hbar)\Phi_\alpha(t) = \exp(-i\epsilon_\alpha(T+t)/\hbar)\Phi_\alpha(T+t),\]</div>
+<p>or, since <span class="math notranslate nohighlight">\(\Phi_\alpha(T+t)=\Phi_\alpha(t)\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[U(T+t,t)\Phi_\alpha(t) = \exp(-i\epsilon_\alpha T/\hbar)\Phi_\alpha(t) = \eta_\alpha \Phi_\alpha(t),\]</div>
+<p>which shows that the Floquet modes are eigenstates of the one-period propagator. We can therefore find the Floquet modes and quasienergies <span class="math notranslate nohighlight">\(\epsilon_\alpha = -\hbar\arg(\eta_\alpha)/T\)</span> by numerically calculating <span class="math notranslate nohighlight">\(U(T+t,t)\)</span> and diagonalizing it. In particular this method is useful to find <span class="math notranslate nohighlight">\(\Phi_\alpha(0)\)</span> by calculating and diagonalize <span class="math notranslate nohighlight">\(U(T,0)\)</span>.</p>
+<p>The Floquet modes at arbitrary time <span class="math notranslate nohighlight">\(t\)</span> can then be found by propagating <span class="math notranslate nohighlight">\(\Phi_\alpha(0)\)</span> to <span class="math notranslate nohighlight">\(\Phi_\alpha(t)\)</span> using the wave function propagator <span class="math notranslate nohighlight">\(U(t,0)\Psi_\alpha(0) = \Psi_\alpha(t)\)</span>, which for the Floquet modes yields</p>
+<div class="math notranslate nohighlight">
+\[U(t,0)\Phi_\alpha(0) = \exp(-i\epsilon_\alpha t/\hbar)\Phi_\alpha(t),\]</div>
+<p>so that <span class="math notranslate nohighlight">\(\Phi_\alpha(t) = \exp(i\epsilon_\alpha t/\hbar) U(t,0)\Phi_\alpha(0)\)</span>. Since <span class="math notranslate nohighlight">\(\Phi_\alpha(t)\)</span> is periodic we only need to evaluate it for <span class="math notranslate nohighlight">\(t \in [0, T]\)</span>, and from <span class="math notranslate nohighlight">\(\Phi_\alpha(t \in [0,T])\)</span> we can directly evaluate <span class="math notranslate nohighlight">\(\Phi_\alpha(t)\)</span>, <span class="math notranslate nohighlight">\(\Psi_\alpha(t)\)</span> and <span class="math notranslate nohighlight">\(\Psi(t)\)</span> for arbitrary large <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<div class="section" id="floquet-formalism-in-qutip">
+<h3>Floquet formalism in QuTiP<a class="headerlink" href="#floquet-formalism-in-qutip" title="Permalink to this headline">¶</a></h3>
+<p>QuTiP provides a family of functions to calculate the Floquet modes and quasi energies, Floquet state decomposition, etc., given a time-dependent Hamiltonian on the <em>callback format</em>, <em>list-string format</em> and <em>list-callback format</em> (see, e.g., <a class="reference internal" href="../../apidoc/functions.html#module-qutip.mesolve" title="qutip.mesolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.mesolve()</span></code></a> for details).</p>
+<p>Consider for example the case of a strongly driven two-level atom, described by the Hamiltonian</p>
+<div class="math notranslate nohighlight" id="equation-eq-driven-qubit">
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-driven-qubit" title="Permalink to this equation">¶</a></span>\[ H(t) = -\frac{1}{2}\Delta\sigma_x - \frac{1}{2}\epsilon_0\sigma_z + \frac{1}{2}A\sin(\omega t)\sigma_z.\]</div>
+<p>In QuTiP we can define this Hamiltonian as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">delta</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">;</span> <span class="n">eps0</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">;</span> <span class="n">A</span> <span class="o">=</span> <span class="mf">2.5</span> <span class="o">*</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">;</span> <span class="n">omega</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+<span class="n">H0</span> <span class="o">=</span> <span class="o">-</span> <span class="n">delta</span><span class="o">/</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">sigmax</span><span class="p">()</span> <span class="o">-</span> <span class="n">eps0</span><span class="o">/</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">sigmaz</span><span class="p">()</span>
+
+<span class="n">H1</span> <span class="o">=</span> <span class="n">A</span><span class="o">/</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">sigmaz</span><span class="p">()</span>
+
+<span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="n">omega</span><span class="p">}</span>
+
+<span class="n">H</span> <span class="o">=</span> <span class="p">[</span><span class="n">H0</span><span class="p">,</span> <span class="p">[</span><span class="n">H1</span><span class="p">,</span> <span class="s1">&#39;sin(w * t)&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(t=0\)</span> Floquet modes corresponding to the Hamiltonian <a class="reference internal" href="#equation-eq-driven-qubit">(5)</a> can then be calculated using the <a class="reference internal" href="../../apidoc/functions.html#qutip.floquet.floquet_modes" title="qutip.floquet.floquet_modes"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.floquet_modes()</span></code></a> function, which returns lists containing the Floquet modes and the quasienergies</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span> <span class="o">/</span> <span class="n">omega</span>
+
+<span class="n">f_modes_0</span><span class="p">,</span> <span class="n">f_energies</span> <span class="o">=</span> <span class="n">floquet_modes</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+<span class="n">f_energies</span>
+
+<span class="n">f_modes_0</span>
+</pre></div>
+</div>
+<p>For some problems interesting observations can be draw from the quasienergy levels alone. Consider for example the quasienergies for the driven two-level system introduced above as a function of the driving amplitude, calculated and plotted in the following example. For certain driving amplitudes the quasienergy levels cross. Since the the quasienergies can be associated with the time-scale of the long-term dynamics due that the driving, degenerate quasienergies indicates a &quot;freezing&quot; of the dynamics (sometimes known as coherent destruction of tunneling).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">;</span> <span class="n">eps0</span>  <span class="o">=</span> <span class="mf">0.0</span> <span class="o">*</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+ <span class="n">omega</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">;</span> <span class="n">A_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="n">omega</span><span class="p">;</span>
+
+ <span class="n">T</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="n">omega</span>
+
+ <span class="n">tlist</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">T</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+
+ <span class="n">psi0</span>   <span class="o">=</span> <span class="n">basis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+ <span class="n">q_energies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">A_vec</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+
+ <span class="n">H0</span> <span class="o">=</span> <span class="n">delta</span><span class="o">/</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">sigmaz</span><span class="p">()</span> <span class="o">-</span> <span class="n">eps0</span><span class="o">/</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">sigmax</span><span class="p">()</span>
+
+ <span class="n">args</span> <span class="o">=</span> <span class="n">omega</span>
+
+ <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">A</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">A_vec</span><span class="p">):</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="n">H1</span> <span class="o">=</span> <span class="n">A</span><span class="o">/</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">sigmax</span><span class="p">()</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="n">H</span> <span class="o">=</span> <span class="p">[</span><span class="n">H0</span><span class="p">,</span> <span class="p">[</span><span class="n">H1</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="n">sin</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">t</span><span class="p">)]]</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="n">f_modes</span><span class="p">,</span> <span class="n">f_energies</span> <span class="o">=</span> <span class="n">floquet_modes</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="n">q_energies</span><span class="p">[</span><span class="n">idx</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">f_energies</span>
+
+ <span class="n">figure</span><span class="p">()</span>
+
+ <span class="n">plot</span><span class="p">(</span><span class="n">A_vec</span><span class="o">/</span><span class="n">omega</span><span class="p">,</span> <span class="n">q_energies</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">delta</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">A_vec</span><span class="o">/</span><span class="n">omega</span><span class="p">,</span> <span class="n">q_energies</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">delta</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+ <span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$A/\omega$&#39;</span><span class="p">)</span>
+
+ <span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Quasienergy / $\Delta$&#39;</span><span class="p">)</span>
+
+ <span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Floquet quasienergies&#39;</span><span class="p">)</span>
+
+<span class="nd">@savefig</span> <span class="n">guide</span><span class="o">-</span><span class="n">floquet1</span><span class="o">.</span><span class="n">png</span> <span class="n">width</span><span class="o">=</span><span class="mf">5.0</span><span class="ow">in</span> <span class="n">align</span><span class="o">=</span><span class="n">center</span>
+ <span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Given the Floquet modes at <span class="math notranslate nohighlight">\(t=0\)</span>, we obtain the Floquet mode at some later time <span class="math notranslate nohighlight">\(t\)</span> using the function <code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.floquet_mode_t()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f_modes_t</span> <span class="o">=</span> <span class="n">floquet_modes_t</span><span class="p">(</span><span class="n">f_modes_0</span><span class="p">,</span> <span class="n">f_energies</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+<span class="n">f_modes_t</span>
+</pre></div>
+</div>
+<p>The purpose of calculating the Floquet modes is to find the wavefunction solution to the original problem <a class="reference internal" href="#equation-eq-driven-qubit">(5)</a> given some initial state <span class="math notranslate nohighlight">\(\left|\psi_0\right&gt;\)</span>. To do that, we first need to decompose the initial state in the Floquet states, using the function <a class="reference internal" href="../../apidoc/functions.html#qutip.floquet.floquet_state_decomposition" title="qutip.floquet.floquet_state_decomposition"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.floquet_state_decomposition()</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">psi0</span> <span class="o">=</span> <span class="n">rand_ket</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+ <span class="n">f_coeff</span> <span class="o">=</span> <span class="n">floquet_state_decomposition</span><span class="p">(</span><span class="n">f_modes_0</span><span class="p">,</span> <span class="n">f_energies</span><span class="p">,</span> <span class="n">psi0</span><span class="p">)</span>
+
+<span class="n">f_coeff</span>
+</pre></div>
+</div>
+<p>and given this decomposition of the initial state in the Floquet states we can easily evaluate the wavefunction that is the solution to <a class="reference internal" href="#equation-eq-driven-qubit">(5)</a> at an arbitrary time <span class="math notranslate nohighlight">\(t\)</span> using the function <a class="reference internal" href="../../apidoc/functions.html#qutip.floquet.floquet_wavefunction_t" title="qutip.floquet.floquet_wavefunction_t"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.floquet_wavefunction_t()</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
+
+<span class="n">psi_t</span> <span class="o">=</span> <span class="n">floquet_wavefunction_t</span><span class="p">(</span><span class="n">f_modes_0</span><span class="p">,</span> <span class="n">f_energies</span><span class="p">,</span> <span class="n">f_coeff</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+<span class="n">psi_t</span>
+</pre></div>
+</div>
+<p>The following example illustrates how to use the functions introduced above to calculate and plot the time-evolution of <a class="reference internal" href="#equation-eq-driven-qubit">(5)</a>.</p>
+</div>
+<div class="section" id="pre-computing-the-floquet-modes-for-one-period">
+<h3>Pre-computing the Floquet modes for one period<a class="headerlink" href="#pre-computing-the-floquet-modes-for-one-period" title="Permalink to this headline">¶</a></h3>
+<p>When evaluating the Floquet states or the wavefunction at many points in time it is useful to pre-compute the Floquet modes for the first period of the driving with the required resolution. In QuTiP the function <a class="reference internal" href="../../apidoc/functions.html#qutip.floquet.floquet_modes_table" title="qutip.floquet.floquet_modes_table"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.floquet_modes_table()</span></code></a> calculates a table of Floquet modes which later can be used together with the function <a class="reference internal" href="../../apidoc/functions.html#qutip.floquet.floquet_modes_t_lookup" title="qutip.floquet.floquet_modes_t_lookup"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.floquet_modes_t_lookup()</span></code></a> to efficiently lookup the Floquet mode at an arbitrary time. The following example illustrates how the example from the previous section can be solved more efficiently using these functions for pre-computing the Floquet modes.</p>
+<p>Note that the parameters and the Hamiltonian used in this example is not the same as in the previous section, and hence the different appearance of the resulting figure.</p>
+<p>For convenience, all the steps described above for calculating the evolution of a quantum system using the Floquet formalisms are encapsulated in the function <a class="reference internal" href="../../apidoc/functions.html#qutip.floquet.fsesolve" title="qutip.floquet.fsesolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.fsesolve()</span></code></a>. Using this function, we could have achieved the same results as in the examples above using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">fsesolve</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="p">[</span><span class="n">num</span><span class="p">(</span><span class="mi">2</span><span class="p">)],</span> <span class="n">args</span><span class="p">)</span>
+<span class="n">p_ex</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">expect</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="floquet-theory-for-dissipative-evolution">
+<span id="floquet-dissipative"></span><h2>Floquet theory for dissipative evolution<a class="headerlink" href="#floquet-theory-for-dissipative-evolution" title="Permalink to this headline">¶</a></h2>
+<p>A driven system that is interacting with its environment is not necessarily well described by the standard Lindblad master equation, since its dissipation process could be time-dependent due to the driving. In such cases a rigorious approach would be to take the driving into account when deriving the master equation. This can be done in many different ways, but one way common approach is to derive the master equation in the Floquet basis. That approach results in the so-called Floquet-Markov master equation, see Grifoni et al., Physics Reports 304, 299 (1998) for details.</p>
+<div class="section" id="the-floquet-markov-master-equation-in-qutip">
+<h3>The Floquet-Markov master equation in QuTiP<a class="headerlink" href="#the-floquet-markov-master-equation-in-qutip" title="Permalink to this headline">¶</a></h3>
+<p>The QuTiP function <a class="reference internal" href="../../apidoc/functions.html#qutip.floquet.fmmesolve" title="qutip.floquet.fmmesolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.fmmesolve()</span></code></a> implements the Floquet-Markov master equation. It calculates the dynamics of a system given its initial state, a time-dependent hamiltonian, a list of operators through which the system couples to its environment and a list of corresponding spectral-density functions that describes the environment. In contrast to the <a class="reference internal" href="../../apidoc/functions.html#module-qutip.mesolve" title="qutip.mesolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.mesolve()</span></code></a> and <a class="reference internal" href="../../apidoc/functions.html#module-qutip.mcsolve" title="qutip.mcsolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.mcsolve()</span></code></a>, and the <a class="reference internal" href="../../apidoc/functions.html#qutip.floquet.fmmesolve" title="qutip.floquet.fmmesolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.fmmesolve()</span></code></a> does characterize the environment with dissipation rates, but extract the strength of the coupling to the environment from the noise spectral-density functions and the instantaneous Hamiltonian parameters (similar to the Bloch-Redfield master equation solver <a class="reference internal" href="../../apidoc/functions.html#qutip.bloch_redfield.brmesolve" title="qutip.bloch_redfield.brmesolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.bloch_redfield.brmesolve()</span></code></a>).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Currently the <a class="reference internal" href="../../apidoc/functions.html#qutip.floquet.fmmesolve" title="qutip.floquet.fmmesolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.fmmesolve()</span></code></a> can only accept a single environment coupling operator and spectral-density function.</p>
+</div>
+<p>The noise spectral-density function of the environment is implemented as a Python callback function that is passed to the solver. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gamma1</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">noise_spectrum</span><span class="p">(</span><span class="n">omega</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">gamma1</span> <span class="o">*</span> <span class="n">omega</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The other parameters are similar to the <a class="reference internal" href="../../apidoc/functions.html#module-qutip.mesolve" title="qutip.mesolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.mesolve()</span></code></a> and <a class="reference internal" href="../../apidoc/functions.html#module-qutip.mcsolve" title="qutip.mcsolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.mcsolve()</span></code></a>, and the same format for the return value is used <a class="reference internal" href="../../apidoc/classes.html#qutip.solver.Result" title="qutip.solver.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">qutip.solver.Result</span></code></a>. The following example extends the example studied above, and uses <a class="reference internal" href="../../apidoc/functions.html#qutip.floquet.fmmesolve" title="qutip.floquet.fmmesolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.fmmesolve()</span></code></a> to introduce dissipation into the calculation</p>
+<p>Alternatively, we can let the <a class="reference internal" href="../../apidoc/functions.html#qutip.floquet.fmmesolve" title="qutip.floquet.fmmesolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">qutip.floquet.fmmesolve()</span></code></a> function transform the density matrix at each time step back to the computational basis, and calculating the expectation values for us, but using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">fmmesolve</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="p">[</span><span class="n">sigmax</span><span class="p">()],</span> <span class="p">[</span><span class="n">num</span><span class="p">(</span><span class="mi">2</span><span class="p">)],</span> <span class="p">[</span><span class="n">noise_spectrum</span><span class="p">],</span> <span class="n">T</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+<span class="n">p_ex</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">expect</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dynamics-options.html" class="btn btn-neutral float-right" title="Setting Options for the Dynamics Solvers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dynamics-bloch-redfield.html" class="btn btn-neutral float-left" title="Bloch-Redfield master equation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

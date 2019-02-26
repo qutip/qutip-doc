@@ -1,0 +1,880 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Change Log &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Developers" href="contributors.html" />
+    <link rel="prev" title="Functions" href="apidoc/functions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-4-3-0">Version 4.3.0 ()</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#improvements">Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bug-fixes">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-4-2-0-july-28-2017">Version 4.2.0 (July 28, 2017)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-4-1-0-march-10-2017">Version 4.1.0 (March 10, 2017)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-4-0-2-january-5-2017">Version 4.0.2 (January 5, 2017)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-4-0-0-december-22-2016">Version 4.0.0 (December 22, 2016)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-3-2-0-never-officially-released">Version 3.2.0 (Never officially released)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#new-features">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-3-1-0-january-1-2015">Version 3.1.0 (January 1, 2015):</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id10">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-3-0-1-aug-5-2014">Version 3.0.1 (Aug 5, 2014):</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-3-0-0-july-17-2014">Version 3.0.0 (July 17, 2014):</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id13">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Improvements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-2-0-march-01-2013">Version 2.2.0 (March 01, 2013):</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id15">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">Bug Fixes:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-1-0-october-05-2012">Version 2.1.0 (October 05, 2012):</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id17">New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">Bug Fixes:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-0-0-june-01-2012">Version 2.0.0 (June 01, 2012):</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id19">New Features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-1-4-may-28-2012">Version 1.1.4 (May 28, 2012):</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id20">Bug Fixes:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-1-3-november-21-2011">Version 1.1.3 (November 21, 2011):</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#new-functions">New Functions:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">Bug Fixes:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-1-2-october-27-2011">Version 1.1.2 (October 27, 2011)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id22">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-1-1-october-25-2011">Version 1.1.1 (October 25, 2011)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id23">New Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id24">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-1-0-october-04-2011">Version 1.1.0 (October 04, 2011)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id25">New Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id26">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-0-0-july-29-2011">Version 1.0.0 (July 29, 2011)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Change Log</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/changelog.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="change-log">
+<span id="changelog"></span><h1>Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="version-4-3-0">
+<h2>Version 4.3.0 ()<a class="headerlink" href="#version-4-3-0" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="improvements">
+<h3>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>MAJOR FEATURE</strong>: Added the Permutational Invariant Quantum Solver (PIQS) module (<strong>by Nathan Shammah</strong> and <strong>Shahnawaz Ahmed</strong>) which allows the simluation of large TLSs ensembles including collective and local Lindblad dissipation. Applications range from superradiance to spin squeezing.</li>
+<li><strong>MAJOR FEATURE</strong>: Added a photon scattering module (<strong>by Ben Bartlett</strong>) which can be used to study scattering in arbitrary driven systems coupled to some configuration of output waveguides.</li>
+<li>Cubic_Spline functions as time-dependent arguments for the collapse operators in mesolve are now allowed.</li>
+<li>Added a faster version of bloch_redfield_tensor, using components from the time-dependent version. About 3x+ faster for secular tensors, and 10x+ faster for non-secular tensors.</li>
+<li>Computing Q.overlap() [inner product] is now ~30x faster.</li>
+<li>Added projector method to Qobj class.</li>
+<li>Added fast projector method, <code class="docutils literal notranslate"><span class="pre">Q.proj()</span></code>.</li>
+<li>Computing matrix elements, <code class="docutils literal notranslate"><span class="pre">Q.matrix_element</span></code> is now ~10x faster.</li>
+<li>Computing expectation values for ket vectors using <code class="docutils literal notranslate"><span class="pre">expect</span></code> is now ~10x faster.</li>
+<li><code class="docutils literal notranslate"><span class="pre">Q.tr()</span></code> is now faster for small Hilbert space dimensions.</li>
+<li>Unitary operator evolution added to sesolve</li>
+<li>Use OPENMP for tidyup if installed.</li>
+</ul>
+</div>
+<div class="section" id="bug-fixes">
+<h3>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fixed bug that stopped simdiag working for python 3.</li>
+<li>Fixed semidefinite cvxpy Variable and Parameter.</li>
+<li>Fixed iterative lu solve atol keyword issue.</li>
+<li>Fixed unitary op evolution rhs matrix in ssesolve.</li>
+<li>Fixed interpolating function to return zero outside range.</li>
+<li>Fixed dnorm complex casting bug.</li>
+<li>Fixed control.io path checking issue.</li>
+<li>Fixed ENR fock dimension.</li>
+<li>Fixed hard coded options in propagator 'batch' mode</li>
+<li>Fixed bug in trace-norm for non-Hermitian operators.</li>
+<li>Fixed bug related to args not being passed to coherence_function_g2</li>
+<li>Fixed MKL error checking dict key error</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-4-2-0-july-28-2017">
+<h2>Version 4.2.0 (July 28, 2017)<a class="headerlink" href="#version-4-2-0-july-28-2017" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Improvements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>MAJOR FEATURE</strong>: Initial implementation of time-dependent Bloch-Redfield Solver.</li>
+<li>Qobj tidyup is now an order of magnitude faster.</li>
+<li>Time-dependent codegen now generates output NumPy arrays faster.</li>
+<li>Improved calculation for analytic coefficients in coherent states (Sebastian Kramer).</li>
+<li>Input array to correlation FFT method now checked for validity.</li>
+<li>Function-based time-dependent mesolve and sesolve routines now faster.</li>
+<li>Codegen now makes sure that division is done in C, as opposed to Python.</li>
+<li>Can now set different controls for a each timeslot in quantum optimization.</li>
+</ul>
+<p>This allows time-varying controls to be used in pulse optimisation.</p>
+</div>
+<div class="section" id="id2">
+<h3>Bug Fixes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>rcsolve importing old Odeoptions Class rather than Options.</li>
+<li>Non-int issue in spin Q and Wigner functions.</li>
+<li>Qobj's should tidyup before determining isherm.</li>
+<li>Fixed time-dependent RHS function loading on Win.</li>
+<li>Fixed several issues with compiling with Cython 0.26.</li>
+<li>Liouvillian superoperators were hard setting isherm=True by default.</li>
+<li>Fixed an issue with the solver safety checks when inputing a list</li>
+</ul>
+<p>with Python functions as time-dependence.</p>
+<ul class="simple">
+<li>Fixed non-int issue in Wigner_cmap.</li>
+<li>MKL solver error handling not working properly.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-4-1-0-march-10-2017">
+<h2>Version 4.1.0 (March 10, 2017)<a class="headerlink" href="#version-4-1-0-march-10-2017" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>Improvements<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p><em>Core libraries</em></p>
+<ul class="simple">
+<li><strong>MAJOR FEATURE</strong>: QuTiP now works for Python 3.5+ on Windows using Visual Studio 2015.</li>
+<li><strong>MAJOR FEATURE</strong>: Cython and other low level code switched to C++ for MS Windows compatibility.</li>
+<li><strong>MAJOR FEATURE</strong>: Can now use interpolating cubic splines as time-dependent coefficients.</li>
+<li><strong>MAJOR FEATURE</strong>: Sparse matrix - vector multiplication now parallel using OPENMP.</li>
+<li>Automatic tuning of OPENMP threading threshold.</li>
+<li>Partial trace function is now up to 100x+ faster.</li>
+<li>Hermitian verification now up to 100x+ faster.</li>
+<li>Internal Qobj objects now created up to 60x faster.</li>
+<li>Inplace conversion from COO -&gt; CSR sparse formats (e.g. Memory efficiency improvement.)</li>
+<li>Faster reverse Cuthill-Mckee and sparse one and inf norms.</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Bug Fixes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Cleanup of temp. Cython files now more robust and working under Windows.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-4-0-2-january-5-2017">
+<h2>Version 4.0.2 (January 5, 2017)<a class="headerlink" href="#version-4-0-2-january-5-2017" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>Bug Fixes<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>td files no longer left behind by correlation tests</li>
+<li>Various fast sparse fixes</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-4-0-0-december-22-2016">
+<h2>Version 4.0.0 (December 22, 2016)<a class="headerlink" href="#version-4-0-0-december-22-2016" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h3>Improvements<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p><em>Core libraries</em></p>
+<ul class="simple">
+<li><strong>MAJOR FEATURE</strong>: Fast sparse: New subclass of csr_matrix added that overrides commonly used methods to avoid certain checks that incurr execution cost. All Qobj.data now fast_csr_matrix</li>
+<li>HEOM performance enhancements</li>
+<li>spmv now faster</li>
+<li>mcsolve codegen further optimised</li>
+</ul>
+<p><em>Control modules</em></p>
+<ul class="simple">
+<li>Time dependent drift (through list of pwc dynamics generators)</li>
+<li>memory optimisation options provided for control.dynamics</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h3>Bug Fixes<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>recompilation of pyx files on first import removed</li>
+<li>tau array in control.pulseoptim funcs now works</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-3-2-0-never-officially-released">
+<h2>Version 3.2.0 (Never officially released)<a class="headerlink" href="#version-3-2-0-never-officially-released" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="new-features">
+<h3>New Features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h3>
+<p><em>Core libraries</em></p>
+<ul class="simple">
+<li><strong>MAJOR FEATURE</strong>: Non-Markovian solvers: Hierarchy (<strong>Added by Neill Lambert</strong>), Memory-Cascade, and Transfer-Tensor methods.</li>
+<li><strong>MAJOR FEATURE</strong>: Default steady state solver now up to 100x faster using the Intel Pardiso library under the Anaconda and Intel Python distributions.</li>
+<li>The default Wigner function now uses a Clenshaw summation algorithm to evaluate a polynomial series that is applicable for any number of exciations (previous limitation was ~50 quanta), and is ~3x faster than before. (<strong>Added by Denis Vasilyev</strong>)</li>
+<li>Can now define a given eigen spectrum for random Hermitian and density operators.</li>
+<li>The Qobj <code class="docutils literal notranslate"><span class="pre">expm</span></code> method now uses the equivilent SciPy routine, and performs a much faster <code class="docutils literal notranslate"><span class="pre">exp</span></code> operation if the matrix is diagonal.</li>
+<li>One can now build zero operators using the <code class="docutils literal notranslate"><span class="pre">qzero</span></code> function.</li>
+</ul>
+<p><em>Control modules</em></p>
+<ul class="simple">
+<li><strong>MAJOR FEATURE</strong>: CRAB algorithm added
+This is an alternative to the GRAPE algorithm, which allows for analytical control functions, which means that experimental constraints can more easily be added into optimisation.
+See tutorial notebook for full information.</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h3>Improvements<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p><em>Core libraries</em></p>
+<ul class="simple">
+<li>Two-time correlation functions can now be calculated for fully time-dependent Hamiltonians and collapse operators. (<strong>Added by Kevin Fischer</strong>)</li>
+<li>The code for the inverse-power method for the steady state solver has been simplified.</li>
+<li>Bloch-Redfield tensor creation is now up to an order of magnitude faster. (<strong>Added by Johannes Feist</strong>)</li>
+<li>Q.transform now works properly for arrays directly from sp_eigs (or eig).</li>
+<li>Q.groundstate now checks for degeneracy.</li>
+<li>Added <code class="docutils literal notranslate"><span class="pre">sinm</span></code> and <code class="docutils literal notranslate"><span class="pre">cosm</span></code> methods to the Qobj class.</li>
+<li>Added <code class="docutils literal notranslate"><span class="pre">charge</span></code> and <code class="docutils literal notranslate"><span class="pre">tunneling</span></code> operators.</li>
+<li>Time-dependent Cython code is now easier to read and debug.</li>
+</ul>
+<p><em>Control modules</em></p>
+<ul>
+<li><p class="first">The internal state / quantum operator data type can now be either Qobj or ndarray
+Previous only ndarray was possible. This now opens up possibility of using Qobj methods in fidelity calculations
+The attributes and functions that return these operators are now preceded by an underscore, to indicate that the data type could change depending on the configuration options.
+In most cases these functions were for internal processing only anyway, and should have been 'private'.
+Accessors to the properties that could be useful outside of the library have been added. These always return Qobj. If the internal operator data type is not Qobj, then there could be signicant overhead in the conversion, and so this should be avoided during pulse optimisation.
+If custom sub-classes are developed that use Qobj properties and methods (e.g. partial trace), then it is very likely that it will be more efficient to set the internal data type to Qobj.
+The internal operator data will be chosen automatically based on the size and sparsity of the dynamics generator. It can be forced by setting <code class="docutils literal notranslate"><span class="pre">dynamics.oper_dtype</span> <span class="pre">=</span> <span class="pre">&lt;type&gt;</span></code>
+Note this can be done by passing <code class="docutils literal notranslate"><span class="pre">dyn_params={'oper_dtype':&lt;type&gt;}</span></code> in any of the pulseoptim functions.</p>
+<p>Some other properties and methods were renamed at the same time. A full list is given here.</p>
+<ul class="simple">
+<li>All modules
+- function: <code class="docutils literal notranslate"><span class="pre">set_log_level</span></code> -&gt; property: <code class="docutils literal notranslate"><span class="pre">log_level</span></code></li>
+<li>dynamics functions<ul>
+<li><code class="docutils literal notranslate"><span class="pre">_init_lists</span></code> now <code class="docutils literal notranslate"><span class="pre">_init_evo</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">get_num_ctrls</span></code> now property: <code class="docutils literal notranslate"><span class="pre">num_ctrls</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">get_owd_evo_target</span></code> now property: <code class="docutils literal notranslate"><span class="pre">onto_evo_target</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">combine_dyn_gen</span></code> now <code class="docutils literal notranslate"><span class="pre">_combine_dyn_gen</span></code> (no longer returns a value)</li>
+<li><code class="docutils literal notranslate"><span class="pre">get_dyn_gen</span></code> now <code class="docutils literal notranslate"><span class="pre">_get_phased_dyn_gen</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">get_ctrl_den_gen</span></code> now <code class="docutils literal notranslate"><span class="pre">_get_phased_ctrl_dyn_gen</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">ensure_decomp_curr</span></code> now <code class="docutils literal notranslate"><span class="pre">_ensure_decomp_curr</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">spectral_decomp</span></code> now <code class="docutils literal notranslate"><span class="pre">_spectral_decomp</span></code></li>
+</ul>
+</li>
+<li>dynamics properties<ul>
+<li><code class="docutils literal notranslate"><span class="pre">evo_init2t</span></code> now <code class="docutils literal notranslate"><span class="pre">_fwd_evo</span></code> (<code class="docutils literal notranslate"><span class="pre">fwd_evo</span></code> as Qobj)</li>
+<li><code class="docutils literal notranslate"><span class="pre">evo_t2end</span></code> now <code class="docutils literal notranslate"><span class="pre">_onwd_evo</span></code> (<code class="docutils literal notranslate"><span class="pre">onwd_evo</span></code> as Qobj)</li>
+<li><code class="docutils literal notranslate"><span class="pre">evo_t2targ</span></code> now <code class="docutils literal notranslate"><span class="pre">_onto_evo</span></code> (<code class="docutils literal notranslate"><span class="pre">onto_evo</span></code> as Qobj)</li>
+</ul>
+</li>
+<li>fidcomp properties<ul>
+<li><code class="docutils literal notranslate"><span class="pre">uses_evo_t2end</span></code> now <code class="docutils literal notranslate"><span class="pre">uses_onwd_evo</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">uses_evo_t2targ</span></code> now <code class="docutils literal notranslate"><span class="pre">uses_onto_evo</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">set_phase_option</span></code> function now property <code class="docutils literal notranslate"><span class="pre">phase_option</span></code></li>
+</ul>
+</li>
+<li>propcomp properties<ul>
+<li><code class="docutils literal notranslate"><span class="pre">grad_exact</span></code> (now read only)</li>
+</ul>
+</li>
+<li>propcomp functions<ul>
+<li><code class="docutils literal notranslate"><span class="pre">compute_propagator</span></code> now <code class="docutils literal notranslate"><span class="pre">_compute_propagator</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">compute_diff_prop</span></code> now <code class="docutils literal notranslate"><span class="pre">_compute_diff_prop</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">compute_prop_grad</span></code> now <code class="docutils literal notranslate"><span class="pre">_compute_prop_grad</span></code></li>
+</ul>
+</li>
+<li>tslotcomp functions<ul>
+<li><code class="docutils literal notranslate"><span class="pre">get_timeslot_for_fidelity_calc</span></code> now <code class="docutils literal notranslate"><span class="pre">_get_timeslot_for_fidelity_calc</span></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><em>Miscellaneous</em></p>
+<ul class="simple">
+<li>QuTiP Travis CI tests now use the Anaconda distribution.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">about</span></code> box and ipynb <code class="docutils literal notranslate"><span class="pre">version_table</span></code> now display addition system information.</li>
+<li>Updated Cython cleanup to remove depreciation warning in sysconfig.</li>
+<li>Updated ipynb_parallel to look for <code class="docutils literal notranslate"><span class="pre">ipyparallel</span></code> module in V4 of the notebooks.</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h3>Bug Fixes<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fixes for countstat and psuedo-inverse functions</li>
+<li>Fixed Qobj division tests on 32-bit systems.</li>
+<li>Removed extra call to Python in time-dependent Cython code.</li>
+<li>Fixed issue with repeated Bloch sphere saving.</li>
+<li>Fixed T_0 triplet state not normalized properly. (<strong>Fixed by Eric Hontz</strong>)</li>
+<li>Simplified compiler flags (support for ARM systems).</li>
+<li>Fixed a decoding error in <code class="docutils literal notranslate"><span class="pre">qload</span></code>.</li>
+<li>Fixed issue using complex.h math and np.kind_t variables.</li>
+<li>Corrected output states mismatch for <code class="docutils literal notranslate"><span class="pre">ntraj=1</span></code> in the mcf90 solver.</li>
+<li>Qobj data is now copied by default to avoid a bug in multiplication. (<strong>Fixed by Richard Brierley</strong>)</li>
+<li>Fixed bug overwriting <code class="docutils literal notranslate"><span class="pre">hardware_info</span></code> in <code class="docutils literal notranslate"><span class="pre">__init__</span></code>. (<strong>Fixed by Johannes Feist</strong>)</li>
+<li>Restored ability to explicity set Q.isherm, Q.type, and Q.superrep.</li>
+<li>Fixed integer depreciation warnings from NumPy.</li>
+<li>Qobj * (dense vec) would result in a recursive loop.</li>
+<li>Fixed args=None -&gt; args={} in correlation functions to be compatible with mesolve.</li>
+<li>Fixed depreciation warnings in mcsolve.</li>
+<li>Fixed neagtive only real parts in <code class="docutils literal notranslate"><span class="pre">rand_ket</span></code>.</li>
+<li>Fixed a complicated list-cast-map-list antipattern in super operator reps. (<strong>Fixed by Stefan Krastanov</strong>)</li>
+<li>Fixed incorrect <code class="docutils literal notranslate"><span class="pre">isherm</span></code> for <code class="docutils literal notranslate"><span class="pre">sigmam</span></code> spin operator.</li>
+<li>Fixed the dims when using <code class="docutils literal notranslate"><span class="pre">final_state_output</span></code> in <code class="docutils literal notranslate"><span class="pre">mesolve</span></code> and <code class="docutils literal notranslate"><span class="pre">sesolve</span></code>.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-3-1-0-january-1-2015">
+<h2>Version 3.1.0 (January 1, 2015):<a class="headerlink" href="#version-3-1-0-january-1-2015" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id10">
+<h3>New Features<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>MAJOR FEATURE</strong>: New module for quantum control (qutip.control).</li>
+<li><strong>NAMESPACE CHANGE</strong>: QuTiP no longer exports symbols from NumPy and matplotlib, so those modules must now be explicitly imported when required.</li>
+<li>New module for counting statistics.</li>
+<li>Stochastic solvers now run trajectories in parallel.</li>
+<li>New superoperator and tensor manipulation functions
+(super_tensor, composite, tensor_contract).</li>
+<li>New logging module for debugging (qutip.logging).</li>
+<li>New user-available API for parallelization (parallel_map).</li>
+<li>New enhanced (optional) text-based progressbar (qutip.ui.EnhancedTextProgressBar)</li>
+<li>Faster Python based monte carlo solver (mcsolve).</li>
+<li>Support for progress bars in propagator function.</li>
+<li>Time-dependent Cython code now calls complex cmath functions.</li>
+<li>Random numbers seeds can now be reused for successive calls to mcsolve.</li>
+<li>The Bloch-Redfield master equation solver now supports optional Lindblad type collapse operators.</li>
+<li>Improved handling of ODE integration errors in mesolve.</li>
+<li>Improved correlation function module (for example, improved support for time-dependent problems).</li>
+<li>Improved parallelization of mcsolve (can now be interrupted easily, support for IPython.parallel, etc.)</li>
+<li>Many performance improvements, and much internal code restructuring.</li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h3>Bug Fixes<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Cython build files for time-dependent string format now removed automatically.</li>
+<li>Fixed incorrect solution time from inverse-power method steady state solver.</li>
+<li>mcsolve now supports <cite>Options(store_states=True)</cite></li>
+<li>Fixed bug in <cite>hadamard</cite> gate function.</li>
+<li>Fixed compatibility issues with NumPy 1.9.0.</li>
+<li>Progressbar in mcsolve can now be suppressed.</li>
+<li>Fixed bug in <cite>gate_expand_3toN</cite>.</li>
+<li>Fixed bug for time-dependent problem (list string format) with multiple terms in coefficient to an operator.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-3-0-1-aug-5-2014">
+<h2>Version 3.0.1 (Aug 5, 2014):<a class="headerlink" href="#version-3-0-1-aug-5-2014" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id12">
+<h3>Bug Fixes<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fix bug in create(), which returned a Qobj with CSC data instead of CSR.</li>
+<li>Fix several bugs in mcsolve: Incorrect storing of collapse times and collapse
+operator records. Incorrect averaging of expectation values for different
+trajectories when using only 1 CPU.</li>
+<li>Fix bug in parsing of time-dependent Hamiltonian/collapse operator arguments
+that occurred when the args argument is not a dictionary.</li>
+<li>Fix bug in internal _version2int function that cause a failure when parsingthe version number of the Cython package.</li>
+<li></li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-3-0-0-july-17-2014">
+<h2>Version 3.0.0 (July 17, 2014):<a class="headerlink" href="#version-3-0-0-july-17-2014" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id13">
+<h3>New Features<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>New module <cite>qutip.stochastic</cite> with stochastic master equation and stochastic
+Schrödinger equation solvers.</li>
+<li>Expanded steady state solvers. The function <code class="docutils literal notranslate"><span class="pre">steady</span></code> has been deprecated in
+favor of <code class="docutils literal notranslate"><span class="pre">steadystate</span></code>. The steadystate solver no longer use umfpack by
+default. New pre-processing methods for reordering and balancing the linear
+equation system used in direct solution of the steady state.</li>
+<li>New module <cite>qutip.qip</cite> with utilities for quantum information processing,
+including pre-defined quantum gates along with functions for expanding
+arbitrary 1, 2, and 3 qubit gates to N qubit registers, circuit
+representations, library of quantum algorithms, and basic physical models for
+some common QIP architectures.</li>
+<li>New module <cite>qutip.distributions</cite> with unified API for working with
+distribution functions.</li>
+<li>New format for defining time-dependent Hamiltonians and collapse operators,
+using a pre-calculated numpy array that specifies the values of the
+Qobj-coefficients for each time step.</li>
+<li>New functions for working with different superoperator representations,
+including Kraus and Chi representation.</li>
+<li>New functions for visualizing quantum states using Qubism and Schimdt plots:
+<code class="docutils literal notranslate"><span class="pre">plot_qubism</span></code> and <code class="docutils literal notranslate"><span class="pre">plot_schmidt</span></code>.</li>
+<li>Dynamics solver now support taking argument <code class="docutils literal notranslate"><span class="pre">e_ops</span></code> (expectation value
+operators) in dictionary form.</li>
+<li>Public plotting functions from the <code class="docutils literal notranslate"><span class="pre">qutip.visualization</span></code> module are now
+prefixed with <code class="docutils literal notranslate"><span class="pre">plot_</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">plot_fock_distribution</span></code>). The
+<code class="docutils literal notranslate"><span class="pre">plot_wigner</span></code> and <code class="docutils literal notranslate"><span class="pre">plot_wigner_fock_distribution</span></code> now supports 3D views
+in addition to contour views.</li>
+<li>New API and new functions for working with spin operators and states,
+including for example <code class="docutils literal notranslate"><span class="pre">spin_Jx</span></code>, <code class="docutils literal notranslate"><span class="pre">spin_Jy</span></code>, <code class="docutils literal notranslate"><span class="pre">spin_Jz</span></code> and
+<code class="docutils literal notranslate"><span class="pre">spin_state</span></code>, <code class="docutils literal notranslate"><span class="pre">spin_coherent</span></code>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">expect</span></code> function now supports a list of operators, in addition to the
+previously supported list of states.</li>
+<li>Simplified creation of qubit states using <code class="docutils literal notranslate"><span class="pre">ket</span></code> function.</li>
+<li>The module <code class="docutils literal notranslate"><span class="pre">qutip.cyQ</span></code> has been renamed to <code class="docutils literal notranslate"><span class="pre">qutip.cy</span></code> and the sparse
+matrix-vector functions <code class="docutils literal notranslate"><span class="pre">spmv</span></code> and <code class="docutils literal notranslate"><span class="pre">spmv1d</span></code> has been combined into one
+function <code class="docutils literal notranslate"><span class="pre">spmv</span></code>. New functions for operating directly on the underlaying
+sparse CSR data have been added (e.g., <code class="docutils literal notranslate"><span class="pre">spmv_csr</span></code>). Performance
+improvements. New and improved Cython functions for calculating expectation
+values for state vectors, density matrices in matrix and vector form.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">concurrence</span></code> function now supports both pure and mixed states. Added
+function for calculating the entangling power of a two-qubit gate.</li>
+<li>Added function for generating (generalized) Lindblad dissipator
+superoperators.</li>
+<li>New functions for generating Bell states, and singlet and triplet states.</li>
+<li>QuTiP no longer contains the demos GUI. The examples are now available on the
+QuTiP web site. The <code class="docutils literal notranslate"><span class="pre">qutip.gui</span></code> module has been renamed to <code class="docutils literal notranslate"><span class="pre">qutip.ui</span></code> and
+does no longer contain graphical UI elements. New text-based and HTML-based
+progressbar classes.</li>
+<li>Support for harmonic oscillator operators/states in a Fock state basis that
+does not start from zero (e.g., in the range [M,N+1]). Support for
+eliminating and extracting states from Qobj instances (e.g., removing one
+state from a two-qubit system to obtain a three-level system).</li>
+<li>Support for time-dependent Hamiltonian and Liouvillian callback functions that
+depend on the instantaneous state, which for example can be used for solving
+master equations with mean field terms.</li>
+</ul>
+</div>
+<div class="section" id="id14">
+<h3>Improvements<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Restructured and optimized implementation of Qobj, which now has
+significantly lower memory footprint due to avoiding excessive copying of
+internal matrix data.</li>
+<li>The classes <code class="docutils literal notranslate"><span class="pre">OdeData</span></code>, <code class="docutils literal notranslate"><span class="pre">Odeoptions</span></code>, <code class="docutils literal notranslate"><span class="pre">Odeconfig</span></code> are now called
+<code class="docutils literal notranslate"><span class="pre">Result</span></code>, <code class="docutils literal notranslate"><span class="pre">Options</span></code>, and <code class="docutils literal notranslate"><span class="pre">Config</span></code>, respectively, and are available in
+the module <cite>qutip.solver</cite>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">squeez</span></code> function has been renamed to <code class="docutils literal notranslate"><span class="pre">squeeze</span></code>.</li>
+<li>Better support for sparse matrices when calculating propagators using the
+<code class="docutils literal notranslate"><span class="pre">propagator</span></code> function.</li>
+<li>Improved Bloch sphere.</li>
+<li>Restructured and improved the module <code class="docutils literal notranslate"><span class="pre">qutip.sparse</span></code>, which now only
+operates directly on sparse matrices (not on Qobj instances).</li>
+<li>Improved and simplified implement of the <code class="docutils literal notranslate"><span class="pre">tensor</span></code> function.</li>
+<li>Improved performance, major code cleanup (including namespace changes),
+and numerous bug fixes.</li>
+<li>Benchmark scripts improved and restructured.</li>
+<li>QuTiP is now using continuous integration tests (TravisCI).</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-2-2-0-march-01-2013">
+<h2>Version 2.2.0 (March 01, 2013):<a class="headerlink" href="#version-2-2-0-march-01-2013" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id15">
+<h3>New Features<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>Added Support for Windows</strong></li>
+<li>New Bloch3d class for plotting 3D Bloch spheres using Mayavi.</li>
+<li>Bloch sphere vectors now look like arrows.</li>
+<li>Partial transpose function.</li>
+<li>Continuos variable functions for calculating correlation and covariance
+matrices, the Wigner covariance matrix and the logarithmic negativity for
+for multimode fields in Fock basis.</li>
+<li>The master-equation solver (mesolve) now accepts pre-constructed Liouvillian
+terms, which makes it possible to solve master equations that are not on
+the standard Lindblad form.</li>
+<li>Optional Fortran Monte Carlo solver (mcsolve_f90) by Arne Grimsmo.</li>
+<li>A module of tools for using QuTiP in IPython notebooks.</li>
+<li>Increased performance of the steady state solver.</li>
+<li>New Wigner colormap for highlighting negative values.</li>
+<li>More graph styles to the visualization module.</li>
+</ul>
+</div>
+<div class="section" id="id16">
+<h3>Bug Fixes:<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Function based time-dependent Hamiltonians now keep the correct phase.</li>
+<li>mcsolve no longer prints to the command line if ntraj=1.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-2-1-0-october-05-2012">
+<h2>Version 2.1.0 (October 05, 2012):<a class="headerlink" href="#version-2-1-0-october-05-2012" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id17">
+<h3>New Features<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>New method for generating Wigner functions based on Laguerre polynomials.</li>
+<li>coherent(), coherent_dm(), and thermal_dm() can now be expressed using analytic values.</li>
+<li>Unittests now use nose and can be run after installation.</li>
+<li>Added iswap and sqrt-iswap gates.</li>
+<li>Functions for quantum process tomography.</li>
+<li>Window icons are now set for Ubuntu application launcher.</li>
+<li>The propagator function can now take a list of times as argument, and returns a list of corresponding propagators.</li>
+</ul>
+</div>
+<div class="section" id="id18">
+<h3>Bug Fixes:<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>mesolver now correctly uses the user defined rhs_filename in Odeoptions().</li>
+<li>rhs_generate() now handles user defined filenames properly.</li>
+<li>Density matrix returned by propagator_steadystate is now Hermitian.</li>
+<li>eseries_value returns real list if all imag parts are zero.</li>
+<li>mcsolver now gives correct results for strong damping rates.</li>
+<li>Odeoptions now prints mc_avg correctly.</li>
+<li>Do not check for PyObj in mcsolve when gui=False.</li>
+<li>Eseries now correctly handles purely complex rates.</li>
+<li>thermal_dm() function now uses truncated operator method.</li>
+<li>Cython based time-dependence now Python 3 compatible.</li>
+<li>Removed call to NSAutoPool on mac systems.</li>
+<li>Progress bar now displays the correct number of CPU's used.</li>
+<li>Qobj.diag() returns reals if operator is Hermitian.</li>
+<li>Text for progress bar on Linux systems is no longer cutoff.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-2-0-0-june-01-2012">
+<h2>Version 2.0.0 (June 01, 2012):<a class="headerlink" href="#version-2-0-0-june-01-2012" title="Permalink to this headline">¶</a></h2>
+<p>The second version of QuTiP has seen many improvements in the performance of the original code base, as well as the addition of several new routines supporting a wide range of functionality.  Some of the highlights of this release include:</p>
+<div class="section" id="id19">
+<h3>New Features<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>QuTiP now includes solvers for both Floquet and Bloch-Redfield master equations.</li>
+<li>The Lindblad master equation and Monte Carlo solvers allow for time-dependent collapse operators.</li>
+<li>It is possible to automatically compile time-dependent problems into c-code using Cython (if installed).</li>
+<li>Python functions can be used to create arbitrary time-dependent Hamiltonians and collapse operators.</li>
+<li>Solvers now return Odedata objects containing all simulation results and parameters, simplifying the saving of simulation results.</li>
+</ul>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This breaks compatibility with QuTiP version 1.x.</p>
+</div>
+<ul class="simple">
+<li>mesolve and mcsolve can reuse Hamiltonian data when only the initial state, or time-dependent arguments, need to be changed.</li>
+<li>QuTiP includes functions for creating random quantum states and operators.</li>
+<li>The generation and manipulation of quantum objects is now more efficient.</li>
+<li>Quantum objects have basis transformation and matrix element calculations as built-in methods.</li>
+<li>The quantum object eigensolver can use sparse solvers.</li>
+<li>The partial-trace (ptrace) function is up to 20x faster.</li>
+<li>The Bloch sphere can now be used with the Matplotlib animation function, and embedded as a subplot in a figure.</li>
+<li>QuTiP has built-in functions for saving quantum objects and data arrays.</li>
+<li>The steady-state solver has been further optimized for sparse matrices, and can handle much larger system Hamiltonians.</li>
+<li>The steady-state solver can use the iterative bi-conjugate gradient method instead of a direct solver.</li>
+<li>There are three new entropy functions for concurrence, mutual information, and conditional entropy.</li>
+<li>Correlation functions have been combined under a single function.</li>
+<li>The operator norm can now be set to trace, Frobius, one, or max norm.</li>
+<li>Global QuTiP settings can now be modified.</li>
+<li>QuTiP includes a collection of unit tests for verifying the installation.</li>
+<li>Demos window now lets you copy and paste code from each example.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-1-1-4-may-28-2012">
+<h2>Version 1.1.4 (May 28, 2012):<a class="headerlink" href="#version-1-1-4-may-28-2012" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id20">
+<h3>Bug Fixes:<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fixed bug pointed out by Brendan Abolins.</li>
+<li>Qobj.tr() returns zero-dim ndarray instead of float or complex.</li>
+<li>Updated factorial import for scipy version 0.10+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-1-1-3-november-21-2011">
+<h2>Version 1.1.3 (November 21, 2011):<a class="headerlink" href="#version-1-1-3-november-21-2011" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="new-functions">
+<h3>New Functions:<a class="headerlink" href="#new-functions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Allow custom naming of Bloch sphere.</li>
+</ul>
+</div>
+<div class="section" id="id21">
+<h3>Bug Fixes:<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fixed text alignment issues in AboutBox.</li>
+<li>Added fix for SciPy V&gt;0.10 where factorial was moved to scipy.misc module.</li>
+<li>Added tidyup function to tensor function output.</li>
+<li>Removed openmp flags from setup.py as new Mac Xcode compiler does not recognize them.</li>
+<li>Qobj diag method now returns real array if all imaginary parts are zero.</li>
+<li>Examples GUI now links to new documentation.</li>
+<li>Fixed zero-dimensional array output from metrics module.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-1-1-2-october-27-2011">
+<h2>Version 1.1.2 (October 27, 2011)<a class="headerlink" href="#version-1-1-2-october-27-2011" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id22">
+<h3>Bug Fixes<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fixed issue where Monte Carlo states were not output properly.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-1-1-1-october-25-2011">
+<h2>Version 1.1.1 (October 25, 2011)<a class="headerlink" href="#version-1-1-1-october-25-2011" title="Permalink to this headline">¶</a></h2>
+<p><strong>THIS POINT-RELEASE INCLUDES VASTLY IMPROVED TIME-INDEPENDENT MCSOLVE AND ODESOLVE PERFORMANCE</strong></p>
+<div class="section" id="id23">
+<h3>New Functions<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Added linear entropy function.</li>
+<li>Number of CPU's can now be changed.</li>
+</ul>
+</div>
+<div class="section" id="id24">
+<h3>Bug Fixes<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Metrics no longer use dense matrices.</li>
+<li>Fixed Bloch sphere grid issue with matplotlib 1.1.</li>
+<li>Qobj trace operation uses only sparse matrices.</li>
+<li>Fixed issue where GUI windows do not raise to front.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-1-1-0-october-04-2011">
+<h2>Version 1.1.0 (October 04, 2011)<a class="headerlink" href="#version-1-1-0-october-04-2011" title="Permalink to this headline">¶</a></h2>
+<p><strong>THIS RELEASE NOW REQUIRES THE GCC COMPILER TO BE INSTALLED</strong></p>
+<div class="section" id="id25">
+<h3>New Functions<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>tidyup function to remove small elements from a Qobj.</li>
+<li>Added concurrence function.</li>
+<li>Added simdiag for simultaneous diagonalization of operators.</li>
+<li>Added eigenstates method returning eigenstates and eigenvalues to Qobj class.</li>
+<li>Added fileio for saving and loading data sets and/or Qobj's.</li>
+<li>Added hinton function for visualizing density matrices.</li>
+</ul>
+</div>
+<div class="section" id="id26">
+<h3>Bug Fixes<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Switched Examples to new Signals method used in PySide 1.0.6+.</li>
+<li>Switched ProgressBar to new Signals method.</li>
+<li>Fixed memory issue in expm functions.</li>
+<li>Fixed memory bug in isherm.</li>
+<li>Made all Qobj data complex by default.</li>
+<li>Reduced ODE tolerance levels in Odeoptions.</li>
+<li>Fixed bug in ptrace where dense matrix was used instead of sparse.</li>
+<li>Fixed issue where PyQt4 version would not be displayed in about box.</li>
+<li>Fixed issue in Wigner where xvec was used twice (in place of yvec).</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-1-0-0-july-29-2011">
+<h2>Version 1.0.0 (July 29, 2011)<a class="headerlink" href="#version-1-0-0-july-29-2011" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Initial release.</strong></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="contributors.html" class="btn btn-neutral float-right" title="Developers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="apidoc/functions.html" class="btn btn-neutral float-left" title="Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

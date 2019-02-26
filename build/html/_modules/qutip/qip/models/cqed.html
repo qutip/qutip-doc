@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qutip.qip.models.cqed &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>qutip.qip.models.cqed</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qutip.qip.models.cqed</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of QuTiP: Quantum Toolbox in Python.</span>
+<span class="c1">#</span>
+<span class="c1">#    Copyright (c) 2011 and later, Paul D. Nation and Robert J. Johansson.</span>
+<span class="c1">#    All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Redistribution and use in source and binary forms, with or without</span>
+<span class="c1">#    modification, are permitted provided that the following conditions are</span>
+<span class="c1">#    met:</span>
+<span class="c1">#</span>
+<span class="c1">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="c1">#       this list of conditions and the following disclaimer.</span>
+<span class="c1">#</span>
+<span class="c1">#    2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="c1">#       notice, this list of conditions and the following disclaimer in the</span>
+<span class="c1">#       documentation and/or other materials provided with the distribution.</span>
+<span class="c1">#</span>
+<span class="c1">#    3. Neither the name of the QuTiP: Quantum Toolbox in Python nor the names</span>
+<span class="c1">#       of its contributors may be used to endorse or promote products derived</span>
+<span class="c1">#       from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1">#    &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A</span>
+<span class="c1">#    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1">#    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1">#    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1">#    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1">#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1">#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1">#    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">###############################################################################</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">qutip</span> <span class="k">import</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">identity</span><span class="p">,</span> <span class="n">destroy</span><span class="p">,</span> <span class="n">sigmax</span><span class="p">,</span> <span class="n">sigmaz</span><span class="p">,</span> <span class="n">basis</span>
+<span class="kn">from</span> <span class="nn">qutip.qip.circuit</span> <span class="k">import</span> <span class="n">QubitCircuit</span><span class="p">,</span> <span class="n">Gate</span>
+<span class="kn">from</span> <span class="nn">qutip.qip.models.circuitprocessor</span> <span class="k">import</span> <span class="n">CircuitProcessor</span>
+
+
+<div class="viewcode-block" id="DispersivecQED"><a class="viewcode-back" href="../../../../apidoc/classes.html#qutip.qip.models.cqed.DispersivecQED">[docs]</a><span class="k">class</span> <span class="nc">DispersivecQED</span><span class="p">(</span><span class="n">CircuitProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Representation of the physical implementation of a quantum</span>
+<span class="sd">    program/algorithm on a dispersive cavity-QED system.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">correct_global_phase</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">Nres</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deltamax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">epsmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">w0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wq</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Nres: Integer</span>
+<span class="sd">            The number of energy levels in the resonator.</span>
+
+<span class="sd">        deltamax: Integer/List</span>
+<span class="sd">            The sigma-x coefficient for each of the qubits in the system.</span>
+
+<span class="sd">        epsmax: Integer/List</span>
+<span class="sd">            The sigma-z coefficient for each of the qubits in the system.</span>
+
+<span class="sd">        wo: Integer</span>
+<span class="sd">            The base frequency of the resonator.</span>
+
+<span class="sd">        wq: Integer/List</span>
+<span class="sd">            The frequency of the qubits.</span>
+
+<span class="sd">        eps: Integer/List</span>
+<span class="sd">            The epsilon for each of the qubits in the system.</span>
+
+<span class="sd">        delta: Integer/List</span>
+<span class="sd">            The epsilon for each of the qubits in the system.</span>
+
+<span class="sd">        g: Integer/List</span>
+<span class="sd">            The interaction strength for each of the qubit with the resonator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">DispersivecQED</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">correct_global_phase</span><span class="p">)</span>
+
+        <span class="c1"># user definable</span>
+        <span class="k">if</span> <span class="n">Nres</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Nres</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Nres</span> <span class="o">=</span> <span class="n">Nres</span>
+
+        <span class="k">if</span> <span class="n">deltamax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sx_coeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">deltamax</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sx_coeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">deltamax</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sx_coeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">deltamax</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">epsmax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sz_coeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">9.5</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">epsmax</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sz_coeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">epsmax</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sz_coeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">epsmax</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">w0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">w0</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">w0</span> <span class="o">=</span> <span class="n">w0</span>
+
+        <span class="k">if</span> <span class="n">eps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">9.5</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">eps</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">eps</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">eps</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">delta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">delta</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.01</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">g</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">wq</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wq</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">wq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">wq</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">wq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">wq</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">wq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">eps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">9.5</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">eps</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">eps</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">eps</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">delta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">delta</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+
+        <span class="c1"># computed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wq</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">w0</span>
+
+        <span class="c1"># rwa/dispersive regime tests</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">wq</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Not in the dispersive regime&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">any</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">w0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">wq</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">wq</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;The rotating-wave approximation might not be valid.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sx_ops</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">([</span><span class="n">identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nres</span><span class="p">)]</span> <span class="o">+</span>
+                              <span class="p">[</span><span class="n">sigmax</span><span class="p">()</span> <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="n">n</span> <span class="k">else</span> <span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                               <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)])</span>
+                       <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sz_ops</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">([</span><span class="n">identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nres</span><span class="p">)]</span> <span class="o">+</span>
+                              <span class="p">[</span><span class="n">sigmaz</span><span class="p">()</span> <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="n">n</span> <span class="k">else</span> <span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                               <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)])</span>
+                       <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="n">destroy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nres</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cavityqubit_ops</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">sm</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="n">identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nres</span><span class="p">)]</span> <span class="o">+</span>
+                        <span class="p">[</span><span class="n">destroy</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="n">n</span> <span class="k">else</span> <span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cavityqubit_ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">sm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="n">sm</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">psi_proj</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="n">basis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nres</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">+</span>
+                               <span class="p">[</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)])</span>
+
+<div class="viewcode-block" id="DispersivecQED.get_ops_and_u"><a class="viewcode-back" href="../../../../apidoc/classes.html#qutip.qip.models.cqed.DispersivecQED.get_ops_and_u">[docs]</a>    <span class="k">def</span> <span class="nf">get_ops_and_u</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">H0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span>
+        <span class="k">return</span> <span class="p">([</span><span class="n">H0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx_ops</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz_ops</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cavityqubit_ops</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">w0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">sx_u</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)),</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">sx_u</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz_u</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_u</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="DispersivecQED.get_ops_labels"><a class="viewcode-back" href="../../../../apidoc/classes.html#qutip.qip.models.cqed.DispersivecQED.get_ops_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_ops_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">([</span><span class="sa">r</span><span class="s2">&quot;$a^\dagger a$&quot;</span><span class="p">]</span> <span class="o">+</span>
+                <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;$\sigma_x^</span><span class="si">%d</span><span class="s2">$&quot;</span> <span class="o">%</span> <span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)]</span> <span class="o">+</span>
+                <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;$\sigma_z^</span><span class="si">%d</span><span class="s2">$&quot;</span> <span class="o">%</span> <span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)]</span> <span class="o">+</span>
+                <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;$g_{</span><span class="si">%d</span><span class="s2">}$&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)])</span></div>
+
+<div class="viewcode-block" id="DispersivecQED.optimize_circuit"><a class="viewcode-back" href="../../../../apidoc/classes.html#qutip.qip.models.cqed.DispersivecQED.optimize_circuit">[docs]</a>    <span class="k">def</span> <span class="nf">optimize_circuit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qc</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qc0</span> <span class="o">=</span> <span class="n">qc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qc1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qc0</span><span class="o">.</span><span class="n">resolve_gates</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ISWAP&quot;</span><span class="p">,</span> <span class="s2">&quot;RX&quot;</span><span class="p">,</span> <span class="s2">&quot;RZ&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qc2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispersive_gate_correction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qc1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">qc2</span></div>
+
+    <span class="k">def</span> <span class="nf">eliminate_auxillary_modes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">U</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">psi_proj</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">U</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">psi_proj</span>
+
+<div class="viewcode-block" id="DispersivecQED.dispersive_gate_correction"><a class="viewcode-back" href="../../../../apidoc/classes.html#qutip.qip.models.cqed.DispersivecQED.dispersive_gate_correction">[docs]</a>    <span class="k">def</span> <span class="nf">dispersive_gate_correction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qc1</span><span class="p">,</span> <span class="n">rwa</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to resolve ISWAP and SQRTISWAP gates in a cQED system by adding</span>
+<span class="sd">        single qubit gates to get the correct output matrix.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        qc: Qobj</span>
+<span class="sd">            The circular spin chain circuit to be resolved</span>
+
+<span class="sd">        rwa: Boolean</span>
+<span class="sd">            Specify if RWA is used or not.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        qc: QubitCircuit</span>
+<span class="sd">            Returns QubitCircuit of resolved gates for the qubit circuit in the</span>
+<span class="sd">            desired basis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">qc</span> <span class="o">=</span> <span class="n">QubitCircuit</span><span class="p">(</span><span class="n">qc1</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">qc1</span><span class="o">.</span><span class="n">reverse_states</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">gate</span> <span class="ow">in</span> <span class="n">qc1</span><span class="o">.</span><span class="n">gates</span><span class="p">:</span>
+            <span class="n">qc</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gate</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rwa</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">gate</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;SQRTISWAP&quot;</span><span class="p">:</span>
+                    <span class="n">qc</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gate</span><span class="p">(</span><span class="s2">&quot;RZ&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="kc">None</span><span class="p">,</span>
+                                         <span class="n">arg_value</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                         <span class="n">arg_label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;-\pi/4&quot;</span><span class="p">))</span>
+                    <span class="n">qc</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gate</span><span class="p">(</span><span class="s2">&quot;RZ&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="kc">None</span><span class="p">,</span>
+                                         <span class="n">arg_value</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                         <span class="n">arg_label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;-\pi/4&quot;</span><span class="p">))</span>
+                    <span class="n">qc</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gate</span><span class="p">(</span><span class="s2">&quot;GLOBALPHASE&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+                                         <span class="n">arg_value</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                         <span class="n">arg_label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;-\pi/4&quot;</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="n">gate</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;ISWAP&quot;</span><span class="p">:</span>
+                    <span class="n">qc</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gate</span><span class="p">(</span><span class="s2">&quot;RZ&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="kc">None</span><span class="p">,</span>
+                                         <span class="n">arg_value</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                                         <span class="n">arg_label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;-\pi/2&quot;</span><span class="p">))</span>
+                    <span class="n">qc</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gate</span><span class="p">(</span><span class="s2">&quot;RZ&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="kc">None</span><span class="p">,</span>
+                                         <span class="n">arg_value</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                                         <span class="n">arg_label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;-\pi/2&quot;</span><span class="p">))</span>
+                    <span class="n">qc</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gate</span><span class="p">(</span><span class="s2">&quot;GLOBALPHASE&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+                                         <span class="n">arg_value</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                                         <span class="n">arg_label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;-\pi/2&quot;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">qc</span></div>
+
+<div class="viewcode-block" id="DispersivecQED.load_circuit"><a class="viewcode-back" href="../../../../apidoc/classes.html#qutip.qip.models.cqed.DispersivecQED.load_circuit">[docs]</a>    <span class="k">def</span> <span class="nf">load_circuit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qc</span><span class="p">):</span>
+
+        <span class="n">gates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimize_circuit</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span><span class="o">.</span><span class="n">gates</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_phase</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sx_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">gates</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sx_ops</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sz_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">gates</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sz_ops</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">gates</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cavityqubit_ops</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">gate</span> <span class="ow">in</span> <span class="n">gates</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">gate</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;ISWAP&quot;</span><span class="p">:</span>
+                <span class="n">t0</span><span class="p">,</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sz_u</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wq</span><span class="p">[</span><span class="n">t0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">w0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sz_u</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">t1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wq</span><span class="p">[</span><span class="n">t1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">w0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">g_u</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">t0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">g_u</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">t1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">t1</span><span class="p">]</span>
+
+                <span class="n">J</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">t0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">t1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Delta</span><span class="p">[</span><span class="n">t0</span><span class="p">]</span> <span class="o">+</span>
+                                               <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Delta</span><span class="p">[</span><span class="n">t1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="n">T</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">J</span><span class="p">))</span> <span class="o">/</span> <span class="mi">4</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">T_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+                <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">elif</span> <span class="n">gate</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;SQRTISWAP&quot;</span><span class="p">:</span>
+                <span class="n">t0</span><span class="p">,</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sz_u</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wq</span><span class="p">[</span><span class="n">t0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">w0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sz_u</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">t1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wq</span><span class="p">[</span><span class="n">t1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">w0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">g_u</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">t0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">t0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">g_u</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">t1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">t1</span><span class="p">]</span>
+
+                <span class="n">J</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">t0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">t1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Delta</span><span class="p">[</span><span class="n">t0</span><span class="p">]</span> <span class="o">+</span>
+                                               <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Delta</span><span class="p">[</span><span class="n">t1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="n">T</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">J</span><span class="p">))</span> <span class="o">/</span> <span class="mi">8</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">T_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+                <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">elif</span> <span class="n">gate</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;RZ&quot;</span><span class="p">:</span>
+                <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz_coeff</span><span class="p">[</span><span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sz_u</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gate</span><span class="o">.</span><span class="n">arg_value</span><span class="p">)</span> <span class="o">*</span> <span class="n">g</span>
+                <span class="n">T</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">gate</span><span class="o">.</span><span class="n">arg_value</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">T_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+                <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">elif</span> <span class="n">gate</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;RX&quot;</span><span class="p">:</span>
+                <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx_coeff</span><span class="p">[</span><span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sx_u</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">gate</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gate</span><span class="o">.</span><span class="n">arg_value</span><span class="p">)</span> <span class="o">*</span> <span class="n">g</span>
+                <span class="n">T</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">gate</span><span class="o">.</span><span class="n">arg_value</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">T_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+                <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">elif</span> <span class="n">gate</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;GLOBALPHASE&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">global_phase</span> <span class="o">+=</span> <span class="n">gate</span><span class="o">.</span><span class="n">arg_value</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unsupported gate </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">gate</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

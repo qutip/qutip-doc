@@ -1,0 +1,521 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qutip.propagator &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>qutip.propagator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qutip.propagator</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of QuTiP: Quantum Toolbox in Python.</span>
+<span class="c1">#</span>
+<span class="c1">#    Copyright (c) 2011 and later, Paul D. Nation and Robert J. Johansson.</span>
+<span class="c1">#    All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Redistribution and use in source and binary forms, with or without</span>
+<span class="c1">#    modification, are permitted provided that the following conditions are</span>
+<span class="c1">#    met:</span>
+<span class="c1">#</span>
+<span class="c1">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="c1">#       this list of conditions and the following disclaimer.</span>
+<span class="c1">#</span>
+<span class="c1">#    2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="c1">#       notice, this list of conditions and the following disclaimer in the</span>
+<span class="c1">#       documentation and/or other materials provided with the distribution.</span>
+<span class="c1">#</span>
+<span class="c1">#    3. Neither the name of the QuTiP: Quantum Toolbox in Python nor the names</span>
+<span class="c1">#       of its contributors may be used to endorse or promote products derived</span>
+<span class="c1">#       from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1">#    &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A</span>
+<span class="c1">#    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1">#    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1">#    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1">#    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1">#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1">#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1">#    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">###############################################################################</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;propagator&#39;</span><span class="p">,</span> <span class="s1">&#39;propagator_steadystate&#39;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">types</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="nn">la</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">from</span> <span class="nn">qutip.qobj</span> <span class="k">import</span> <span class="n">Qobj</span>
+<span class="kn">from</span> <span class="nn">qutip.tensor</span> <span class="k">import</span> <span class="n">tensor</span>
+<span class="kn">from</span> <span class="nn">qutip.operators</span> <span class="k">import</span> <span class="n">qeye</span>
+<span class="kn">from</span> <span class="nn">qutip.rhs_generate</span> <span class="k">import</span> <span class="p">(</span><span class="n">rhs_generate</span><span class="p">,</span> <span class="n">rhs_clear</span><span class="p">,</span> <span class="n">_td_format_check</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">qutip.superoperator</span> <span class="k">import</span> <span class="p">(</span><span class="n">vec2mat</span><span class="p">,</span> <span class="n">mat2vec</span><span class="p">,</span>
+                                 <span class="n">vector_to_operator</span><span class="p">,</span> <span class="n">operator_to_vector</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">qutip.sparse</span> <span class="k">import</span> <span class="n">sp_reshape</span>
+<span class="kn">from</span> <span class="nn">qutip.cy.sparse_utils</span> <span class="k">import</span> <span class="n">unit_row_norm</span>
+<span class="kn">from</span> <span class="nn">qutip.mesolve</span> <span class="k">import</span> <span class="n">mesolve</span>
+<span class="kn">from</span> <span class="nn">qutip.sesolve</span> <span class="k">import</span> <span class="n">sesolve</span>
+<span class="kn">from</span> <span class="nn">qutip.states</span> <span class="k">import</span> <span class="n">basis</span>
+<span class="kn">from</span> <span class="nn">qutip.solver</span> <span class="k">import</span> <span class="n">Options</span><span class="p">,</span> <span class="n">_solver_safety_check</span><span class="p">,</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">qutip.parallel</span> <span class="k">import</span> <span class="n">parallel_map</span><span class="p">,</span> <span class="n">_default_kwargs</span>
+<span class="kn">from</span> <span class="nn">qutip.ui.progressbar</span> <span class="k">import</span> <span class="n">BaseProgressBar</span><span class="p">,</span> <span class="n">TextProgressBar</span>
+
+
+<div class="viewcode-block" id="propagator"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.propagator.propagator">[docs]</a><span class="k">def</span> <span class="nf">propagator</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">c_op_list</span><span class="o">=</span><span class="p">[],</span> <span class="n">args</span><span class="o">=</span><span class="p">{},</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+               <span class="n">unitary_mode</span><span class="o">=</span><span class="s1">&#39;batch&#39;</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+               <span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">_safe_mode</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+               <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the propagator U(t) for the density matrix or wave function such</span>
+<span class="sd">    that :math:`\psi(t) = U(t)\psi(0)` or</span>
+<span class="sd">    :math:`\\rho_{\mathrm vec}(t) = U(t) \\rho_{\mathrm vec}(0)`</span>
+<span class="sd">    where :math:`\\rho_{\mathrm vec}` is the vector representation of the</span>
+<span class="sd">    density matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    H : qobj or list</span>
+<span class="sd">        Hamiltonian as a Qobj instance of a nested list of Qobjs and</span>
+<span class="sd">        coefficients in the list-string or list-function format for</span>
+<span class="sd">        time-dependent Hamiltonians (see description in :func:`qutip.mesolve`).</span>
+
+<span class="sd">    t : float or array-like</span>
+<span class="sd">        Time or list of times for which to evaluate the propagator.</span>
+
+<span class="sd">    c_op_list : list</span>
+<span class="sd">        List of qobj collapse operators.</span>
+
+<span class="sd">    args : list/array/dictionary</span>
+<span class="sd">        Parameters to callback functions for time-dependent Hamiltonians and</span>
+<span class="sd">        collapse operators.</span>
+
+<span class="sd">    options : :class:`qutip.Options`</span>
+<span class="sd">        with options for the ODE solver.</span>
+
+<span class="sd">    unitary_mode = str (&#39;batch&#39;, &#39;single&#39;)</span>
+<span class="sd">        Solve all basis vectors simulaneously (&#39;batch&#39;) or individually </span>
+<span class="sd">        (&#39;single&#39;).</span>
+<span class="sd">    </span>
+<span class="sd">    parallel : bool {False, True}</span>
+<span class="sd">        Run the propagator in parallel mode. This will override the </span>
+<span class="sd">        unitary_mode settings if set to True.</span>
+<span class="sd">    </span>
+<span class="sd">    progress_bar: BaseProgressBar</span>
+<span class="sd">        Optional instance of BaseProgressBar, or a subclass thereof, for</span>
+<span class="sd">        showing the progress of the simulation. By default no progress bar</span>
+<span class="sd">        is used, and if set to True a TextProgressBar will be used.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">     a : qobj</span>
+<span class="sd">        Instance representing the propagator :math:`U(t)`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kw</span> <span class="o">=</span> <span class="n">_default_kwargs</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s1">&#39;num_cpus&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">num_cpus</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;num_cpus&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">num_cpus</span> <span class="o">=</span> <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;num_cpus&#39;</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="n">progress_bar</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">progress_bar</span> <span class="o">=</span> <span class="n">BaseProgressBar</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">progress_bar</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">progress_bar</span> <span class="o">=</span> <span class="n">TextProgressBar</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">rhs_reuse</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">rhs_clear</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">)):</span>
+        <span class="n">tlist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tlist</span> <span class="o">=</span> <span class="n">t</span>
+
+    <span class="k">if</span> <span class="n">_safe_mode</span><span class="p">:</span>
+        <span class="n">_solver_safety_check</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">c_ops</span><span class="o">=</span><span class="n">c_op_list</span><span class="p">,</span> <span class="n">e_ops</span><span class="o">=</span><span class="p">[],</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+    
+    <span class="n">td_type</span> <span class="o">=</span> <span class="n">_td_format_check</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">c_op_list</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;me&#39;</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">BuiltinFunctionType</span><span class="p">,</span>
+                      <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">)):</span>
+        <span class="n">H0</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">H0</span> <span class="o">=</span> <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">H0</span> <span class="o">=</span> <span class="n">H</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">c_op_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">H0</span><span class="o">.</span><span class="n">isoper</span><span class="p">:</span>
+        <span class="c1"># calculate propagator for the wave function</span>
+
+        <span class="n">N</span> <span class="o">=</span> <span class="n">H0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="n">H0</span><span class="o">.</span><span class="n">dims</span>
+        
+        <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
+            <span class="n">unitary_mode</span> <span class="o">=</span> <span class="s1">&#39;single&#39;</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">tlist</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">parallel_map</span><span class="p">(</span><span class="n">_parallel_sesolve</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">),</span>
+                                  <span class="n">task_args</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">options</span><span class="p">),</span>
+                                  <span class="n">progress_bar</span><span class="o">=</span><span class="n">progress_bar</span><span class="p">,</span> <span class="n">num_cpus</span><span class="o">=</span><span class="n">num_cpus</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tlist</span><span class="p">):</span>
+                    <span class="n">u</span><span class="p">[:,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">states</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">full</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">unitary_mode</span> <span class="o">==</span> <span class="s1">&#39;single&#39;</span><span class="p">:</span>
+                <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">tlist</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+                <span class="n">progress_bar</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+                    <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                    <span class="n">psi0</span> <span class="o">=</span> <span class="n">basis</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+                    <span class="n">output</span> <span class="o">=</span> <span class="n">sesolve</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="p">[],</span> <span class="n">args</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span>
+                                     <span class="n">_safe_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tlist</span><span class="p">):</span>
+                        <span class="n">u</span><span class="p">[:,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">states</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">full</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+                    <span class="n">progress_bar</span><span class="o">.</span><span class="n">finished</span><span class="p">()</span>
+
+
+            <span class="k">elif</span> <span class="n">unitary_mode</span> <span class="o">==</span><span class="s1">&#39;batch&#39;</span><span class="p">:</span>
+                <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tlist</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+                <span class="n">_rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)])</span>
+                <span class="n">_cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">_rows</span><span class="p">)</span>
+                <span class="n">_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">_rows</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+                <span class="n">psi0</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">coo_matrix</span><span class="p">((</span><span class="n">_data</span><span class="p">,</span> <span class="p">(</span><span class="n">_rows</span><span class="p">,</span> <span class="n">_cols</span><span class="p">)))</span><span class="o">.</span><span class="n">tocsr</span><span class="p">())</span>
+                <span class="k">if</span> <span class="n">td_type</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">td_type</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">H2</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">H</span><span class="p">)):</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                            <span class="n">H2</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">tensor</span><span class="p">(</span><span class="n">qeye</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">H</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span> <span class="n">H</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]])</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">H2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">qeye</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">H</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">H2</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">qeye</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">H</span><span class="p">)</span>
+                <span class="n">options</span><span class="o">.</span><span class="n">normalize_output</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">sesolve</span><span class="p">(</span><span class="n">H2</span><span class="p">,</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="p">[],</span>
+                                 <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+                                 <span class="n">_safe_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tlist</span><span class="p">):</span>
+                    <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp_reshape</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">states</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+                    <span class="n">unit_row_norm</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid unitary mode.&#39;</span><span class="p">)</span>
+                        
+
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">c_op_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">H0</span><span class="o">.</span><span class="n">issuper</span><span class="p">:</span>
+        <span class="c1"># calculate the propagator for the vector representation of the</span>
+        <span class="c1"># density matrix (a superoperator propagator)</span>
+        <span class="n">unitary_mode</span> <span class="o">=</span> <span class="s1">&#39;single&#39;</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">H0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">sqrt_N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="n">H0</span><span class="o">.</span><span class="n">dims</span>
+        
+        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">tlist</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">parallel_map</span><span class="p">(</span><span class="n">_parallel_mesolve</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">N</span><span class="p">),</span>
+                                  <span class="n">task_args</span><span class="o">=</span><span class="p">(</span>
+                                      <span class="n">sqrt_N</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="n">c_op_list</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span>
+                                      <span class="n">options</span><span class="p">),</span>
+                                  <span class="n">progress_bar</span><span class="o">=</span><span class="n">progress_bar</span><span class="p">,</span> <span class="n">num_cpus</span><span class="o">=</span><span class="n">num_cpus</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">N</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tlist</span><span class="p">):</span>
+                    <span class="n">u</span><span class="p">[:,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">mat2vec</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">states</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">full</span><span class="p">())</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+                <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                <span class="n">col_idx</span><span class="p">,</span> <span class="n">row_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">sqrt_N</span><span class="p">,</span> <span class="n">sqrt_N</span><span class="p">))</span>
+                <span class="n">rho0</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(([</span><span class="mi">1</span><span class="p">],</span> <span class="p">([</span><span class="n">row_idx</span><span class="p">],</span> <span class="p">[</span><span class="n">col_idx</span><span class="p">])),</span>
+                                          <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">sqrt_N</span><span class="p">,</span><span class="n">sqrt_N</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+                            <span class="p">)</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">mesolve</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[],</span> <span class="n">args</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span>
+                                 <span class="n">_safe_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tlist</span><span class="p">):</span>
+                    <span class="n">u</span><span class="p">[:,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">mat2vec</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">states</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">full</span><span class="p">())</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">finished</span><span class="p">()</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># calculate the propagator for the vector representation of the</span>
+        <span class="c1"># density matrix (a superoperator propagator)</span>
+        <span class="n">unitary_mode</span> <span class="o">=</span> <span class="s1">&#39;single&#39;</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">H0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">H0</span><span class="o">.</span><span class="n">dims</span><span class="p">,</span> <span class="n">H0</span><span class="o">.</span><span class="n">dims</span><span class="p">]</span>
+
+        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">N</span> <span class="o">*</span> <span class="n">N</span><span class="p">,</span> <span class="n">N</span> <span class="o">*</span> <span class="n">N</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">tlist</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">parallel_map</span><span class="p">(</span><span class="n">_parallel_mesolve</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">N</span><span class="p">),</span>
+                                  <span class="n">task_args</span><span class="o">=</span><span class="p">(</span>
+                                      <span class="n">N</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="n">c_op_list</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">options</span><span class="p">),</span>
+                                  <span class="n">progress_bar</span><span class="o">=</span><span class="n">progress_bar</span><span class="p">,</span> <span class="n">num_cpus</span><span class="o">=</span><span class="n">num_cpus</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">N</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tlist</span><span class="p">):</span>
+                    <span class="n">u</span><span class="p">[:,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">mat2vec</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">states</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">full</span><span class="p">())</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">N</span><span class="p">):</span>
+                <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                <span class="n">col_idx</span><span class="p">,</span> <span class="n">row_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+                <span class="n">rho0</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(([</span><span class="mi">1</span><span class="p">],</span> <span class="p">([</span><span class="n">row_idx</span><span class="p">],</span> <span class="p">[</span><span class="n">col_idx</span><span class="p">])),</span>
+                                          <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">mesolve</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="n">c_op_list</span><span class="p">,</span> <span class="p">[],</span> <span class="n">args</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span>
+                                 <span class="n">_safe_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tlist</span><span class="p">):</span>
+                    <span class="n">u</span><span class="p">[:,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">mat2vec</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">states</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">full</span><span class="p">())</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">finished</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tlist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">unitary_mode</span> <span class="o">==</span> <span class="s1">&#39;batch&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">u</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">unitary_mode</span> <span class="o">==</span> <span class="s1">&#39;batch&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Qobj</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">)</span>
+                             <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tlist</span><span class="p">))],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Qobj</span><span class="p">(</span><span class="n">u</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">k</span><span class="p">],</span> <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">)</span>
+                             <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tlist</span><span class="p">))],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_min_and_index</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Private function for obtaining min and max indicies.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">minval</span><span class="p">,</span> <span class="n">minidx</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">minval</span><span class="p">:</span>
+            <span class="n">minval</span><span class="p">,</span> <span class="n">minidx</span> <span class="o">=</span> <span class="n">v</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">minval</span><span class="p">,</span> <span class="n">minidx</span>
+
+
+<div class="viewcode-block" id="propagator_steadystate"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.propagator.propagator_steadystate">[docs]</a><span class="k">def</span> <span class="nf">propagator_steadystate</span><span class="p">(</span><span class="n">U</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Find the steady state for successive applications of the propagator</span>
+<span class="sd">    :math:`U`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    U : qobj</span>
+<span class="sd">        Operator representing the propagator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a : qobj</span>
+<span class="sd">        Instance representing the steady-state density matrix.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">full</span><span class="p">())</span>
+    
+    <span class="n">shifted_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">evals</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">ev_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">shifted_vals</span><span class="p">)</span>
+    <span class="n">ev_min</span> <span class="o">=</span> <span class="n">shifted_vals</span><span class="p">[</span><span class="n">ev_idx</span><span class="p">]</span>
+    <span class="n">evecs</span> <span class="o">=</span> <span class="n">evecs</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">vec2mat</span><span class="p">(</span><span class="n">evecs</span><span class="p">[</span><span class="n">ev_idx</span><span class="p">]),</span> <span class="n">dims</span><span class="o">=</span><span class="n">U</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">rho</span><span class="o">.</span><span class="n">tr</span><span class="p">())</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">rho</span> <span class="o">+</span> <span class="n">rho</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span>  <span class="c1"># make sure rho is herm</span>
+    <span class="n">rho</span><span class="o">.</span><span class="n">isherm</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">rho</span></div>
+
+
+<span class="k">def</span> <span class="nf">_parallel_sesolve</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="n">psi0</span> <span class="o">=</span> <span class="n">basis</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">sesolve</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="p">[],</span> <span class="n">args</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">_safe_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span>
+
+<span class="k">def</span> <span class="nf">_parallel_mesolve</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="n">c_op_list</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="n">col_idx</span><span class="p">,</span> <span class="n">row_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+    <span class="n">rho0</span> <span class="o">=</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(([</span><span class="mi">1</span><span class="p">],</span> <span class="p">([</span><span class="n">row_idx</span><span class="p">],</span> <span class="p">[</span><span class="n">col_idx</span><span class="p">])),</span>
+                              <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">mesolve</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">tlist</span><span class="p">,</span> <span class="n">c_op_list</span><span class="p">,</span> <span class="p">[],</span> <span class="n">args</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span>
+                     <span class="n">_safe_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

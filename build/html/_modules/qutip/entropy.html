@@ -1,0 +1,551 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="None" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="None" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qutip.entropy &mdash; QuTiP: Quantum Toolbox in Python 4.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> QuTiP: Quantum Toolbox in Python
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../frontmatter.html">Frontmatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/guide.html">Users Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/apidoc.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../biblio.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">QuTiP: Quantum Toolbox in Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>qutip.entropy</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qutip.entropy</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is part of QuTiP: Quantum Toolbox in Python.</span>
+<span class="c1">#</span>
+<span class="c1">#    Copyright (c) 2011 and later, Paul D. Nation and Robert J. Johansson.</span>
+<span class="c1">#    All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Redistribution and use in source and binary forms, with or without</span>
+<span class="c1">#    modification, are permitted provided that the following conditions are</span>
+<span class="c1">#    met:</span>
+<span class="c1">#</span>
+<span class="c1">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="c1">#       this list of conditions and the following disclaimer.</span>
+<span class="c1">#</span>
+<span class="c1">#    2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="c1">#       notice, this list of conditions and the following disclaimer in the</span>
+<span class="c1">#       documentation and/or other materials provided with the distribution.</span>
+<span class="c1">#</span>
+<span class="c1">#    3. Neither the name of the QuTiP: Quantum Toolbox in Python nor the names</span>
+<span class="c1">#       of its contributors may be used to endorse or promote products derived</span>
+<span class="c1">#       from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1">#    &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A</span>
+<span class="c1">#    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1">#    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1">#    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1">#    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1">#    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1">#    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1">#    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1">#    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">###############################################################################</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;entropy_vn&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy_linear&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy_mutual&#39;</span><span class="p">,</span> <span class="s1">&#39;negativity&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;concurrence&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy_conditional&#39;</span><span class="p">,</span> <span class="s1">&#39;entangling_power&#39;</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="n">e</span><span class="p">,</span> <span class="n">real</span><span class="p">,</span> <span class="n">sort</span><span class="p">,</span> <span class="n">sqrt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">log2</span>
+<span class="kn">from</span> <span class="nn">qutip.qobj</span> <span class="k">import</span> <span class="n">ptrace</span>
+<span class="kn">from</span> <span class="nn">qutip.states</span> <span class="k">import</span> <span class="n">ket2dm</span>
+<span class="kn">from</span> <span class="nn">qutip.tensor</span> <span class="k">import</span> <span class="n">tensor</span>
+<span class="kn">from</span> <span class="nn">qutip.operators</span> <span class="k">import</span> <span class="n">sigmay</span>
+<span class="kn">from</span> <span class="nn">qutip.sparse</span> <span class="k">import</span> <span class="n">sp_eigs</span>
+<span class="kn">from</span> <span class="nn">qutip.qip.gates</span> <span class="k">import</span> <span class="n">swap</span>
+<span class="kn">from</span> <span class="nn">qutip.partial_transpose</span> <span class="k">import</span> <span class="n">partial_transpose</span>
+
+
+<div class="viewcode-block" id="entropy_vn"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.entropy.entropy_vn">[docs]</a><span class="k">def</span> <span class="nf">entropy_vn</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Von-Neumann entropy of density matrix</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rho : qobj</span>
+<span class="sd">        Density matrix.</span>
+<span class="sd">    base : {e,2}</span>
+<span class="sd">        Base of logarithm.</span>
+<span class="sd">    sparse : {False,True}</span>
+<span class="sd">        Use sparse eigensolver.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    entropy : float</span>
+<span class="sd">        Von-Neumann entropy of `rho`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; rho=0.5*fock_dm(2,0)+0.5*fock_dm(2,1)</span>
+<span class="sd">    &gt;&gt;&gt; entropy_vn(rho,2)</span>
+<span class="sd">    1.0</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rho</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;ket&#39;</span> <span class="ow">or</span> <span class="n">rho</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;bra&#39;</span><span class="p">:</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">ket2dm</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="n">sp_eigs</span><span class="p">(</span><span class="n">rho</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rho</span><span class="o">.</span><span class="n">isherm</span><span class="p">,</span> <span class="n">vecs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="n">sparse</span><span class="p">)</span>
+    <span class="n">nzvals</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">vals</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">base</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">logvals</span> <span class="o">=</span> <span class="n">log2</span><span class="p">(</span><span class="n">nzvals</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">base</span> <span class="o">==</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logvals</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">nzvals</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Base must be 2 or e.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">real</span><span class="p">(</span><span class="o">-</span><span class="nb">sum</span><span class="p">(</span><span class="n">nzvals</span> <span class="o">*</span> <span class="n">logvals</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="entropy_linear"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.entropy.entropy_linear">[docs]</a><span class="k">def</span> <span class="nf">entropy_linear</span><span class="p">(</span><span class="n">rho</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Linear entropy of a density matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rho : qobj</span>
+<span class="sd">        sensity matrix or ket/bra vector.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    entropy : float</span>
+<span class="sd">        Linear entropy of rho.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; rho=0.5*fock_dm(2,0)+0.5*fock_dm(2,1)</span>
+<span class="sd">    &gt;&gt;&gt; entropy_linear(rho)</span>
+<span class="sd">    0.5</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rho</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;ket&#39;</span> <span class="ow">or</span> <span class="n">rho</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;bra&#39;</span><span class="p">:</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">ket2dm</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">real</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">rho</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tr</span><span class="p">()))</span></div>
+
+
+<div class="viewcode-block" id="concurrence"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.entropy.concurrence">[docs]</a><span class="k">def</span> <span class="nf">concurrence</span><span class="p">(</span><span class="n">rho</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the concurrence entanglement measure for a two-qubit state.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    state : qobj</span>
+<span class="sd">        Ket, bra, or density matrix for a two-qubit state.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    concur : float</span>
+<span class="sd">        Concurrence</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    .. [1] http://en.wikipedia.org/wiki/Concurrence_(quantum_computing)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rho</span><span class="o">.</span><span class="n">isket</span> <span class="ow">and</span> <span class="n">rho</span><span class="o">.</span><span class="n">dims</span> <span class="o">!=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Ket must be tensor product of two qubits.&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">rho</span><span class="o">.</span><span class="n">isbra</span> <span class="ow">and</span> <span class="n">rho</span><span class="o">.</span><span class="n">dims</span> <span class="o">!=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Bra must be tensor product of two qubits.&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">rho</span><span class="o">.</span><span class="n">isoper</span> <span class="ow">and</span> <span class="n">rho</span><span class="o">.</span><span class="n">dims</span> <span class="o">!=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Density matrix must be tensor product of two qubits.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">rho</span><span class="o">.</span><span class="n">isket</span> <span class="ow">or</span> <span class="n">rho</span><span class="o">.</span><span class="n">isbra</span><span class="p">:</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">ket2dm</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
+
+    <span class="n">sysy</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">sigmay</span><span class="p">(),</span> <span class="n">sigmay</span><span class="p">())</span>
+
+    <span class="n">rho_tilde</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="n">sysy</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">rho</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">sysy</span><span class="p">)</span>
+
+    <span class="n">evals</span> <span class="o">=</span> <span class="n">rho_tilde</span><span class="o">.</span><span class="n">eigenenergies</span><span class="p">()</span>
+
+    <span class="c1"># abs to avoid problems with sqrt for very small negative numbers</span>
+    <span class="n">evals</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sort</span><span class="p">(</span><span class="n">real</span><span class="p">(</span><span class="n">evals</span><span class="p">)))</span>
+
+    <span class="n">lsum</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">evals</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">evals</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">evals</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">evals</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">lsum</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">negativity</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">subsys</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;tracenorm&#39;</span><span class="p">,</span> <span class="n">logarithmic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the negativity for a multipartite quantum system described</span>
+<span class="sd">    by the density matrix rho. The subsys argument is an index that</span>
+<span class="sd">    indicates which system to compute the negativity for.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        Experimental.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx</span> <span class="o">==</span> <span class="n">subsys</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rho</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+    <span class="n">rho_pt</span> <span class="o">=</span> <span class="n">partial_transpose</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;tracenorm&#39;</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="p">((</span><span class="n">rho_pt</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">rho_pt</span><span class="p">)</span><span class="o">.</span><span class="n">sqrtm</span><span class="p">()</span><span class="o">.</span><span class="n">tr</span><span class="p">()</span><span class="o">.</span><span class="n">real</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;eigenvalues&#39;</span><span class="p">:</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">rho_pt</span><span class="o">.</span><span class="n">eigenenergies</span><span class="p">()</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">-</span><span class="n">l</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown method </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">method</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">logarithmic</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">log2</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">N</span>
+
+
+<div class="viewcode-block" id="entropy_mutual"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.entropy.entropy_mutual">[docs]</a><span class="k">def</span> <span class="nf">entropy_mutual</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">selA</span><span class="p">,</span> <span class="n">selB</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the mutual information S(A:B) between selection</span>
+<span class="sd">    components of a system density matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rho : qobj</span>
+<span class="sd">        Density matrix for composite quantum systems</span>
+<span class="sd">    selA : int/list</span>
+<span class="sd">        `int` or `list` of first selected density matrix components.</span>
+<span class="sd">    selB : int/list</span>
+<span class="sd">        `int` or `list` of second selected density matrix components.</span>
+<span class="sd">    base : {e,2}</span>
+<span class="sd">        Base of logarithm.</span>
+<span class="sd">    sparse : {False,True}</span>
+<span class="sd">        Use sparse eigensolver.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ent_mut : float</span>
+<span class="sd">       Mutual information between selected components.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selA</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">selA</span> <span class="o">=</span> <span class="p">[</span><span class="n">selA</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selB</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">selB</span> <span class="o">=</span> <span class="p">[</span><span class="n">selB</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">rho</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s1">&#39;oper&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Input must be a density matrix.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">selA</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">selB</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rho</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Number of selected components must match &quot;</span> <span class="o">+</span>
+                        <span class="s2">&quot;total number.&quot;</span><span class="p">)</span>
+
+    <span class="n">rhoA</span> <span class="o">=</span> <span class="n">ptrace</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">selA</span><span class="p">)</span>
+    <span class="n">rhoB</span> <span class="o">=</span> <span class="n">ptrace</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">selB</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">(</span><span class="n">entropy_vn</span><span class="p">(</span><span class="n">rhoA</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="n">sparse</span><span class="p">)</span> <span class="o">+</span>
+           <span class="n">entropy_vn</span><span class="p">(</span><span class="n">rhoB</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="n">sparse</span><span class="p">)</span> <span class="o">-</span>
+           <span class="n">entropy_vn</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="n">sparse</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+<span class="k">def</span> <span class="nf">_entropy_relative</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ****NEEDS TO BE WORKED ON****</span>
+
+<span class="sd">    Calculates the relative entropy S(rho||sigma) between two density</span>
+<span class="sd">    matrices.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rho : qobj</span>
+<span class="sd">        First density matrix.</span>
+<span class="sd">    sigma : qobj</span>
+<span class="sd">        Second density matrix.</span>
+<span class="sd">    base : {e,2}</span>
+<span class="sd">        Base of logarithm.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    rel_ent : float</span>
+<span class="sd">        Value of relative entropy.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rho</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s1">&#39;oper&#39;</span> <span class="ow">or</span> <span class="n">sigma</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s1">&#39;oper&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Inputs must be density matrices..&quot;</span><span class="p">)</span>
+    <span class="c1"># sigma terms</span>
+    <span class="n">svals</span> <span class="o">=</span> <span class="n">sp_eigs</span><span class="p">(</span><span class="n">sigma</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">sigma</span><span class="o">.</span><span class="n">isherm</span><span class="p">,</span> <span class="n">vecs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="n">sparse</span><span class="p">)</span>
+    <span class="n">snzvals</span> <span class="o">=</span> <span class="n">svals</span><span class="p">[</span><span class="n">svals</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">base</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">slogvals</span> <span class="o">=</span> <span class="n">log2</span><span class="p">(</span><span class="n">snzvals</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">base</span> <span class="o">==</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">slogvals</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">snzvals</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Base must be 2 or e.&quot;</span><span class="p">)</span>
+    <span class="c1"># rho terms</span>
+    <span class="n">rvals</span> <span class="o">=</span> <span class="n">sp_eigs</span><span class="p">(</span><span class="n">rho</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rho</span><span class="o">.</span><span class="n">isherm</span><span class="p">,</span> <span class="n">vecs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="n">sparse</span><span class="p">)</span>
+    <span class="n">rnzvals</span> <span class="o">=</span> <span class="n">rvals</span><span class="p">[</span><span class="n">rvals</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># calculate tr(rho*log sigma)</span>
+    <span class="n">rel_trace</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">real</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">rnzvals</span> <span class="o">*</span> <span class="n">slogvals</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">entropy_vn</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">sparse</span><span class="p">)</span> <span class="o">-</span> <span class="n">rel_trace</span>
+
+
+<div class="viewcode-block" id="entropy_conditional"><a class="viewcode-back" href="../../apidoc/functions.html#qutip.entropy.entropy_conditional">[docs]</a><span class="k">def</span> <span class="nf">entropy_conditional</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">selB</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the conditional entropy :math:`S(A|B)=S(A,B)-S(B)`</span>
+<span class="sd">    of a selected density matrix component.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rho : qobj</span>
+<span class="sd">        Density matrix of composite object</span>
+<span class="sd">    selB : int/list</span>
+<span class="sd">        Selected components for density matrix B</span>
+<span class="sd">    base : {e,2}</span>
+<span class="sd">        Base of logarithm.</span>
+<span class="sd">    sparse : {False,True}</span>
+<span class="sd">        Use sparse eigensolver.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ent_cond : float</span>
+<span class="sd">        Value of conditional entropy</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rho</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s1">&#39;oper&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Input must be density matrix.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selB</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">selB</span> <span class="o">=</span> <span class="p">[</span><span class="n">selB</span><span class="p">]</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">ptrace</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">selB</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">(</span><span class="n">entropy_vn</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="n">sparse</span><span class="p">)</span> <span class="o">-</span>
+           <span class="n">entropy_vn</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="n">sparse</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+<span class="k">def</span> <span class="nf">participation_ratio</span><span class="p">(</span><span class="n">rho</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the effective number of states for a density matrix.</span>
+
+<span class="sd">    The participation is unity for pure states, and maximally N,</span>
+<span class="sd">    where N is the Hilbert space dimensionality, for completely</span>
+<span class="sd">    mixed states.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rho : qobj</span>
+<span class="sd">        Density matrix</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pr : float</span>
+<span class="sd">        Effective number of states in the density matrix</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rho</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;ket&#39;</span> <span class="ow">or</span> <span class="n">rho</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;bra&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">1.0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">rho</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tr</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">entangling_power</span><span class="p">(</span><span class="n">U</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the entangling power of a two-qubit gate U, which</span>
+<span class="sd">    is zero of nonentangling gates and 1 and 2/9 for maximally</span>
+<span class="sd">    entangling gates.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    U : qobj</span>
+<span class="sd">        Qobj instance representing a two-qubit gate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ep : float</span>
+<span class="sd">        The entanglement power of U (real number between 0 and 1)</span>
+
+<span class="sd">    References:</span>
+
+<span class="sd">        Explorations in Quantum Computing, Colin P. Williams (Springer, 2011)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">U</span><span class="o">.</span><span class="n">isoper</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;U must be an operator.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">U</span><span class="o">.</span><span class="n">dims</span> <span class="o">!=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;U must be a two-qubit gate.&quot;</span><span class="p">)</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">U</span><span class="p">)</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">swap</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">*</span>
+         <span class="n">tensor</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">U</span><span class="p">)</span> <span class="o">*</span> <span class="n">swap</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">swap</span><span class="p">()</span> <span class="o">*</span> <span class="n">U</span><span class="p">,</span> <span class="n">swap</span><span class="p">()</span> <span class="o">*</span> <span class="n">U</span><span class="p">)</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">swap</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">*</span>
+         <span class="n">tensor</span><span class="p">(</span><span class="n">swap</span><span class="p">()</span> <span class="o">*</span> <span class="n">U</span><span class="p">,</span> <span class="n">swap</span><span class="p">()</span> <span class="o">*</span> <span class="n">U</span><span class="p">)</span> <span class="o">*</span> <span class="n">swap</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="mf">5.0</span><span class="o">/</span><span class="mi">9</span> <span class="o">-</span> <span class="mf">1.0</span><span class="o">/</span><span class="mi">36</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">tr</span><span class="p">()</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="n">tr</span><span class="p">())</span><span class="o">.</span><span class="n">real</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
