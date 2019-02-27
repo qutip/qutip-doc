@@ -24,7 +24,7 @@ copyright = '2019, P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, an
 author = 'P.D. Nation, J.R. Johansson, A.J.G. Pitchford, C. Granade, and A.L. Grimsmo'
 
 # The short X.Y version
-version = ''
+version = '4.2'
 # The full version, including alpha/beta/rc tags
 release = '4.2.0'
 
@@ -93,7 +93,8 @@ html_theme = "sphinx_rtd_theme"
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {'cannonical_url':'http://qutip.org/docs/latest/index.html'}
+html_theme_options = {'cannonical_url':'http://qutip.org/docs/latest/index.html',
+'display_version': True}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
