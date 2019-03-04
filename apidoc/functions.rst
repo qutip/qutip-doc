@@ -253,7 +253,7 @@ Algorithms
 
 .. _functions-non_markov:
 
-non-Markovian Solvers
+Non-Markovian Solvers
 =====================
 
 .. automodule:: qutip.nonmarkov.transfertensor
