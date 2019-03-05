@@ -14,7 +14,7 @@ QuTiP: Quantum Toolbox in Python
    
    changelog.rst
    contributors.rst
-
+   biblio.rst
 
 Indices and tables
 ==================
