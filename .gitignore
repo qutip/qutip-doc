@@ -6,5 +6,5 @@
 *.dat
 *~
 
-_build
-_images
+build
+
