@@ -131,8 +131,7 @@ resulting in a stochastic differential equation
 The function :func:`smesolve` covert these cases in qutip.
 
 Heterodyne detection
-====================
-
+--------------------
 
 
 

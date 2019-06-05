@@ -82,7 +82,7 @@ liouvillian
 
 	L_{\rm eff}(\rho(t)) = L_{\rm sys}(\rho(t)) +
 	                      \sum_{n}\left(
-						  tr \left(C_{n}^{+}C_{n}  \rho C_{n}^{+}C_{n} \right)
+						  \rm{tr} \left(C_{n}^{+}C_{n}  \rho C_{n}^{+}C_{n} \right)
 						  - C_{n}^{+}C_{n}  \rho C_{n}^{+}C_{n} \right),
 
 with the probability of jumps in a timestep :math:`\delta t` given by
@@ -90,13 +90,13 @@ with the probability of jumps in a timestep :math:`\delta t` given by
 .. math::
 	:label: psmesolve_rate
 
-	\delta p = tr \left( C \rho C^{+} \right) \delta t.
+	\delta p = \rm{tr} \left( C \rho C^{+} \right) \delta t.
 
 After a jump, the density matrix betcome
 
 .. math::
 
-	\rho' = \frac{C \rho C^{+}}{tr \left( C \rho C^{+} \right)}.
+	\rho' = \frac{C \rho C^{+}}{\rm{tr} \left( C \rho C^{+} \right)}.
 
 The evolution of the system at each timestep if thus given by
 
@@ -104,6 +104,6 @@ The evolution of the system at each timestep if thus given by
 	:label: psmesolve_sde
 
 	\rho(t + \delta t) = \rho(t) + L_{\rm eff}(\rho) \delta t + \delta N
-	\left(\frac{C \rho C^{+}}{tr \left( C \rho C^{+} \right)} - \rho \right).
+	\left(\frac{C \rho C^{+}}{\rm{tr} \left( C \rho C^{+} \right)} - \rho \right).
 
 ===============================================================================
