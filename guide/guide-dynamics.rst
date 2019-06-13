@@ -13,8 +13,8 @@ Time Evolution and Quantum System Dynamics
    dynamics/dynamics-data.rst
    dynamics/dynamics-master.rst
    dynamics/dynamics-monte.rst
-   dynamics/dynamics-stochastic.rst
    dynamics/dynamics-photocurrent.rst
+   dynamics/dynamics-stochastic.rst
    dynamics/dynamics-monte.rst
    dynamics/dynamics-time.rst
    dynamics/dynamics-bloch-redfield.rst

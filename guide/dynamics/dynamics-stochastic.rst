@@ -132,7 +132,8 @@ The function :func:`smesolve` covert these cases in qutip.
 
 Heterodyne detection
 --------------------
-
+With heterodyne detection, two mesurements are made in order to obtain
+information about 2 orthogonal quadratures at once.
 
 
 
