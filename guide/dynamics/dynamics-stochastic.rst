@@ -20,25 +20,25 @@ Stochastic Solver
 
 Homodyne detection
 ==================
-Homodyne detection is an extantion of the photocurrent method where the output
+Homodyne detection is an extension of the photocurrent method where the output
 is mixed with a strong external source allowing to get information about the
-phase of the system. With this method, the resulting detection rate depend is
+phase of the system. With this method, the resulting detection rate depends is
 
 .. math::
 	:label: jump_rate
 
     \tau = tr \left((\gamma^2 + \gamma (C+C^\dag) + C^\dag C)\rho \right)
 
-With :math:`\gamma`, the strengh of the external beam and :math:`C` the collapse
+With :math:`\gamma`, the strength of the external beam and :math:`C` the collapse
 operator. When the beam is very strong :math:`(\gamma >> C^\dag C)`,
-the rate becomes a constant term plus a term proportional to the quatrature of
+the rate becomes a constant term plus a term proportional to the quadrature of
 the system.
 
 Closed system
 -------------
 .. Stochastic Schrodinger equation
 
-In closed system, the resulting stochastic differencial equation is
+In closed systems, the resulting stochastic differential equation is
 
 .. math::
 	:label: jump_ssesolve
@@ -57,7 +57,7 @@ with
 
 Here :math:`\delta \omega` is a Wiener increment.
 
-In qutip, this is available with the function :func:`ssesolve`.
+In QuTiP, this is available with the function :func:`ssesolve`.
 
 .. ipython::
 
@@ -113,26 +113,26 @@ with
 	D(C, \rho) = \frac{1}{2} \left[2 C \rho(t) C^{+}
 			   - \rho(t) C^{+} C - C^{+} C \rho(t) \right].
 
-The stochastic part of the
+The stochastic part is given by
 
 .. math::
 	:label: stochastic_smesolve
 
 	d_2 = \left(C \rho(t) + \rho(t) C^{+} - \rm{tr}\left(C \times \rho
-					 + \rho \times C^{+} \right)\rho(t) \right)
+					 + \rho \times C^{+} \right)\rho(t) \right),
 
-resulting in a stochastic differential equation
+resulting in the stochastic differential equation
 
 .. math::
 	:label: sde_smesolve
 
 	\delta \rho(t) = L(\rho(t)) \delta t + d_2  \delta \omega
 
-The function :func:`smesolve` covert these cases in qutip.
+The function :func:`smesolve` covert these cases in QuTiP.
 
 Heterodyne detection
 --------------------
-With heterodyne detection, two mesurements are made in order to obtain
+With heterodyne detection, two measurements are made in order to obtain
 information about 2 orthogonal quadratures at once.
 
 

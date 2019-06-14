@@ -57,19 +57,19 @@ These properties are detailed in the following table.  Assuming ``options = Opti
 +-----------------------------+-----------------+----------------------------------------------------------------+
 | options.rhs_filename        | None            | RHS filename when using compiled time-dependent Hamiltonians.  |
 +-----------------------------+-----------------+----------------------------------------------------------------+
-| options.rhs_reuse           | False           | Reuse compiled RHS function.  Useful for repeatative tasks.    |
+| options.rhs_reuse           | False           | Reuse compiled RHS function.  Useful for repetitive tasks.    |
 +-----------------------------+-----------------+----------------------------------------------------------------+
 | options.rhs_with_state      | False           | Whether or not to include the state in the Hamiltonian         |
 |                             |                 | function callback signature.                                   |
 +-----------------------------+-----------------+----------------------------------------------------------------+
-| options.num_cpus            | installed num   | Integer number of cpu's used by mcsolve.                       |
+| options.num_cpus            | installed num   | Integer number of cpus used by mcsolve.                       |
 |                             | of processors   |                                                                |
 +-----------------------------+-----------------+----------------------------------------------------------------+
 | options.seeds               | None            | Array containing random number seeds for mcsolver.             |
 +-----------------------------+-----------------+----------------------------------------------------------------+
 | options.norm_tol            | 1e-6            | Tolerance used when finding wavefunction norm in mcsolve.      |
 +-----------------------------+-----------------+----------------------------------------------------------------+
-| options.norm_steps          | 5               | Max. number of steps used to find wavefunction norm to within  |
+| options.norm_steps          | 5               | Max. number of steps used to find wavefunction's norm to within  |
 |                             |                 | norm_tol in mcsolve.                                           |
 +-----------------------------+-----------------+----------------------------------------------------------------+
 | options.steady_state_average| False           | Include an estimation of the steady state  in mcsolve.         |
@@ -78,7 +78,7 @@ These properties are detailed in the following table.  Assuming ``options = Opti
 +-----------------------------+-----------------+----------------------------------------------------------------+
 | options.average_expect      | True            | Average expectation values over trajectories.                  |
 +-----------------------------+-----------------+----------------------------------------------------------------+
-| options.average_states      | False           | Average states values over trajectories.                       |
+| options.average_states      | False           | Average of the states over trajectories.                       |
 +-----------------------------+-----------------+----------------------------------------------------------------+
 | options.openmp_threads      | installed num   | Number of OPENMP threads to use.                               |
 |                             | of processors   |                                                                |

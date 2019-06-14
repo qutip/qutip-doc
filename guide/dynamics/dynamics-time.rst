@@ -37,7 +37,7 @@ There are, in general, three different ways to implement time-dependent problems
 
 2. **String (Cython) based**: The Hamiltonian and/or collapse operators are expressed as a list of [qobj, string] pairs, where the time-dependent coefficients are represented as strings.  The resulting Hamiltonian is then compiled into C code using Cython and executed.
 
-3. **Array Based**: The Hamiltonian and/or collapse operators are expressed as a list of [qobj, np.array] pairs. The arrays are 1 dimensional and dtype are complex or float. They must contain one value for each time in the tlist given to the solver. Cubic spline interpolation will be used between given times.
+3. **Array Based**: The Hamiltonian and/or collapse operators are expressed as a list of [qobj, np.array] pairs. The arrays are 1 dimensional and dtype are complex or float. They must contain one value for each time in the tlist given to the solver. Cubic spline interpolation will be used between the given times.
 
 4. **Hamiltonian function (outdated)**: The Hamiltonian is itself a Python function with time-dependence.  Collapse operators must be time independent using this input format.
 
@@ -380,10 +380,10 @@ New in QuTiP 4.4
 
 The state of the system, the ket vector or the density matrix,
 is available to time-dependent Hamiltonian and collapse operators in ``args``.
-Some key of the argument dictionary are understood by the solver to be values
+Some keys of the argument dictionary are understood by the solver to be values
 to be updated with the evolution of the system.
-The state can be obtained in 3 forms ``Qobj``, vector (1d ``np.array``), matrix (2d ``np.array``),
-expectation values can also be obtained.
+The state can be obtained in 3 forms: ``Qobj``, vector (1d ``np.array``), matrix (2d ``np.array``),
+expectation values and collapse can also be obtained.
 
 +-------------------+-------------------------+----------------------+------------------------------------------------------------------+
 |                   | Preparation             | usage                | Notes                                                            |
@@ -398,13 +398,13 @@ expectation values can also be obtained.
 |                   |                         |                      | :math:`\left<\psi(t)|O|\psi(t)\right>`                           |
 |                   |                         |                      |  or :math:`\rm{tr}\left(O \rho(t)\right)`                        |
 +-------------------+-------------------------+----------------------+------------------------------------------------------------------+
-| collpases         | ``name+"=collapse":[]`` | ``col=args[name]``   | List of collapses,                                               |
+| collpases         | ``name+"=collapse":[]`` | ``col=args[name]``   | List of collapse,                                               |
 |                   |                         |                      | each collapse is a tuple of the pair ``(time, which)``           |
 |                   |                         |                      | ``which`` being the indice of the collapse operator.             |
 |                   |                         |                      | ``mcsolve`` only.                                                |
 +-------------------+-------------------------+----------------------+------------------------------------------------------------------+
 
-Here ``psi0`` is the initial value used for tests before the evolution begin.
+Here ``psi0`` is the initial value used for tests before the evolution begins.
 :func:`qutip.brmesolve` does not support these arguments.
 
 Reusing Time-Dependent Hamiltonian Data

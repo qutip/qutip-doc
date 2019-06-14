@@ -10,7 +10,7 @@ Stochastic Solver - Photocurrent
 .. _photocurrent-intro:
 
 Photocurrent method, like monte-carlo method, allows for simulating an
-individual realization of the system evolution under continuous mesurement.
+individual realization of the system evolution under continuous measurement.
 
 Closed system
 -------------
@@ -19,7 +19,7 @@ Closed system
 
 Photocurrent evolution have the state evolve deterministically between quantum jumps.
 During the deterministic part, the system evolve by schrodinger equation with a
-non-hermitian, norm conservating effective hamiltonian.
+non-hermitian, norm conserving effective Hamiltonian.
 
 .. math::
 	:label: pssesolve_heff
@@ -28,9 +28,9 @@ non-hermitian, norm conservating effective hamiltonian.
 	\frac{i\hbar}{2}\left( -\sum_{n}C^{+}_{n}C_{n}+ |C_{n} \psi |^2\right).
 
 With :math:`C_{n}`, the collapse operators.
-This effective hamiltonian is equivalent to the monte-carlo effective
-hamiltonian with an extra term to keep the state normalized.
-At each timestep of :math:`\delta t`, the wave function has a probability
+This effective Hamiltonian is equivalent to the monte-carlo effective
+Hamiltonian with an extra term to keep the state normalized.
+At each time step of :math:`\delta t`, the wave function has a probability
 
 .. math::
 	:label: pssesolve_jump_prob
@@ -39,16 +39,16 @@ At each timestep of :math:`\delta t`, the wave function has a probability
 
 of making a quantum jump. :math:`\delta t` must be chosen small enough to keep
 that probability small :math:`\delta p << 1`. *If multiple jumps happen at the
-same timestep, the state become unphysical.*
-Each jump result in a sharp variation of they state by,
+same time step, the state become unphysical.*
+Each jump result in a sharp variation of the state by,
 
 .. math::
 	:label: pssesolve_jump
 
 	\delta \psi = \left( \frac{C_n \psi} {\left| C_n \psi  \right|} - \psi \right)
 
-The basic photocurrent method directly integrate these equations to the first-order.
-Starting from a state :math:`\left|\psi(0)\right>`, it evolve the state according to
+The basic photocurrent method directly integrates these equations to the first-order.
+Starting from a state :math:`\left|\psi(0)\right>`, it evolves the state according to
 
 .. math::
 	:label: pssesolve_sde
@@ -72,9 +72,9 @@ Open system
 -----------
 .. photocurent_Master_equation
 
-Photocurrent approach allow to obtain trajectories for system with
-both measured and dissipative iteraction with the bath.
-The system evoles according to the master equation between jumps with a modified
+Photocurrent approach allows to obtain trajectories for a system with
+both measured and dissipative interaction with the bath.
+The system evolves according to the master equation between jumps with a modified
 liouvillian
 
 .. math::
@@ -85,20 +85,20 @@ liouvillian
 						  \rm{tr} \left(C_{n}^{+}C_{n}  \rho C_{n}^{+}C_{n} \right)
 						  - C_{n}^{+}C_{n}  \rho C_{n}^{+}C_{n} \right),
 
-with the probability of jumps in a timestep :math:`\delta t` given by
+with the probability of jumps in a time step :math:`\delta t` given by
 
 .. math::
 	:label: psmesolve_rate
 
 	\delta p = \rm{tr} \left( C \rho C^{+} \right) \delta t.
 
-After a jump, the density matrix betcome
+After a jump, the density matrix become
 
 .. math::
 
 	\rho' = \frac{C \rho C^{+}}{\rm{tr} \left( C \rho C^{+} \right)}.
 
-The evolution of the system at each timestep if thus given by
+The evolution of the system at each time step if thus given by
 
 .. math::
 	:label: psmesolve_sde
