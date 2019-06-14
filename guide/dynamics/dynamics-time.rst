@@ -54,7 +54,7 @@ it does support essentially all problems that one would typically encounter.
 Time-dependent coefficients using any of the following functions,
 or combinations thereof (including constants) can be compiled directly into C++-code::
 
-   'abs', 'acos', 'acosh', 'arg', 'asin', 'asinh', 'atan', 'atanh', 'conj',
+  'abs', 'acos', 'acosh', 'arg', 'asin', 'asinh', 'atan', 'atanh', 'conj',
    'cos', 'cosh','exp', 'erf', 'zerf', 'imag', 'log', 'log10', 'norm', 'pi',
    'proj', 'real', 'sin', 'sinh', 'sqrt', 'tan', 'tanh'
 
@@ -378,11 +378,34 @@ Accesing the state from solver
 
 New in QuTiP 4.4
 
-When the Hamiltonian is not linear and depend on the state.
-The state can be included in ``args`` that are updated during the evolution.
-The state can be obtained in 3 forms ``Qobj``, vector (1d ``np.array``), matrix (2d ``np.array``).
+The state of the system, the ket vector or the density matrix,
+is available to time-dependent Hamiltonian and collapse operators in ``args``.
+Some key of the argument dictionary are understood by the solver to be values
+to be updated with the evolution of the system.
+The state can be obtained in 3 forms ``Qobj``, vector (1d ``np.array``), matrix (2d ``np.array``),
+expectation values can also be obtained.
 
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+|                   | Preparation             | usage                | Notes                                                            |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+| state as Qobj     | ``name+"=Qobj":psi0``   | ``psi_t=args[name]`` | The ket or density matrix as a Qobj with ``psi0``'s dimensions   |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+| state as matrix   | ``name+"=mat":psi0``    | ``mat_t=args[name]`` | The state as a matrix, equivalent to ``state.full()``            |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+| state as vector   | ``name+"=vec":psi0``    | ``vec_t=args[name]`` | The state as a vector, equivalent to ``state.full().ravel('F')`` |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+| expectation value | ``name+"=expect":O``    | ``e=args[name]``     | Expectation value of the operator ``O``, either                  |
+|                   |                         |                      | :math:`\left<\psi(t)|O|\psi(t)\right>`                           |
+|                   |                         |                      |  or :math:`\rm{tr}\left(O \rho(t)\right)`                        |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+| collpases         | ``name+"=collapse":[]`` | ``col=args[name]``   | List of collapses,                                               |
+|                   |                         |                      | each collapse is a tuple of the pair ``(time, which)``           |
+|                   |                         |                      | ``which`` being the indice of the collapse operator.             |
+|                   |                         |                      | ``mcsolve`` only.                                                |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
 
+Here ``psi0`` is the initial value used for tests before the evolution begin.
+:func:`qutip.brmesolve` does not support these arguments.
 
 Reusing Time-Dependent Hamiltonian Data
 =======================================
