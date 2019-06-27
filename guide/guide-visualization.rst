@@ -12,6 +12,10 @@ Visualization of quantum states and processes
 
    In [1]: from qutip import *
 
+   In [1]: import numpy as np
+
+   In [1]: import matplotlib.pyplot as plt
+
 
 Visualization is often an important complement to a simulation of a quantum
 mechanical system. The first method of visualization that come to mind might be
@@ -320,12 +324,10 @@ used below to visualize the corresponding steadystate density matrix:
 
     In [1]: rho_ss = steadystate(H, [np.sqrt(0.1) * a, np.sqrt(0.4) * b.dag()])
 
-    In [1]: fig, ax = hinton(rho_ss) # xlabels=xlabels, ylabels=xlabels)
+    In [1]: hinton(rho_ss)
 
     @savefig visualization-rho-ss.png width=5.0in align=center
-    In [1]: plt.show()
-
-
+    In [1]: #plt.show()
 
 .. _visual-qpt:
 
