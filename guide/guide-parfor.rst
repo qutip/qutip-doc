@@ -88,7 +88,7 @@ While :func:`qutip.parallel.parallel_map` only iterate over the values `argument
 
     In [2]: parfor(sum_diff, [1, 2, 3], [4, 5, 6], z=5.0)
 
-    In [2]: #parallel_map(sum_diff, [1, 2, 3], task_args=(np.array([4, 5, 6]),), task_kwargs=dict(z=5.0))
+    In [2]: parallel_map(sum_diff, [1, 2, 3], task_args=(np.array([4, 5, 6]),), task_kwargs=dict(z=5.0))
 
 Note that the keyword arguments can be anything you like, but the keyword values are **not** iterated over. The keyword argument *num_cpus* is reserved as it sets the number of CPU's used by parfor. By default, this value is set to the total number of physical processors on your system. You can change this number to a lower value, however setting it higher than the number of CPU's will cause a drop in performance. In :func:`qutip.parallel.parallel_map`, keyword arguments to the task function are specified using `task_kwargs` argument, so there is no special reserved keyword arguments.
 
@@ -100,7 +100,7 @@ The :func:`qutip.parallel.parallel_map` function also supports progressbar, usin
 
    In [2]: def func(x): time.sleep(1)
 
-   In [2]: #result = parallel_map(func, range(50), progress_bar=True)
+   In [2]: result = parallel_map(func, range(50), progress_bar=True)
 
 
 Parallel processing is useful for repeated tasks such as generating plots corresponding to the dynamical evolution of your system, or simultaneously simulating different parameter configurations.

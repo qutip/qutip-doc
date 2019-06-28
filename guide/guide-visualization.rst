@@ -16,6 +16,8 @@ Visualization of quantum states and processes
 
    In [1]: import matplotlib.pyplot as plt
 
+   In [1]: plt.close("all")
+
 
 Visualization is often an important complement to a simulation of a quantum
 mechanical system. The first method of visualization that come to mind might be
@@ -327,7 +329,7 @@ used below to visualize the corresponding steadystate density matrix:
     In [1]: hinton(rho_ss)
 
     @savefig visualization-rho-ss.png width=5.0in align=center
-    In [1]: #plt.show()
+    In [1]: plt.show()
 
 .. _visual-qpt:
 

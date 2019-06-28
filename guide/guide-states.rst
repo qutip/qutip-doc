@@ -599,6 +599,12 @@ The Kraus representation of a hermicity-preserving map can be found in QuTiP
 using the :func:`~qutip.superop_reps.to_kraus` function.
 
 .. ipython::
+    :suppress:
+
+    In [1]: del sum # np.sum overwrote sum and caused a bug.
+
+
+.. ipython::
 
     In [1]: I, X, Y, Z = qeye(2), sigmax(), sigmay(), sigmaz()
 

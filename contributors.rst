@@ -93,6 +93,8 @@ Contributors
 
 **Nikolas Tezak** (Stanford) - Code contributor
 
+**Nithin Ramu** Code contributor
+
 **Per Nielsen** (Technical University of Denmark) - Bug hunter, Code contributor
 
 **Piotr Migdał** (ICFO) - Code contributor
