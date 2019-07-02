@@ -7,18 +7,38 @@
 Change Log
 **********
 
-Version 4.4.0 (July 04, 2019)
+Version 4.4.0 (July 03, 2019)
 ++++++++++++++++++++++++++++++
 
-- Great improvement to the stochastic solver. Higher order stochastic integration method available.
+- **MAJOR FEATURE**: Added methods and techniques to the stochastic solvers (**by Eric Giguère**) which allows to use a much broader set of solvers and much more efficiently.
 
-- Optimization of the montecarlo solver.
+- **MAJOR FEATURE**: Optimization of the montecarlo solver (**by Eric Giguère**). Computation are faster in many cases. Collapse information available to time dependant information.
 
-- Updated time-dependant support of Hamilonian and c_ops by the main solvers. More built-in function available to string coefficients. Coefficients from interpolated array with variable timesteps. Coefficents can obtain state information more easily.
+- Added the QObjEvo class and methods (**by Eric Giguère**), which is used behind the scenes by the dynamical solvers, making the code more efficient and tidier. More built-in function available to string coefficients. The coefficients can be made from interpolated array with variable timesteps and can obtain state information more easily. Time-dependant collapse operator can have multiple terms.
 
-- New plot_wigner_sphere function.
+- New wigner_transform and plot_wigner_sphere function. (**by Nithin Ramu**).
 
-- ptrace is faster and work on bigger systems, from 15 Qbits to 30 Qbits
+- ``ptrace`` is faster and work on bigger systems, from 15 Qbits to 30 Qbits.
+
+- QIP module: added the possibility for user-defined gates, added the possibility to remove or add gates in any point of an already built circuit, added the molmer_sorensen gate, and fixed some bugs (**by Boxi Li**).
+
+- Added the quantum Hellinger distance to ``qutip.metrics`` (**by Wojciech Rzadkowski**).
+
+- Implemented possibility of choosing a random seed (**by Marek marekyggdrasil**).
+
+- Added a code of conduct to Github.
+
+Bug Fixes
+---------
+
+- Fixed bug that made QuTiP incompatible with SciPy 1.3.
+
+- ``quite.cite()`` is improved.
+
+- Added matplotlib as optional dependency and updated numpy and scipy requirements.
+
+- Fixed matrix generating coherent spin states in ``qutip.piqs`` to include complex coefficients.
+
 
 Version 4.3.0 (July 14, 2018)
 ++++++++++++++++++++++++++++++
