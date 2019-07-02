@@ -15,7 +15,10 @@ Plotting on the Bloch Sphere
 
    In [1]: from qutip import *
 
-   In [2]: from scipy import *
+   In [1]: from scipy import *
+
+   In [1]: import numpy as np
+
 
 .. _bloch-intro:
 
@@ -130,7 +133,7 @@ Notice that when we add more than a single vector (or data point), a different c
 
     In [1]: b = Bloch()
 
-    In [1]: pnt = [1/np.sqrt(3),1/np.sqrt(3),1/np.sqrt(3)]
+    In [1]: pnt = [1./np.sqrt(3), 1./np.sqrt(3), 1./np.sqrt(3)]
 
     In [1]: b.add_points(pnt)
 
@@ -449,14 +452,15 @@ Generating Images for Animation
 
 An example of generating images for generating an animation outside of Python is given below::
 
-    b = Bloch()
-    b.vector_color = ['r']
-    b.view = [-40,30]
-    for i in range(len(sx)):
-        b.clear()
-        b.add_vectors([np.sin(theta),0,np.cos(theta)])
-        b.add_points([sx[:i+1],sy[:i+1],sz[:i+1]])
-        b.save(dirc='temp') #saving images to temp directory in current working directory
+	import numpy as np
+	b = Bloch()
+	b.vector_color = ['r']
+	b.view = [-40,30]
+	for i in range(len(sx)):
+	    b.clear()
+	    b.add_vectors([np.sin(theta),0,np.cos(theta)])
+	    b.add_points([sx[:i+1],sy[:i+1],sz[:i+1]])
+	    b.save(dirc='temp') #saving images to temp directory in current working directory
 
 Generating an animation using ffmpeg (for example) is fairly simple::
 
@@ -472,28 +476,27 @@ Directly Generating an Animation
 
 The code to directly generate an mp4 movie of the Qubit decay is as follows::
 
-    from pylab import *
-    import matplotlib.animation as animation
-    from mpl_toolkits.mplot3d import Axes3D
+	from pylab import *
+	import matplotlib.animation as animation
+	from mpl_toolkits.mplot3d import Axes3D
 
-    fig = figure()
-    ax = Axes3D(fig,azim=-40,elev=30)
-    sphere = Bloch(axes=ax)
+	fig = figure()
+	ax = Axes3D(fig,azim=-40,elev=30)
+	sphere = Bloch(axes=ax)
 
-    def animate(i):
-        sphere.clear()
-        sphere.add_vectors([np.sin(theta),0,np.cos(theta)])
-        sphere.add_points([sx[:i+1],sy[:i+1],sz[:i+1]])
-        sphere.make_sphere()
-        return ax
+	def animate(i):
+	    sphere.clear()
+	    sphere.add_vectors([np.sin(theta),0,np.cos(theta)])
+	    sphere.add_points([sx[:i+1],sy[:i+1],sz[:i+1]])
+	    sphere.make_sphere()
+	    return ax
 
-    def init():
-        sphere.vector_color = ['r']
-        return ax
+	def init():
+	    sphere.vector_color = ['r']
+	    return ax
 
-    ani = animation.FuncAnimation(fig, animate, np.arange(len(sx)),
-                                init_func=init, blit=True, repeat=False)
-    ani.save('bloch_sphere.mp4', fps=20, clear_temp=True)
+	ani = animation.FuncAnimation(fig, animate, np.arange(len(sx)),
+	                            init_func=init, blit=True, repeat=False)
+	ani.save('bloch_sphere.mp4', fps=20)
 
-
-The resulting movie may be viewed here: `Bloch_Decay.mp4 <http://qutip.googlecode.com/svn/doc/figures/bloch_decay.mp4>`_
+The resulting movie may be viewed here: `bloch_decay.mp4 <https://github.com/qutip/qutip-doc/raw/master/figures/bloch_decay.mp4>`_

@@ -67,6 +67,7 @@ We can create a ``Qobj`` with a user defined data set by passing a list or array
 
     In [5]: Qobj(r)
 
+
 Notice how both the dims and shape change according to the input data.  Although dims and shape appear to have the same function, the difference will become quite clear in the section on :ref:`tensor products and partial traces <tensor>`.
 
 .. note:: If you are running QuTiP from a python script you must use the :func:`print` function to view the Qobj attributes.
@@ -244,7 +245,7 @@ The rules for mathematical operations on ``Qobj`` instances are similar to stand
     In [2]: x = sigmax()
 
     In [3]: q + 5
-    
+
     In [4]: x * x
 
     In [5]: q ** 3

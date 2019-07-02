@@ -17,34 +17,62 @@ Solving Problems with Time-dependent Hamiltonians
    In [1]: import pylab as plt
 
    In [1]: from warnings import warn
-   
+
    In [1]: plt.close("all")
 
 
 Methods for Writing Time-Dependent Operators
 ============================================
 
-In the previous examples of quantum evolution, we assumed that the systems under consideration were described by time-independent Hamiltonians.  However, many systems have explicit time dependence in either the Hamiltonian, or the collapse operators describing coupling to the environment, and sometimes both components might depend on time.  The time-evolutions  solvers :func:`qutip.mesolve`, :func:`qutip.mcsolve`, :func:`qutip.sesolve`, and :func:`qutip.brmesolve` are all capable of handling time-dependent Hamiltonians and collapse terms. There are, in general, three different ways to implement time-dependent problems in QuTiP:
+In the previous examples of quantum evolution,
+we assumed that the systems under consideration were described by time-independent Hamiltonians.
+However, many systems have explicit time dependence in either the Hamiltonian,
+or the collapse operators describing coupling to the environment, and sometimes both components might depend on time.
+The time-evolutions  solvers
+:func:`qutip.mesolve`, :func:`qutip.mcsolve`, :func:`qutip.sesolve`, :func:`qutip.brmesolve`
+:func:`qutip.ssesolve`, :func:`qutip.photocurrent_sesolve`, :func:`qutip.smesolve`, and :func:`qutip.photocurrent_mesolve`
+are all capable of handling time-dependent Hamiltonians and collapse terms.
+There are, in general, three different ways to implement time-dependent problems in QuTiP:
 
 
 1. **Function based**: Hamiltonian / collapse operators expressed using [qobj, func] pairs, where the time-dependent coefficients of the Hamiltonian (or collapse operators) are expressed using Python functions.
 
 2. **String (Cython) based**: The Hamiltonian and/or collapse operators are expressed as a list of [qobj, string] pairs, where the time-dependent coefficients are represented as strings.  The resulting Hamiltonian is then compiled into C code using Cython and executed.
 
-3. **Hamiltonian function (outdated)**: The Hamiltonian is itself a Python function with time-dependence.  Collapse operators must be time independent using this input format.
+3. **Array Based**: The Hamiltonian and/or collapse operators are expressed as a list of [qobj, np.array] pairs. The arrays are 1 dimensional and dtype are complex or float. They must contain one value for each time in the tlist given to the solver. Cubic spline interpolation will be used between the given times.
+
+4. **Hamiltonian function (outdated)**: The Hamiltonian is itself a Python function with time-dependence.  Collapse operators must be time independent using this input format.
 
 
-Give the multiple choices of input style, the first question that arrises is which option to choose?  In short, the function based method (option #1) is the most general, allowing for essentially arbitrary coefficients expressed via user defined functions.  However, by automatically compiling your system into C++ code, the second option (string based) tends to be more efficient and will run faster [This is also the only format that is supported in the :func:`qutip.brmesolve` solver].  Of course, for small system sizes and evolution times, the difference will be minor.  Although this method does not support all time-dependent coefficients that one can think of, it does support essentially all problems that one would typically encounter.  Time-dependent coefficients using any of the following functions, or combinations thereof (including constants) can be compiled directly into C++-code::
+Give the multiple choices of input style, the first question that arrises is which option to choose?
+In short, the function based method (option #1) is the most general,
+allowing for essentially arbitrary coefficients expressed via user defined functions.
+However, by automatically compiling your system into C++ code,
+the second option (string based) tends to be more efficient and will run faster
+[This is also the only format that is supported in the :func:`qutip.brmesolve` solver].
+Of course, for small system sizes and evolution times, the difference will be minor.
+Although this method does not support all time-dependent coefficients that one can think of,
+it does support essentially all problems that one would typically encounter.
+Time-dependent coefficients using any of the following functions,
+or combinations thereof (including constants) can be compiled directly into C++-code::
 
-   'abs', 'acos', 'acosh', 'arg', 'asin', 'asinh', 'atan', 'atanh', 'conj',
-   'cos', 'cosh','exp', 'erf', 'imag', 'log', 'log10', 'norm', 'proj', 'real', 'sin', 'sinh', 'sqrt',
-   'tan', 'tanh'
+  'abs', 'acos', 'acosh', 'arg', 'asin', 'asinh', 'atan', 'atanh', 'conj',
+   'cos', 'cosh','exp', 'erf', 'zerf', 'imag', 'log', 'log10', 'norm', 'pi',
+   'proj', 'real', 'sin', 'sinh', 'sqrt', 'tan', 'tanh'
 
 In addition, QuTiP supports cubic spline based interpolation functions [:ref:`time-interp`].
 
-If you require mathematical functions other than those listed above, than it is possible to call any of the functions in the NumPy library using the prefix ``np.`` before the function name in the string, i.e ``'np.sin(t)'``.  This includes a wide range of functionality, but comes with a small overhead created by going from C++->Python->C++.
+If you require mathematical functions other than those listed above,
+it is possible to call any of the functions in the NumPy library using the prefix ``np.``
+before the function name in the string, i.e ``'np.sin(t)'`` and  ``scipy.special`` imported as ``spe``.
+This includes a wide range of functionality, but comes with a small overhead created by going from C++->Python->C++.
 
-Finally option #3, expressing the Hamiltonian as a Python function, is the original method for time dependence in QuTiP 1.x.  However, this method is somewhat less efficient then the previously mentioned methods, and does not allow for time-dependent collapse operators. However, in contrast to options #1 and #2, this method can be used in implementing time-dependent Hamiltonians that cannot be expressed as a function of constant operators with time-dependent coefficients.
+Finally option #4, expressing the Hamiltonian as a Python function,
+is the original method for time dependence in QuTiP 1.x.
+However, this method is somewhat less efficient then the previously mentioned methods.
+However, in contrast to the other options
+this method can be used in implementing time-dependent Hamiltonians that cannot be
+expressed as a function of constant operators with time-dependent coefficients.
 
 A collection of examples demonstrating the simulation of time-dependent problems can be found on the `tutorials <http://qutip.org/tutorials.html>`_ web page.
 
@@ -276,7 +304,7 @@ We can also use the ``args`` variable in the same manner as before, however we m
     In [1]: output = mesolve(H, psi0, times, c_ops, [a.dag()*a], args=args)
 
 
-.. important:: Naming your ``args`` variables ``e``, ``j`` or ``pi`` will cause errors when using the string-based format.
+.. important:: Naming your ``args`` variables ``exp``, ``sin``, ``pi`` etc. will cause errors when using the string-based format.
 
 Collapse operators are handled in the exact same way.
 
@@ -344,6 +372,42 @@ to
 
 When combining interpolating functions with other Python functions or strings, the interpolating class will automatically pick the appropriate method for calling the class.  That is to say that, if for example, you have other time-dependent terms that are given in the string-format, then the cubic spline representation will also be passed in a string-compatible format.  In the string-format, the interpolation function is compiled into c-code, and thus is quite fast.  This is the default method if no other time-dependent terms are present.
 
+
+.. _time-dynargs:
+
+Accesing the state from solver
+==============================
+
+New in QuTiP 4.4
+
+The state of the system, the ket vector or the density matrix,
+is available to time-dependent Hamiltonian and collapse operators in ``args``.
+Some keys of the argument dictionary are understood by the solver to be values
+to be updated with the evolution of the system.
+The state can be obtained in 3 forms: ``Qobj``, vector (1d ``np.array``), matrix (2d ``np.array``),
+expectation values and collapse can also be obtained.
+
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+|                   | Preparation             | usage                | Notes                                                            |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+| state as Qobj     | ``name+"=Qobj":psi0``   | ``psi_t=args[name]`` | The ket or density matrix as a Qobj with ``psi0``'s dimensions   |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+| state as matrix   | ``name+"=mat":psi0``    | ``mat_t=args[name]`` | The state as a matrix, equivalent to ``state.full()``            |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+| state as vector   | ``name+"=vec":psi0``    | ``vec_t=args[name]`` | The state as a vector, equivalent to ``state.full().ravel('F')`` |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+| expectation value | ``name+"=expect":O``    | ``e=args[name]``     | Expectation value of the operator ``O``, either                  |
+|                   |                         |                      | :math:`\left<\psi(t)|O|\psi(t)\right>`                           |
+|                   |                         |                      |  or :math:`\rm{tr}\left(O \rho(t)\right)`                        |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+| collpases         | ``name+"=collapse":[]`` | ``col=args[name]``   | List of collapse,                                               |
+|                   |                         |                      | each collapse is a tuple of the pair ``(time, which)``           |
+|                   |                         |                      | ``which`` being the indice of the collapse operator.             |
+|                   |                         |                      | ``mcsolve`` only.                                                |
++-------------------+-------------------------+----------------------+------------------------------------------------------------------+
+
+Here ``psi0`` is the initial value used for tests before the evolution begins.
+:func:`qutip.brmesolve` does not support these arguments.
 
 Reusing Time-Dependent Hamiltonian Data
 =======================================

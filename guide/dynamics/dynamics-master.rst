@@ -49,6 +49,7 @@ For example, the time evolution of a quantum spin-1/2 system with tunneling rate
 
     In [1]: result = sesolve(H, psi0, times, [sigmaz()])
 
+
 The brackets in the fourth argument is an empty list of collapse operators, since we consider unitary evolution in this example. See the next section for examples on how dissipation is included by defining a list of collapse operators.
 
 The function returns an instance of :class:`qutip.solver.Result`, as described in the previous section :ref:`solver_result`. The attribute ``expect`` in ``result`` is a list of expectation values for the operators that are included in the list in the fifth argument. Adding operators to this list results in a larger output list returned by the function (one array of numbers, corresponding to the times in times, for each operator)
@@ -192,7 +193,7 @@ the previously empty list in the fourth parameter to the :func:`qutip.mesolve` f
     In [1]: ax.legend(("Sigma-Z", "Sigma-Y"));
 
 	@savefig guide-qubit-dynamics-dissip.png width=5.0in align=center
-    In [1]: show(fig)
+    In [1]: show()
 
 
 Here, 0.05 is the rate and the operator :math:`\sigma_x` (:func:`qutip.operators.sigmax`) describes the dissipation
