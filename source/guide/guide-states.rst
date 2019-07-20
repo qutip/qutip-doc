@@ -219,7 +219,7 @@ or use ``0.5 * fock_dm(5, 2) + 0.5 * fock_dm(5, 4)``. There are also several oth
      thermal_dm(5, 1.25)
 
 
-QuTiP also provides a set of distance metrics for determining how close two density matrix distributions are to each other. Included are the trace distance :func:`qutip.metrics.tracedist`, fidelity :func:`qutip.metrics.fidelity`, Hilbert-Schmidt distance :func:`qutip.metrics.hilbert_dist`, Bures distance :func:`qutip.metrics.bures_dist`, and Bures angle :func:`qutip.metrics.bures_angle`.
+QuTiP also provides a set of distance metrics for determining how close two density matrix distributions are to each other. Included are the trace distance :func:`qutip.metrics.tracedist`, fidelity :func:`qutip.metrics.fidelity`, Hilbert-Schmidt distance :func:`qutip.metrics.hilbert_dist`, Bures distance :func:`qutip.metrics.bures_dist`, Bures angle :func:`qutip.metrics.bures_angle`, and quantum Hellinger distance :func:`qutip.metrics.hellinger_dist`.
 
 .. code-block:: python
 
@@ -230,11 +230,10 @@ QuTiP also provides a set of distance metrics for determining how close two dens
      z = thermal_dm(5, 0.125)
     
      fidelity(x, x)
-    
+
      tracedist(y, y)
 
-
-We also know that for two pure states, the trace distance (T) and the fidelity (F) are related by :math:`T = \sqrt{1 - F^{2}}`.
+We also know that for two pure states, the trace distance (T) and the fidelity (F) are related by :math:`T = \sqrt{1 - F^{2}}`, while the quantum Hellinger distance (QHE) between two pure states :math:`\left|\psi\right>` and :math:`\left|\phi\right>` is given by :math:`QHE = \sqrt{2 - 2\left|\left<\psi | \phi\right>\right|^2}`.
 
 .. code-block:: python
 

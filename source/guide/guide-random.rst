@@ -44,7 +44,7 @@ In all cases, these functions can be called with a single parameter :math:`N` th
 ``dims`` keyword argument allows for the dimensions of a random state, unitary or channel to be broken down into subsystems.
 
 .. code-block:: python
-	
+
 	 print rand_super_bcsz(7).dims
 
 	 print rand_super_bcsz(6, dims=[[[2, 3], [2, 3]], [[2, 3], [2, 3]]]).dims
