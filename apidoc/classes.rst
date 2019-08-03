@@ -129,17 +129,52 @@ Quantum information processing
 .. autoclass:: qutip.qip.models.CircuitProcessor
     :members:
 
+.. autoclass:: qutip.qip.models.OptPulseProcessor
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.models.ModelProcessor
+    :members:
+    :inherited-members:
+
 .. autoclass:: qutip.qip.models.spinchain.SpinChain
     :members:
+    :inherited-members:
 
 .. autoclass:: qutip.qip.models.spinchain.LinearSpinChain
     :members:
+    :inherited-members:
 
 .. autoclass:: qutip.qip.models.spinchain.CircularSpinChain
     :members:
+    :inherited-members:
 
 .. autoclass:: qutip.qip.models.cqed.DispersivecQED
     :members:
+    :inherited-members:
+    
+.. autoclass:: qutip.qip.models.circuitnoise.CircuitNoise
+    :members:
+
+.. autoclass:: qutip.qip.models.circuitnoise.DecoherenceNoise
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.models.circuitnoise.RelaxationNoise
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.models.circuitnoise.ControlAmpNoise
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.models.circuitnoise.WhiteNoise
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.models.circuitnoise.UserNoise
+    :members:
+    :inherited-members:
 
 .. _classes-control:
 
