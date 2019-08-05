@@ -322,6 +322,6 @@ def setup(app):
 # Sphinx Gallery
 sphinx_gallery_conf = {
      'examples_dirs': 'gallery',   # path to your example scripts
-     'gallery_dirs': 'gallery/auto_examples',  # save generated examples
+     'gallery_dirs': '_build/gallery',  # save generated examples
      'abort_on_example_error': True  # abort if exception occurs
 }

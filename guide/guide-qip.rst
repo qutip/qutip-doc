@@ -215,13 +215,13 @@ Compared to the approach of Kraus operators, this way of simulating noise is mor
 
 The first example is a processor with one qubit under rotation around the z-axis with relaxation time T2=5. We can measure the population of the :math:`\left| + \right\rangle` state and observe the Ramsey signal:
 
-.. image:: /gallery/auto_examples/qip/images/sphx_glr_plot_qip_relaxation_001.png
+.. image:: /_build/gallery/qip/images/sphx_glr_plot_qip_relaxation_001.png
 
 The second example demonstrates a biased Gaussian noise on the pulse amplitude. For visualization purpose, we plot the noisy pulse intensity instead of the state fidelity. The three pulses can, for example, be a zyz-decomposition of an arbitrary single-qubit gate:
 
-.. image:: /gallery/auto_examples/qip/images/sphx_glr_plot_qip_amplitude_noise_001.png
+.. image:: /_build/gallery/qip/images/sphx_glr_plot_qip_amplitude_noise_001.png
 
-.. image:: /gallery/auto_examples/qip/images/sphx_glr_plot_qip_amplitude_noise_001.png
+.. image:: /_build/gallery/qip/images/sphx_glr_plot_qip_amplitude_noise_001.png
 
 As the design of circuit processor follows the physical realization, so is the noise simulation. Noise can be added to the processor at different levels:
 
