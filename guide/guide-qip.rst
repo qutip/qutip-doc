@@ -166,7 +166,7 @@ Despite this difference, the logic behind circuit processors is the same:
 
 * The processor calculates the evolution using the QuTip solvers. Collapse operators can be added to simulate decoherence. The method :meth:`qutip.qip.CircuitProcessor.run_state` returns a object :class:`qutip.solver.Result`.
 
-For :class:`qutip.qip.ModelProcessor`, it is also possible to calculate the evolution analytically with matrix exponential. A list of the matrices representing the gates is returned just like :meth:`qutip.qip.QubitCircuit.propagators()`. For a large system, this approach is clearly inefficient. 
+It is also possible to calculate the evolution analytically with matrix exponentiation by setting ``analytical=True``. A list of the matrices representing the gates is returned just like for :meth:`qutip.qip.QubitCircuit.propagators()`. However, this does not consider the collapse operators or the noise. As the system size getting larger, this approach will be very inefficient.
 
 SpinChain
 ---------
@@ -186,23 +186,35 @@ The :class:`qutip.qip.OptPulseProcessor` uses the function in :func:`qutip.contr
 
    U(\Delta t)=\exp(\rm{i} \cdot \Delta t [H_d  + \sum_j u_j H_j] )
 
-All parameters for :func:`qutip.control.pulseoptim.optimize_pulse_unitary` can also be given as keyword arguments to the class method :meth:`qutip.qip.OptPulseProcessor.load_circuit`. The example below uses it to find ``tlist`` and ``coeffs`` for a Hadamard gate.
+To let it find the optimal pulses, we needs to give the parameters for :func:`qutip.control.pulseoptim.optimize_pulse_unitary` as keyword arguments to :meth:`qutip.qip.OptPulseProcessor.load_circuit`. Usually the minimal requirements are the evolution time ``evo_time`` and the number of time slices ``num_tslots`` for each gate. Other parameters can also be given in the keyword arguments. For available choices, see :func:`qutip.control.pulseoptim.optimize_pulse_unitary`. It is also possible to specify different parameters for different gates, as shown in the following example:
 
 .. code-block:: python
 
-   >>> from qutip.qip.models.optpulseprocessor import OptPulseProcessor
-   >>> H_d = sigmaz()
-   >>> H_c = sigmax()
-   >>> optproc = OptPulseProcessor(N=1, drift=H_d, ctrls=[H_c])
-   >>> qc = QubitCircuit(1)
-   >>> qc.add_gate("SNOT", targets=[0])
-   >>> optproc.load_circuit(qc, n_ts=10, evo_time=10)
-   (array([ 0.,  1.,  2.,  3.,  4.,  5.,  6.,  7.,  8.,  9., 10.]),
-   array([[ 0.30731151, -0.65352563, -0.48110828,  0.28911593, -0.29193726,
-         -0.06580244, -0.80886723, -0.31633408, -0.66637145,  0.19453724]]))
-   >>> real_rho1 = optproc.run_state(rho0=basis(2,0)).states[-1]
-   >>> ideal_rho1 = (basis(2, 0) + basis(2, 1)).unit()
-   >>> fidelity(real_rho1, ideal_rho1)
+      >>> # Same parameter for all the gates
+      ... qc = QubitCircuit(N=1)
+      >>> qc.add_gate("SNOT", 0)
+      >>>
+      >>> num_tslots = 10
+      >>> evo_time = 10
+      >>> processor = OptPulseProcessor(N=1, drift=sigmaz(), ctrls=[sigmax()])
+      >>> # num_tslots and evo_time are two keyword arguments
+      ... tlist, coeffs = processor.load_circuit(
+      ... qc, num_tslots=num_tslots, evo_time=evo_time)
+      >>>
+      >>> # Different parameters for different gates
+      ... qc = QubitCircuit(N=2)
+      >>> qc.add_gate("SNOT", 0)
+      >>> qc.add_gate("SWAP", targets=[0, 1])
+      >>> qc.add_gate('CNOT', controls=1, targets=[0])
+      >>>
+      >>> processor = OptPulseProcessor(N=2, drift=tensor([sigmaz()]*2))
+      >>> processor.add_ctrl(sigmax(), cyclic_permutation=True)
+      >>> processor.add_ctrl(sigmay(), cyclic_permutation=True)
+      >>> processor.add_ctrl(tensor([sigmay(), sigmay()]))
+      >>> setting_args = {"SNOT": {"num_tslots": 10, "evo_time": 1},
+      ...             "SWAP": {"num_tslots": 30, "evo_time": 3},
+      ...             "CNOT": {"num_tslots": 30, "evo_time": 3}}
+      >>> tlist, coeffs = processor.load_circuit(qc, setting_args=setting_args)
 
 Noise Simulation
 ================
