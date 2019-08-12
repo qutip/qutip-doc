@@ -126,53 +126,53 @@ Quantum information processing
 .. autoclass:: qutip.qip.QubitCircuit
     :members:
 
-.. autoclass:: qutip.qip.CircuitProcessor
+.. autoclass:: qutip.qip.device.Processor
     :members:
 
-.. autoclass:: qutip.qip.OptPulseProcessor
-    :members:
-    :inherited-members:
-
-.. autoclass:: qutip.qip.ModelProcessor
+.. autoclass:: qutip.qip.device.OptPulseProcessor
     :members:
     :inherited-members:
 
-.. autoclass:: qutip.qip.SpinChain
+.. autoclass:: qutip.qip.device.ModelProcessor
     :members:
     :inherited-members:
 
-.. autoclass:: qutip.qip.LinearSpinChain
+.. autoclass:: qutip.qip.device.SpinChain
     :members:
     :inherited-members:
 
-.. autoclass:: qutip.qip.CircularSpinChain
+.. autoclass:: qutip.qip.device.LinearSpinChain
     :members:
     :inherited-members:
 
-.. autoclass:: qutip.qip.DispersivecQED
+.. autoclass:: qutip.qip.device.CircularSpinChain
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.device.DispersivecQED
     :members:
     :inherited-members:
     
-.. autoclass:: qutip.qip.CircuitNoise
+.. autoclass:: qutip.qip.device.Noise
     :members:
 
-.. autoclass:: qutip.qip..DecoherenceNoise
-    :members:
-    :inherited-members:
-
-.. autoclass:: qutip.qip.RelaxationNoise
+.. autoclass:: qutip.qip.device.DecoherenceNoise
     :members:
     :inherited-members:
 
-.. autoclass:: qutip.qip.ControlAmpNoise
+.. autoclass:: qutip.qip.device.RelaxationNoise
     :members:
     :inherited-members:
 
-.. autoclass:: qutip.qip.WhiteNoise
+.. autoclass:: qutip.qip.device.ControlAmpNoise
     :members:
     :inherited-members:
 
-.. autoclass:: qutip.qip.UserNoise
+.. autoclass:: qutip.qip.device.RandomNoise
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.device.UserNoise
     :members:
     :inherited-members:
 
