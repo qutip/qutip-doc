@@ -9,7 +9,8 @@ import copy
 import numpy as np
 import matplotlib.pyplot as plt
 pi = np.pi
-from qutip.qip.device import Processor, RandomNoise
+from qutip.qip.device import Processor
+from qutip.qip import RandomNoise
 from qutip.operators import sigmaz, sigmay, sigmax, destroy
 from qutip.metrics import fidelity
 from qutip.bloch import Bloch
@@ -28,14 +29,14 @@ result.states[-1].tidyup(1.0e-5)
 
 
 tlist = np.linspace(0., 2*np.pi, 20)
-processor = Processor(N=1, spline_kind="step_func")
+processor = Processor(N=1, spline_type="step_func")
 processor.add_ctrl(sigmaz())
 processor.tlist = tlist
 processor.coeffs = np.array([[np.sin(t) for t in tlist]])
 processor.plot_pulses(noisy=False)
 
 tlist = np.linspace(0., 2*np.pi, 20)
-processor = Processor(N=1, spline_kind="cubic")
+processor = Processor(N=1, spline_type="cubic")
 processor.add_ctrl(sigmaz())
 processor.tlist = tlist
 processor.coeffs = np.array([[np.sin(t) for t in tlist]])

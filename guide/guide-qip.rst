@@ -79,7 +79,7 @@ In addition to these pre-defined gates, QuTiP also allows the user to define the
       >>> from qutip import Qobj
       >>> import numpy as np
       >>> def user_gate1(arg_value):
-      ...     # controlled rotation X
+           # controlled rotation X
       ...     mat = np.zeros((4, 4), dtype=np.complex)
       ...     mat[0, 0] = mat[1, 1] = 1.
       ...     mat[2:4, 2:4] = rx(arg_value)
@@ -192,6 +192,7 @@ To let it find the optimal pulses, we needs to give the parameters for :func:`qu
 
       >>> from qutip.qip.device import OptPulseProcessor
       >>> from qutip.qip import QubitCircuit
+      >>> from qutip import tensor, sigmaz, sigmax, sigmay
       >>> # Same parameter for all the gates
       ... qc = QubitCircuit(N=1)
       >>> qc.add_gate("SNOT", 0)
@@ -217,7 +218,7 @@ To let it find the optimal pulses, we needs to give the parameters for :func:`qu
       ...             "SWAP": {"num_tslots": 30, "evo_time": 3},
       ...             "CNOT": {"num_tslots": 30, "evo_time": 3}}
       >>> tlist, coeffs = processor.load_circuit(
-            qc, setting_args=setting_args, merge_gates=False)
+      ... qc, setting_args=setting_args, merge_gates=False)
 
 Noise Simulation
 ================

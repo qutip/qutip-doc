@@ -18,7 +18,7 @@ plus_state = (basis(2,1) + basis(2,0)).unit()
 tlist = np.arange(0.00, 20.2, 0.2)
 
 T2 = 5
-processor = Processor(1, T2=T2)
+processor = Processor(1, t2=T2)
 processor.add_ctrl(sigmaz())
 processor.tlist= tlist
 processor.coeffs = np.ones((1,len(processor.tlist)))

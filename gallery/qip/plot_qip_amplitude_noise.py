@@ -6,7 +6,8 @@ This example demonstrates how to add Gaussian noise to the control pulse.
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from qutip.qip.device import Processor, RandomNoise
+from qutip.qip.device import Processor
+from qutip.qip import RandomNoise
 from qutip.operators import sigmaz, sigmay
 
 # add control Hamiltonians
