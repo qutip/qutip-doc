@@ -7,11 +7,70 @@
 Change Log
 **********
 
+Version 4.5.x (unreleased)
+++++++++++++++++++++++++++++++
+
+Improvements
+------------
+
+- QObjEvo no longer requires Cython fro string coefficient. (by Eric Giguere)
+
+- Added entropy and purity for Dicke density matrices, refactored into more general dicke_trace. (by Nathan Shammah)
+
+- Added option for specifying resolution in Bloch.save function. (by Tarun Raheja)
+
+
+Bug Fixes
+---------
+
+- Fixed PolyDataMapper construction. (by Sam Griffiths)
+
+- Fixed error checking for null matrix in essolve. (by Nathan Shammah)
+
+
+Version 4.4.1 (August 29, 2019)
+++++++++++++++++++++++++++++++
+
+Improvements
+------------
+
+- QobjEvo do not need to start from 0 anymore. (by Eric Giguere).
+
+- Add a quantum object purity function. (by Nathan Shammah and Shahnawaz Ahmed)
+
+- Add step function interpolation for array time-coefficient. (by Boxi Li).
+
+- Generalize expand_oper for arbitrary dimensions, and new method for cyclic permutations of given target cubits. (by Boxi Li)
+
+
+Bug Fixes
+---------
+
+- Fixed the pickling but that made solver unable to run in parallel on Windows. (Thank lrunze for reporting)
+
+- Removed warning when mesolve fall back on sesolve (by Michael Goerz).
+
+- Fixed dimension check and confusing documentation in random ket (by Yariv Yanay).
+
+- Fixed Qobj isherm not working after using Qobj.permute. (Thank llorz1207 for reporting).
+
+- Correlation functions call now properly handle multiple time dependant functions. (Thank taw181 for reporting).
+
+- Removed mutable default values in mesolve/sesolve (by Michael Goerz).
+
+- Fixed simdiag bug (Thank Croydon-Brixton for reporting).
+
+- Better support of constant QobjEvo. (by Boxi Li).
+
+- Fixed potential cyclic import in the control module (by Alexander Pitchford).
+
+
 Version 4.4.0 (July 03, 2019)
 ++++++++++++++++++++++++++++++
 
 Improvements
 ------------
+
 - **MAJOR FEATURE**: Added methods and techniques to the stochastic solvers (by Eric Giguère) which allows to use a much broader set of solvers and much more efficiently.
 
 - **MAJOR FEATURE**: Optimization of the montecarlo solver (by Eric Giguère). Computation are faster in many cases. Collapse information available to time dependant information.
@@ -32,8 +91,6 @@ Improvements
 
 - Added a code of conduct to Github.
 
-- Added option for specifying resolution in Bloch.save function.
-
 
 Bug Fixes
 ---------
@@ -52,9 +109,10 @@ Version 4.3.0 (July 14, 2018)
 
 Improvements
 ------------
-- **MAJOR FEATURE**: Added the Permutational Invariant Quantum Solver (PIQS) module (**by Nathan Shammah** and **Shahnawaz Ahmed**) which allows the simluation of large TLSs ensembles including collective and local Lindblad dissipation. Applications range from superradiance to spin squeezing.
 
-- **MAJOR FEATURE**: Added a photon scattering module (**by Ben Bartlett**) which can be used to study scattering in arbitrary driven systems coupled to some configuration of output waveguides.
+- **MAJOR FEATURE**: Added the Permutational Invariant Quantum Solver (PIQS) module (by **Nathan Shammah** and **Shahnawaz Ahmed**) which allows the simluation of large TLSs ensembles including collective and local Lindblad dissipation. Applications range from superradiance to spin squeezing.
+
+- **MAJOR FEATURE**: Added a photon scattering module (by Ben Bartlett) which can be used to study scattering in arbitrary driven systems coupled to some configuration of output waveguides.
 
 - Cubic_Spline functions as time-dependent arguments for the collapse operators in mesolve are now allowed.
 
