@@ -13,7 +13,7 @@ Version 4.5.x (unreleased)
 Improvements
 ------------
 
-- QObjEvo no longer requires Cython for string coefficient (by **Eric Giguere**).
+- QObjEvo no longer requires Cython for string coefficient (by **Eric Giguère**).
 
 - Added entropy and purity for Dicke density matrices, refactored into more general dicke_trace (by **Nathan Shammah**).
 
@@ -34,7 +34,7 @@ Version 4.4.1 (August 29, 2019)
 Improvements
 ------------
 
-- QobjEvo do not need to start from 0 anymore (by **Eric Giguere**).
+- QobjEvo do not need to start from 0 anymore (by **Eric Giguère**).
 
 - Add a quantum object purity function (by **Nathan Shammah** and **Shahnawaz Ahmed**).
 
@@ -87,7 +87,7 @@ Improvements
 
 - Added the quantum Hellinger distance to qutip.metrics (by **Wojciech Rzadkowski**).
 
-- Implemented possibility of choosing a random seed (by **Marek marekyggdrasil**).
+- Implemented possibility of choosing a random seed (by **Marek Marekyggdrasil**).
 
 - Added a code of conduct to Github.
 
@@ -112,7 +112,7 @@ Improvements
 
 - **MAJOR FEATURE**: Added the Permutational Invariant Quantum Solver (PIQS) module (by **Nathan Shammah** and **Shahnawaz Ahmed**) which allows the simluation of large TLSs ensembles including collective and local Lindblad dissipation. Applications range from superradiance to spin squeezing.
 
-- **MAJOR FEATURE**: Added a photon scattering module (by **Ben Bartlett*) which can be used to study scattering in arbitrary driven systems coupled to some configuration of output waveguides.
+- **MAJOR FEATURE**: Added a photon scattering module (by **Ben Bartlett**) which can be used to study scattering in arbitrary driven systems coupled to some configuration of output waveguides.
 
 - Cubic_Spline functions as time-dependent arguments for the collapse operators in mesolve are now allowed.
 
