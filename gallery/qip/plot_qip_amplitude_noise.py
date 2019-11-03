@@ -1,5 +1,5 @@
 """
-Control Amplitude noise
+Control Amplitude Noise
 =======================
 
 This example demonstrates how to add Gaussian noise to the control pulse.

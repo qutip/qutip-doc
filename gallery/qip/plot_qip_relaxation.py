@@ -2,8 +2,7 @@
 T2 Relaxation
 =============
 
-Simulating the T2 relaxation of a single qubit with
-:class:`qutip.qip.device.Processor`.
+Simulating the T2 relaxation of a single qubit with :class:`qutip.qip.device.Processor`. The single qubit is driven by a rotation around z axis. We measure the population of the plus state as a function of time to see the Ramsey signal.
 """
 import numpy as np
 import matplotlib.pyplot as plt
