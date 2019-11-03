@@ -240,7 +240,7 @@ The second example demonstrates a biased Gaussian noise on the pulse amplitude. 
 
 .. image:: /gallery/qutip_examples/qip/images/sphx_glr_plot_qip_amplitude_noise_002.png
 
-As the design of ou simulator follows the physical realization, so is the noise simulation. Noise can be added to the processor at different levels:
+As the design of our simulator follows the physical realization, so is the noise simulation. Noise can be added to the processor at different levels:
 
 * The decoherence time T1 and T2 can be defined for the processor or for each qubit. When calculating the evolution, the corresponding collapse operators will be added automatically to the solver.
 
