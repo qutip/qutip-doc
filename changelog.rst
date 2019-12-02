@@ -13,6 +13,8 @@ Version 4.5.x (unreleased)
 Improvements
 ------------
 
+- Migrated testing from Nose to PyTest (by **Tarun Raheja**).
+
 - QObjEvo no longer requires Cython for string coefficient (by **Eric Giguère**).
 
 - Added entropy and purity for Dicke density matrices, refactored into more general dicke_trace (by **Nathan Shammah**).
