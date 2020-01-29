@@ -74,7 +74,7 @@ Create a new minor or major release
 -----------------------------------
 
 Create a new branch on qutip repository using the website, e.g. 'qutip-4.1.X'.
-
+(See https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-and-deleting-branches-within-your-repository#creating-a-branch)
 Checkout the branch and push to your fork ::
 
     $ git fetch upstream
@@ -137,6 +137,7 @@ The next steps are based instructions from https://packaging.python.org/distribu
 
 Build the source code distribution
 ----------------------------------
+On Mac, first create a directory named ``tmp`` in your home directory.  
 
 ::
 
@@ -188,7 +189,7 @@ The html documentation will be in a subfolder like ::
 
     docs/<MAJOR>.<MINOR>
 
-- copy the contents ``qutip-doc/_build/html`` into this folder. **Note that the underscores at start of the subfolder names will need to be removed, otherwise Jekyll will ignore the folders**. There is a script in the ``docs`` folder for this.
+- copy the contents ``qutip-doc/_build/html`` into this folder. **Note that the underscores at start of the subfolder names will need to be removed, otherwise Jekyll will ignore the folders**. There is a script in the ``docs`` folder for this. https://qutip/qutip.github.io/blob/master/docs/remove_leading_underscores.py
 
 
 HTML file updates
