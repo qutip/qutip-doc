@@ -8,11 +8,14 @@ Change Log
 **********
 
 
-Version 4.5.x (unreleased)
+Version 4.5.0
 ++++++++++++++++++++++++++++++
 
 Improvements
 ------------
+- **MAJOR FEATURE**: Added `qip.noise`, a module with pulse level description of quantum circuits allowing to model various types of noise and devices (by **Boxi Li**).
+
+- **MAJOR FEATURE**: Added `qip.lattice`, a module for the study of lattice dynamics in 1D (by **Saumya Biswas**).
 
 - Migrated testing from Nose to PyTest (by **Tarun Raheja**).
 
