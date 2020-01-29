@@ -7,11 +7,14 @@
 Change Log
 **********
 
+
 Version 4.5.x (unreleased)
 ++++++++++++++++++++++++++++++
 
 Improvements
 ------------
+
+- Migrated testing from Nose to PyTest (by **Tarun Raheja**).
 
 - QObjEvo no longer requires Cython for string coefficient (by **Eric Giguère**).
 
@@ -22,8 +25,6 @@ Improvements
 
 Bug Fixes
 ---------
-
-- Fixed the feature allowing to add points to the Bloch sphere, `Bloch.add_ponts` making it compatible with Matplotlib 3.1.0 (by **Nathan Shammah**).
 
 - Fixed PolyDataMapper construction (by **Sam Griffiths**).
 
@@ -98,12 +99,6 @@ Bug Fixes
 ---------
 
 - Fixed bug that made QuTiP incompatible with SciPy 1.3.
-
-- quite.cite() is improved.
-
-- Added matplotlib as optional dependency and updated numpy and scipy requirements.
-
-- Fixed matrix generating coherent spin states in qutip.piqs to include complex coefficients.
 
 
 Version 4.3.0 (July 14, 2018)
