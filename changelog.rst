@@ -25,6 +25,8 @@ Improvements
 
 - Added option for specifying resolution in Bloch.save function (by **Tarun Raheja**).
 
+- Added information related to the value of hbar in `wigner` and `continuous_variables` (by **Nicolas Quesada**).
+
 
 Bug Fixes
 ---------
