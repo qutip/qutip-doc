@@ -69,10 +69,16 @@ Non-Markovian Solvers
 Solver Options and Results
 ---------------------------
 
+.. autoclass:: qutip.solver.ExpectOps
+    :members:
+
 .. autoclass:: qutip.solver.Options
     :members:
 
 .. autoclass:: qutip.solver.Result
+    :members:
+
+.. autoclass:: qutip.solver.SolverConfiguration
     :members:
 
 .. autoclass:: qutip.solver.Stats
