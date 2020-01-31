@@ -198,6 +198,16 @@ Permutational Invariance
 .. automodule:: qutip.piqs
     :members: jspin, dicke, superradiant, ghz, css, excited, ground, num_dicke_states, num_dicke_ladders, num_tls, isdiagonal, state_degeneracy, m_degeneracy, ap, am, spin_algebra, collapse_uncoupled, dicke_basis, iden
 
+
+Lattice
+===============
+
+Topology
+-------------------------------------
+.. automodule:: qutip.topology
+    :members: berry_curvature, plot_berry_curvature
+
+
 Visualization
 ===============
 
