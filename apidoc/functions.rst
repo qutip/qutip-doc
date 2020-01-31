@@ -321,6 +321,15 @@ Parallelization
 
 .. _functions-ipython:
 
+Semidefinite Programming
+---------------
+
+.. automodule:: qutip.semidefinite
+    :members: complex_var, herm, pos_noherm, pos, dens, kron, conj, bmat, bmat, memoize, qudit_swap, dnorm_problem
+
+
+.. _functions-semidefinite:
+
 IPython Notebook Tools
 ----------------------
 
