@@ -164,29 +164,32 @@ Quantum information processing
 .. autoclass:: qutip.qip.device.DispersivecQED
     :members:
     :inherited-members:
-
-.. autoclass:: qutip.qip.device.Noise
+    
+.. autoclass:: qutip.qip.Noise
     :members:
 
-.. autoclass:: qutip.qip.device.DecoherenceNoise
-    :members:
-    :inherited-members:
-
-.. autoclass:: qutip.qip.device.RelaxationNoise
+.. autoclass:: qutip.qip.noise.DecoherenceNoise
     :members:
     :inherited-members:
 
-.. autoclass:: qutip.qip.device.ControlAmpNoise
+.. autoclass:: qutip.qip.noise.RelaxationNoise
     :members:
     :inherited-members:
 
-.. autoclass:: qutip.qip.device.RandomNoise
+.. autoclass:: qutip.qip.noise.ControlAmpNoise
     :members:
     :inherited-members:
 
-.. autoclass:: qutip.qip.device.UserNoise
+.. autoclass:: qutip.qip.noise.RandomNoise
     :members:
     :inherited-members:
+
+.. autoclass:: qutip.qip.noise.UserNoise
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.pulse.Pulse
+    :members:
 
 .. _classes-control:
 
