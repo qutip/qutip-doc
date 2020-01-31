@@ -8,7 +8,7 @@ Change Log
 **********
 
 
-Version 4.5.0
+Version 4.5.0 (January 31, 2020)
 ++++++++++++++++++++++++++++++
 
 Improvements
@@ -17,10 +17,11 @@ Improvements
 
 - **MAJOR FEATURE**: Added `qip.lattice`, a module for the study of lattice dynamics in 1D (by **Saumya Biswas**).
 
-
 - Migrated testing from Nose to PyTest (by **Tarun Raheja**).
 
 - Optimized testing for PyTest and removed duplicated test runners (by **Jake Lishman**).
+
+- Deprecated importing `qip` functions to the qutip namespace (by **Boxi Li**).
 
 - Added the possibility to define non-square superoperators relevant for quantum circuits (by **Arne Grimsmo** and **Josh Combes**).
 
@@ -44,11 +45,15 @@ Improvements
 
 - Allowed general callable objects to define a time-dependent Hamiltonian (by **Eric Giguère**).
 
+- Added feature so that `QobjEvo` no longer requires Cython for string coefficients (by **Eric Giguère**).
+
+- Updated authors list on Github and added `my binder` link (by **Nathan Shammah**).
+
 
 Bug Fixes
 ---------
 
-- Fixed PolyDataMapper construction (by **Sam Griffiths**).
+- Fixed `PolyDataMapper` construction for `Bloch3d` (by **Sam Griffiths**).
 
 - Fixed error checking for null matrix in essolve (by **Nathan Shammah**).
 
@@ -67,6 +72,12 @@ Bug Fixes
 - Fixed `Bloch.add_ponts` by setting `edgecolor = None` in `plot_points` (by **Nathan Shammah**).
 
 - Fixed error checking for null matrix in `essolve` solver affecting also `ode2es` (by **Peter Kirton**).
+
+- Removed unnecessary shebangs in .pyx and .pxd files (by **Samesh Lakhotia**).
+
+- Fixed `sesolve` and  import of `os` in `codegen` (by **Alex Pitchford**).
+
+- Updated `plot_fock_distribution` by removing the offset value 0.4 in the plot (by **Rajiv-B**).
 
 
 Version 4.4.1 (August 29, 2019)
