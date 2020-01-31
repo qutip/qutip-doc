@@ -280,6 +280,12 @@ Algorithms
 .. automodule:: qutip.qip.algorithms.qft
     :members: qft, qft_steps, qft_gate_sequence
 
+
+Noisy Devices
+----------
+.. automodule:: qutip.qip.device
+    :members:
+
 .. _functions-non_markov:
 
 Non-Markovian Solvers
