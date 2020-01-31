@@ -1,5 +1,5 @@
 .. QuTiP
-   Copyright (C) 2011-2013, Paul D. Nation, Robert J. Johansson & Alexander Pitchford
+   Copyright (C) 2011-2020, Paul D. Nation, Robert J. Johansson, Alexander Pitchford, Chris Granade, Arne Grimsmo, Nathan Shammah, Shahnawax Ahmed, Eric Giguère
 
 .. _changelog:
 
