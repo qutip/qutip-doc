@@ -17,15 +17,32 @@ Improvements
 
 - **MAJOR FEATURE**: Added `qip.lattice`, a module for the study of lattice dynamics in 1D (by **Saumya Biswas**).
 
+
 - Migrated testing from Nose to PyTest (by **Tarun Raheja**).
 
+- Optimized testing for PyTest and removed duplicated test runners (by **Jake Lishman**).
+
+- Added the possibility to define non-square superoperators relevant for quantum circuits (by **Arne Grimsmo** and **Josh Combes**).
+
+- Implicit tensor product for `qeye`, `qzero` and `basis` (by **Jake Lishman**).
+
 - QObjEvo no longer requires Cython for string coefficient (by **Eric Giguère**).
+
+- Added marked tests for faster tests in `testing.run()` and made faster OpenMP benchmarking in CI (by **Eric Giguère**).
 
 - Added entropy and purity for Dicke density matrices, refactored into more general dicke_trace (by **Nathan Shammah**).
 
 - Added option for specifying resolution in Bloch.save function (by **Tarun Raheja**).
 
 - Added information related to the value of hbar in `wigner` and `continuous_variables` (by **Nicolas Quesada**).
+
+- Updated requirements for `scipy 1.4` (by **Eric Giguère**).
+
+- Added previous lead developers to the qutip.about() message (by **Nathan Shammah**).
+
+- Added improvements to `Qobj` introducing the `inv` method and making the partial trace, `ptrace`, faster, keeping both sparse and dense methods (by **Eric Giguère**).
+
+- Allowed general callable objects to define a time-dependent Hamiltonian (by **Eric Giguère**).
 
 
 Bug Fixes
@@ -34,6 +51,22 @@ Bug Fixes
 - Fixed PolyDataMapper construction (by **Sam Griffiths**).
 
 - Fixed error checking for null matrix in essolve (by **Nathan Shammah**).
+
+- Fixed name collision for parallel propagator (by **Nathan Shammah**).
+
+- Fixed dimensional incongruence in `propagator` (by **Nathan Shammah**)
+
+- Fixed bug by rewriting clebsch function based on long integer fraction (by **Eric Giguère**).
+
+- Fixed bugs in QobjEvo's args depending on state and added solver tests using them (by **Eric Giguère**).
+
+- Fixed bug in `sesolve` calculation of average states when summing the timeslot states (by **Alex Pitchford**).
+
+- Fixed bug in `steadystate` solver by removing separate arguments for MKL and Scipy (by **Tarun Raheja**).
+
+- Fixed `Bloch.add_ponts` by setting `edgecolor = None` in `plot_points` (by **Nathan Shammah**).
+
+- Fixed error checking for null matrix in `essolve` solver affecting also `ode2es` (by **Peter Kirton**).
 
 
 Version 4.4.1 (August 29, 2019)
