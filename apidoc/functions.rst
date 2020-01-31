@@ -154,7 +154,7 @@ Stochastic Schrödinger Equation and Master Equation
 ---------------------------------------------------
 
 .. automodule:: qutip.stochastic
-    :members: smesolve, ssesolve, smepdpsolve, ssepdpsolve
+    :members: ssesolve, photocurrent_sesolve, smepdpsolve, smesolve, photocurrent_mesolve, ssepdpsolve, stochastic_solvers, general_stochastic
 
 
 Correlation Functions
