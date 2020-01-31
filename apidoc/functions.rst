@@ -26,6 +26,13 @@ Quantum Operators
 
 .. _functions-rand:
 
+Quantum Objects
+---------------------
+
+.. automodule:: qutip.qobj
+    :members: qobj_list_evaluate, ptrace, dag, isequal, issuper, isoper, isoperket, isoperbra, isket, isbra,
+    isherm, shape, dims
+
 Random Operators and States
 ---------------------------
 
