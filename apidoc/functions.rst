@@ -51,7 +51,7 @@ Superoperator Representations
 -----------------------------
 
 .. automodule:: qutip.superop_reps
-    :members: to_choi, to_super, to_kraus
+    :members: super_to_choi, choi_to_super, choi_to_kraus, kraus_to_choi, kraus_to_super, choi_to_chi, chi_to_choi, to_choi, to_chi, to_super, to_kraus, to_stinespring
     :undoc-members:
 
 
