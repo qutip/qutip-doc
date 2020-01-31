@@ -61,6 +61,12 @@ Superoperator Representations
     :members: super_to_choi, choi_to_super, choi_to_kraus, kraus_to_choi, kraus_to_super, choi_to_chi, chi_to_choi, to_choi, to_chi, to_super, to_kraus, to_stinespring
     :undoc-members:
 
+Operators and Superoperator Dimensions
+-----------------------------
+
+.. automodule:: qutip.dimensions
+    :members: is_scalar, is_vector, is_vectorized_oper, type_from_dims, flatten, deep_remove, unflatten, collapse_dims_oper, collapse_dims_super, enumerate_flat, deep_map, dims_to_tensor_perm, dims_to_tensor_shape, dims_idxs_to_tensor_idxs
+
 
 Functions acting on states and operators
 ========================================
@@ -204,6 +210,7 @@ Permutational Invariance
 
 .. automodule:: qutip.piqs
     :members: [num_dicke_states, num_dicke_ladders, num_tls, isdiagonal, dicke_blocks, dicke_blocks_full, dicke_function_trace, purity_dicke, entropy_vn_dicke, state_degeneracy, m_degeneracy, energy_degeneracy, ap, am, spin_algebra, jspin, collapse_uncoupled, dicke_basis, dicke, excited, superradiant, css, ghz, ground, identity_uncoupled, block_matrix, tau_column,
+
 
 Lattice
 ===============
