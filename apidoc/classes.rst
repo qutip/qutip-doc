@@ -100,6 +100,12 @@ Permutational Invariance
 
 .. _classes-distributions:
 
+One-Dimensional Lattice
+---------------
+
+.. autoclass:: qutip.lattice.Lattice1d
+    :members:
+
 Distribution functions
 ----------------------------
 

@@ -215,6 +215,12 @@ Permutational Invariance
 Lattice
 ===============
 
+Lattice Properties
+-------------------------------------
+.. automodule:: qutip.lattice
+    :members: cell_structures
+
+
 Topology
 -------------------------------------
 .. automodule:: qutip.topology
