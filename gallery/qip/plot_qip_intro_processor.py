@@ -13,18 +13,18 @@ from qutip.operators import sigmaz
 from qutip.states import basis
 
 processor = Processor(N=1)
-processor.add_ctrl(sigmaz(), targets=0)
+processor.add_control(sigmaz(), targets=0)
 
 tlist = np.linspace(0., 2*np.pi, 20)
 processor = Processor(N=1, spline_kind="step_func")
-processor.add_ctrl(sigmaz())
-processor.tlist = tlist
-processor.coeffs = np.array([[np.sin(t) for t in tlist]])
-processor.plot_pulses(noisy=False)
+processor.add_control(sigmaz(), 0)
+processor.pulses[0].tlist = tlist
+processor.pulses[0].coeff = np.array([np.sin(t) for t in tlist])
+processor.plot_pulses()
 
 tlist = np.linspace(0., 2*np.pi, 20)
 processor = Processor(N=1, spline_kind="cubic")
-processor.add_ctrl(sigmaz())
-processor.tlist = tlist
-processor.coeffs = np.array([[np.sin(t) for t in tlist]])
-processor.plot_pulses(noisy=False)
+processor.add_control(sigmaz())
+processor.pulses[0].tlist = tlist
+processor.pulses[0].coeff = np.array([np.sin(t) for t in tlist])
+processor.plot_pulses()
