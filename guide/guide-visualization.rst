@@ -391,7 +391,7 @@ Note that to obtain :math:`\chi` with this method we have to construct a matrix 
 Implementation in QuTiP
 -----------------------
 
-In QuTiP, the procedure described above is implemented in the function :func:`qutip.tomography.qpt`, which returns the :math:`\chi` matrix given a density matrix propagator. To illustrate how to use this function, let's consider the :math:`i`-SWAP gate for two qubits. In QuTiP the function :func:`qutip.gates.iswap` generates the unitary transformation for the state kets:
+In QuTiP, the procedure described above is implemented in the function :func:`qutip.tomography.qpt`, which returns the :math:`\chi` matrix given a density matrix propagator. To illustrate how to use this function, let's consider the :math:`i`-SWAP gate for two qubits. In QuTiP the function :func:`qutip.qip.operations.iswap` generates the unitary transformation for the state kets:
 
 .. ipython::
 
