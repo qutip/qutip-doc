@@ -1,4 +1,4 @@
-.. QuTiP 
+.. QuTiP
    Copyright (C) 2011-2012, Paul D. Nation & Robert J. Johansson
 
 .. _functions:
@@ -46,7 +46,7 @@ Superoperators and Liouvillians
 
 .. automodule:: qutip.superoperator
     :members: operator_to_vector, vector_to_operator, liouvillian, spost, spre, sprepost, lindblad_dissipator
-    
+
 Superoperator Representations
 -----------------------------
 
@@ -124,7 +124,7 @@ Monte Carlo Evolution
 .. automodule:: qutip.mcsolve
     :members: mcsolve
 
-.. ignore f90 stuff for now    
+.. ignore f90 stuff for now
     .. automodule:: qutip.fortran.mcsolve_f90
         :members: mcsolve_f90
 
@@ -200,7 +200,7 @@ Permutational Invariance
 
 Visualization
 ===============
-	
+
 Pseudoprobability Functions
 ----------------------------
 
@@ -212,7 +212,7 @@ Graphs and Visualization
 ------------------------
 
 .. automodule:: qutip.visualization
-    :members: hinton, matrix_histogram, matrix_histogram_complex, plot_energy_levels, wigner_cmap, plot_fock_distribution, plot_wigner_fock_distribution, plot_wigner, sphereplot, plot_schmidt, plot_qubism, plot_expectation_values, plot_spin_distribution_2d, plot_spin_distribution_3d
+    :members: hinton, matrix_histogram, matrix_histogram_complex, plot_energy_levels, wigner_cmap, plot_fock_distribution, plot_wigner_fock_distribution, plot_wigner, sphereplot, plot_schmidt, plot_qubism, plot_expectation_values, plot_spin_distribution_2d, plot_spin_distribution_3d, plot_wigner_sphere, sphereplot
     :undoc-members:
 
 .. automodule:: qutip.orbital

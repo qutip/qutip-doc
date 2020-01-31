@@ -152,7 +152,7 @@ Quantum information processing
 .. autoclass:: qutip.qip.device.DispersivecQED
     :members:
     :inherited-members:
-    
+
 .. autoclass:: qutip.qip.device.Noise
     :members:
 
