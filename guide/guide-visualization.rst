@@ -397,30 +397,28 @@ In QuTiP, the procedure described above is implemented in the function :func:`qu
 
 To be able to use this unitary transformation matrix as input to the function :func:`qutip.tomography.qpt`, we first need to convert it to a transformation matrix for the corresponding density matrix:
 
-.. ipython:: python
 
-    In [1]: U_rho = spre(U_psi) * spost(U_psi.dag())
+`In [1]: U_rho = spre(U_psi) * spost(U_psi.dag())`
 
 
 Next, we construct a list of operators that define the basis :math:`\{B_i\}` in the form of a list of operators for each composite system. At the same time, we also construct a list of corresponding labels that will be used when plotting the :math:`\chi` matrix.
 
-.. ipython:: python
 
-    In [1]: op_basis = [[qeye(2), sigmax(), sigmay(), sigmaz()]] * 2
 
-    In [1]: op_label = [["i", "x", "y", "z"]] * 2
+`In [1]: op_basis = [[qeye(2), sigmax(), sigmay(), sigmaz()]] * 2`
+
+`In [1]: op_label = [["i", "x", "y", "z"]] * 2`
 
 
 We are now ready to compute :math:`\chi` using :func:`qutip.tomography.qpt`, and to plot it using :func:`qutip.tomography.qpt_plot_combined`.
 
-.. ipython:: python
 
-    In [1]: chi = qpt(U_rho, op_basis)
+`In [1]: chi = qpt(U_rho, op_basis)`
 
-    In [1]: fig = qpt_plot_combined(chi, op_label, r'$i$SWAP')
+`In [1]: fig = qpt_plot_combined(chi, op_label, r'$i$SWAP')`
 
-    @savefig visualization-chi-iswap.png width=5.0in align=center
-    In [1]: plt.show()
+`@savefig visualization-chi-iswap.png width=5.0in align=center`
+`In [1]: plt.show()`
 
 
 
