@@ -60,7 +60,7 @@ x-component:
 How do we know what these operators measure? The answer lies in the measurement
 procedure itself:
 
-* A quantum measurement tranforms the state being measure by projecting it into
+* A quantum measurement tranforms the state being measured by projecting it into
   one of the eigenvectors of the measurement operator.
 
 * Which eigenvector to project onto is chosen probabilitically according to the
