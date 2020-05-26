@@ -118,7 +118,10 @@ Continuous Variables
 
 
 Measurement
------------
+===========
+
+Measurement of quantum states
+-----------------------------
 
 .. automodule:: qutip.measurement
     :members: measure, measurement_statistics
