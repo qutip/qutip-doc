@@ -117,7 +117,7 @@ When `left` is chosen, the result of the measurement will be `(1.0, left)`.
 
 When `right` is chosen, the result of measurement with be `(-1.0, right)`.
 
-Now you know how to measure quantum states in QuTip!
+Now you know how to measure quantum states in QuTiP!
 
 The `measure` function can perform measurements on density matrices too. You
 can read about these and other details at :func:`~qutip.measurement.measure`.
