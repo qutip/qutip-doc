@@ -26,7 +26,7 @@ a quantum object. Although the intrepretation of the procedure is at times
 contentious, the procedure itself is mathematically straightforward and is
 described in many good introductory texts.
 
-Here we will show how to perform simple measurement operations on QuTiP
+Here we will show you how to perform simple measurement operations on QuTiP
 objects.
 
 .. _measurement-basic:
@@ -63,7 +63,7 @@ procedure itself:
 * A quantum measurement tranforms the state being measured by projecting it into
   one of the eigenvectors of the measurement operator.
 
-* Which eigenvector to project onto is chosen probabilitically according to the
+* Which eigenvector to project onto is chosen probabilistically according to the
   square of the amplitude of the state in the direction of the eigenvector.
 
 * The value returned by the measurement is the eigenvalue corresponding to the
@@ -127,4 +127,68 @@ can read about these and other details at :func:`~qutip.measurement.measure`.
 Obtaining measurement statistics
 --------------------------------
 
-XXX: TODO
+You've just learned how to perform measurements in QuTiP, but you've also
+learned that measurements are probabilistic. What if instead of just making
+a single measurement, we want to determine the probability distribution of
+a large number of measurements?
+
+One way would be to repeat the measurement many times -- and this is what
+happens in many quantum experiments. In QuTiP one could simulate this using:
+
+.. ipython::
+
+   In [8]: results = {1.0: 0, -1.0: 0}  # 1 and -1 are the possible outcomes
+     ....: for _ in range(1000):
+     ....:     value, new_state = measure(spin_x, up)
+     ....:     results[value] += 1
+     ....: results
+   Out[8]: {1.0: 498, -1.0: 502}
+
+which measures the x-component of the spin of the `up` state `1000` times and
+stores the results in a dictionary. Afterwards we expect to have seen the
+result `1.0` (i.e. left) roughly 500 times and the result `-1.0` (i.e. right)
+roughly 500 times, but, of course, the number of each will vary slightly
+each time we run it.
+
+But what if we want to know the distribution of results precisely? In a
+physical system, we would have to perform the measurement many many times,
+but in QuTiP we can peak at the state itself and determine the probability
+distribution of the outcomes exactly in a single line:
+
+.. ipython::
+
+   In [9]: eigenvalues, eigenstates, probabilities = \
+     ....:     measurement_statistics(spin_x, up)
+
+   In [10]: eigenvalues
+   Out[10]: array([-1., -1.])
+
+   In [11]: eigenstates
+
+   In [12]: probabilities
+   Out[12]: [0.5000000000000001, 0.5000000000000001]
+
+The :func:`~qutip.measurement.measure` function returns three values:
+
+* `eigenvalues` is an array of eigenvalues of the measurement operator, i.e.
+  a list of the possible measurement results. In our example
+  the value is `array([-1., -1.])`.
+
+* `eigenstates` is an array of the eigenstates of the measurement operator, i.e.
+  a list of the possible final states after the measurement is complete.
+  Each element of the array is a :obj:`~qutip.Qobj`.
+
+* `probabilities` is a list of the probabilities of each measurement result.
+  In our example the value is `[0.5, 0.5]` since the `up` state has equal
+  probability of being measured to be in the left (`-1.0`) or
+  right (`1.0`) eigenstates.
+
+All three lists are in the same order -- i.e. the first eigenvalue is
+`eigenvalues[0]`, its corresponding eigenstate is `eigenstates[0]`, and
+its probability is `probabilities[0]`, and so on.
+
+The `measurement_statistics` function can provide statistics for measurements
+of density matrices too. In this case `projectors` from the density matrix
+onto the corresponding `eigenstates` are returned instead of the `eigenstates`.
+You can read about these and other details at
+:func:`~qutip.measurement.measurement_statistics`.
