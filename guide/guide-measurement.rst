@@ -12,7 +12,7 @@ Measurement of Quantum Objects
 
    In [1]: from qutip import basis, sigmax, sigmaz
 
-   In [2]: from qutip.measurement import measure, measurement_statistics
+   In [1]: from qutip.measurement import measure, measurement_statistics
 
 
 .. _measurement-intro:
@@ -41,7 +41,7 @@ state and a *down* state:
 
    In [1]: up = basis(2, 0)
 
-   In [2]: down = basis(2, 1)
+   In [1]: down = basis(2, 1)
 
 which represent spin-1/2 particles with their spin pointing either up or down
 along the z-axis.
@@ -53,9 +53,9 @@ x-component:
 
 .. ipython::
 
-   In [3]: spin_z = sigmaz()
+   In [1]: spin_z = sigmaz()
 
-   In [4]: spin_x = sigmax()
+   In [1]: spin_x = sigmax()
 
 How do we know what these operators measure? The answer lies in the measurement
 procedure itself:
@@ -85,12 +85,13 @@ always obtain:
 
 .. ipython::
 
-   In [5]: measure(spin_z, up) == (1.0, up)
+   In [1]: measure(spin_z, up) == (1.0, -up)
 
-   In [6]: measure(spin_z, down) == (-1.0, down)
+   In [1]: measure(spin_z, down) == (-1.0, -down)
 
 because `up` is the eigenvector of `spin_z` with eigenvalue `1.0` and `down`
-is the eigenvector with eigenvalue `-1.0`.
+is the eigenvector with eigenvalue `-1.0`. The minus signs are just an
+arbitrary global phase -- `up` and `-up` represent the same quantum state.
 
 Neither eigenvector has any component in the direction of the other (they are
 orthogonal), so `measure(spin_z, up)` returns the state `up` 100% percent of the
@@ -106,16 +107,24 @@ of `up`:
 
 .. ipython::
 
-   In [7]: measure(spin_x, up)
+   In [1]: measure(spin_x, up)
 
 The `up` state is not an eigenvector of `spin_x`. `spin_x` has two eigenvectors
 which we will call `left` and `right`. The `up` state has equal components in
 the direction of these two vectors, so measurement will select each of them
 50% of the time.
 
-When `left` is chosen, the result of the measurement will be `(1.0, left)`.
+These `left` and `right` states are:
 
-When `right` is chosen, the result of measurement with be `(-1.0, right)`.
+.. ipython::
+
+   In [1]: left = (up - down).unit()
+
+   In [1]: right = (up + down).unit()
+
+When `left` is chosen, the result of the measurement will be `(-1.0, -left)`.
+
+When `right` is chosen, the result of measurement with be `(1.0, right)`.
 
 Now you know how to measure quantum states in QuTiP!
 
@@ -137,12 +146,12 @@ happens in many quantum experiments. In QuTiP one could simulate this using:
 
 .. ipython::
 
-   In [8]: results = {1.0: 0, -1.0: 0}  # 1 and -1 are the possible outcomes
-     ....: for _ in range(1000):
-     ....:     value, new_state = measure(spin_x, up)
-     ....:     results[value] += 1
-     ....: results
-   Out[8]: {1.0: 498, -1.0: 502}
+   In [1]: results = {1.0: 0, -1.0: 0}  # 1 and -1 are the possible outcomes
+      ...: for _ in range(1000):
+      ...:     value, new_state = measure(spin_x, up)
+      ...:     results[value] += 1
+      ...: results
+   Out[1]: {1.0: 498, -1.0: 502}
 
 which measures the x-component of the spin of the `up` state `1000` times and
 stores the results in a dictionary. Afterwards we expect to have seen the
@@ -157,16 +166,15 @@ distribution of the outcomes exactly in a single line:
 
 .. ipython::
 
-   In [9]: eigenvalues, eigenstates, probabilities = \
-     ....:     measurement_statistics(spin_x, up)
+   In [1]: eigenvalues, eigenstates, probabilities = measurement_statistics(spin_x, up)
 
-   In [10]: eigenvalues
-   Out[10]: array([-1., -1.])
+   In [1]: eigenvalues
+   Out[1]: array([-1., -1.])
 
-   In [11]: eigenstates
+   In [1]: eigenstates
 
-   In [12]: probabilities
-   Out[12]: [0.5000000000000001, 0.5000000000000001]
+   In [1]: probabilities
+   Out[1]: [0.5000000000000001, 0.5000000000000001]
 
 The :func:`~qutip.measurement.measure` function returns three values:
 
