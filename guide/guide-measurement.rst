@@ -71,7 +71,7 @@ procedure itself:
 
 .. note::
 
-   How to intrepret this "random chosing" is the famous
+   How to interpret this "random choosing" is the famous
    "quantum measurement problem".
 
 The eigenvectors of `spin_z` are the states with their spin pointing either up
