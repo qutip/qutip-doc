@@ -23,7 +23,7 @@ Introduction
 Measurement is a fundamental part of the standard formulation of quantum
 mechanics and is the process by which classical readings are obtained from
 a quantum object. Although the intrepretation of the procedure is at times
-contentious, the procedure itself is mathematically straight forward and is
+contentious, the procedure itself is mathematically straightforward and is
 described in many good introductory texts.
 
 Here we will show how to perform simple measurement operations on QuTiP
