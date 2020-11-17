@@ -23,7 +23,7 @@ f_modes_table_t = floquet_modes_table(f_modes_0, f_energies, tlist, H, T, args)
 p_ex = zeros(len(tlist))  
 for n, t in enumerate(tlist):
     f_modes_t = floquet_modes_t_lookup(f_modes_table_t, t, T) 
-    psi_t     = floquet_wavefunction(f_modes_t, f_energies, f_coeff, t)
+    psi_t     = Qobj(floquet_wavefunction(f_modes_t, f_energies, f_coeff, t))
     p_ex[n] = expect(num(2), psi_t)
 
 # For reference: calculate the same thing with mesolve
