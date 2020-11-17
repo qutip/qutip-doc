@@ -11,7 +11,7 @@ H0 = - delta/2.0 * sigmax() - eps0/2.0 * sigmaz()
 H1 = A/2.0 * sigmax()
 args = {'w': omega}
 H = [H0, [H1, lambda t,args: sin(args['w'] * t)]]
-
+ 
 # find the floquet modes for the time-dependent hamiltonian        
 f_modes_0,f_energies = floquet_modes(H, T, args)
 
