@@ -23,7 +23,11 @@ Introduction
 
 Many time-dependent problems of interest are periodic. The dynamics of such systems can be solved for directly by numerical integration of the Schrödinger or Master equation, using the time-dependent Hamiltonian. But they can also be transformed into time-independent problems using the Floquet formalism. Time-independent problems can be solve much more efficiently, so such a transformation is often very desirable.
 
-In the standard derivations of the Lindblad and Bloch-Redfield master equations the Hamiltonian describing the system under consideration is assumed to be time independent. Thus, strictly speaking, the standard forms of these master equation formalisms should not blindly be applied to system with time-dependent Hamiltonians. However, in many relevant cases, in particular for weak driving, the standard master equations still turns out to be useful for many time-dependent problems. But a more rigorous approach would be to rederive the master equation taking the time-dependent nature of the Hamiltonian into account from the start. The Floquet-Markov Master equation is one such a formalism, with important applications for strongly driven systems (see e.g., [Gri98]_).
+In the standard derivations of the Lindblad and Bloch-Redfield master equations the Hamiltonian describing the system under consideration is assumed to be time independent. Thus, strictly speaking, the standard forms of these master equation formalisms should not blindly be applied to system with time-dependent Hamiltonians. However, in many relevant cases, in particular for weak driving, the standard master equations still turns out to be useful for many time-dependent problems. But a more rigorous approach would be to rederive the master equation taking the time-dependent nature of the Hamiltonian into account from the start. The Floquet-Markov Master equation is one such a formalism, with important applications for strongly driven systems (see e.g., [Gri98]_). NB: There is a sign error in an index of equation (52) of this paper. The correct expression writes:
+
+.. math::
+
+    M_{\alpha\beta}=\sum_{k=-\infty}^{k=+\infty}\{\gamma_{\alpha\beta}(k)+n_{th}(\Omega_{\alpha\beta}(k))\times[\gamma_{\alpha\beta}(k)+\gamma_{\beta\alpha}(-k)]\}.
 
 Here we give an overview of how the Floquet and Floquet-Markov formalisms can be used for solving time-dependent problems in QuTiP. To introduce the terminology and naming conventions used in QuTiP we first give a brief summary of quantum Floquet theory.
 
@@ -150,7 +154,7 @@ For some problems interesting observations can be draw from the quasienergy leve
 
    In [1]: for idx, A in enumerate(A_vec):
       ...:     H1 = A/2.0 * sigmax()
-      ...:     H = [H0, [H1, lambda t, args: sin(args['w']*t)]]  
+      ...:     H = [H0, [H1, lambda t, args: sin(args['w']*t)]]
       ...:     f_modes, f_energies = floquet_modes(H, T, args, True)
       ...:     q_energies[idx,:] = f_energies
 
@@ -214,7 +218,7 @@ Note that the parameters and the Hamiltonian used in this example is not the sam
 
 For convenience, all the steps described above for calculating the evolution of a quantum system using the Floquet formalisms are encapsulated in the function :func:`qutip.floquet.fsesolve`. Using this function, we could have achieved the same results as in the examples above using::
 
-    output = fsesolve(H, psi0, times, [num(2)], args)
+    output = fsesolve(H, psi0, times, [num(2)], T, args)
     p_ex = output.expect[0]
 
 .. _floquet-dissipative:
@@ -222,13 +226,18 @@ For convenience, all the steps described above for calculating the evolution of 
 Floquet theory for dissipative evolution
 ========================================
 
-A driven system that is interacting with its environment is not necessarily well described by the standard Lindblad master equation, since its dissipation process could be time-dependent due to the driving. In such cases a rigorious approach would be to take the driving into account when deriving the master equation. This can be done in many different ways, but one way common approach is to derive the master equation in the Floquet basis. That approach results in the so-called Floquet-Markov master equation, see Grifoni et al., Physics Reports 304, 299 (1998) for details.
+A driven system that is interacting with its environment is not necessarily well described by the standard Lindblad master equation, since its dissipation process could be time-dependent due to the driving. In such cases a rigorious approach would be to take the driving into account when deriving the master equation. This can be done in many different ways, but one way common approach is to derive the master equation in the Floquet basis. That approach results in the so-called Floquet-Markov master equation, see Grifoni et al., Physics Reports 304, 299 (1998) for details. NB: There are also transposition errors in the expression of the master equation in this paper (equations (251)). The correct expression writes:
+
+.. math::
+
+    \dot{\rho}_{\alpha\alpha}(t)&=\sum_{\nu}[A_{\nu\alpha}\rho_{\nu\nu}(t)-A_{\alpha\nu}\rho_{\alpha\alpha}(t)],\\
+    \dot{\rho}_{\alpha\beta}(t)&=-\frac{1}{2}\sum_{\nu}\left(A_{\alpha\nu}+A_{\nu\beta}\right)\rho_{\alpha\alpha}(t).
 
 
 The Floquet-Markov master equation in QuTiP
 -------------------------------------------
 
-The QuTiP function :func:`qutip.floquet.fmmesolve` implements the Floquet-Markov master equation. It calculates the dynamics of a system given its initial state, a time-dependent hamiltonian, a list of operators through which the system couples to its environment and a list of corresponding spectral-density functions that describes the environment. In contrast to the :func:`qutip.mesolve` and :func:`qutip.mcsolve`, and the :func:`qutip.floquet.fmmesolve` does characterize the environment with dissipation rates, but extract the strength of the coupling to the environment from the noise spectral-density functions and the instantaneous Hamiltonian parameters (similar to the Bloch-Redfield master equation solver :func:`qutip.bloch_redfield.brmesolve`).
+The QuTiP function :func:`qutip.floquet.fmmesolve` implements the Floquet-Markov master equation. It calculates the dynamics of a system given its initial state, a time-dependent hamiltonian, a list of operators through which the system couples to its environment and a list of corresponding spectral-density functions that describes the environment. In contrast to the :func:`qutip.mesolve` and :func:`qutip.mcsolve`, the :func:`qutip.floquet.fmmesolve` does characterize the environment with dissipation rates, but extract the strength of the coupling to the environment from the noise spectral-density functions and the instantaneous Hamiltonian parameters (similar to the Bloch-Redfield master equation solver :func:`qutip.bloch_redfield.brmesolve`).
 
 .. note::
 
@@ -236,11 +245,14 @@ The QuTiP function :func:`qutip.floquet.fmmesolve` implements the Floquet-Markov
 
 The noise spectral-density function of the environment is implemented as a Python callback function that is passed to the solver. For example:
 
->>> gamma1 = 0.1
+>>> gamma1 = 0.05
 >>> def noise_spectrum(omega):
->>>     return 0.5 * gamma1 * omega/(2*pi)
+>>>     if omega>0:
+>>>         return 0.5 * gamma1 * omega/(2*pi)
+>>>     else:
+>>>         return 0      
 
-The other parameters are similar to the :func:`qutip.mesolve` and :func:`qutip.mcsolve`, and the same format for the return value is used :class:`qutip.solver.Result`. The following example extends the example studied above, and uses :func:`qutip.floquet.fmmesolve` to introduce dissipation into the calculation
+The other parameters are similar to the :func:`qutip.mesolve` and :func:`qutip.mcsolve`, and the same format for the return value is used :class:`qutip.solver.Result`. The following example extends the example studied above, and uses :func:`qutip.floquet.fmmesolve` to introduce dissipation into the calculation. Notice that the Floquet-Markov master equation and the Lindblad master equation only match when the dissipation or the drive amplitude is turned off. 
 
 .. plot:: guide/scripts/floquet_ex3.py
    :width: 4.0in
@@ -250,3 +262,4 @@ Alternatively, we can let the :func:`qutip.floquet.fmmesolve` function transform
 
     output = fmmesolve(H, psi0, tlist, [sigmax()], [num(2)], [noise_spectrum], T, args)
     p_ex = output.expect[0]
+
