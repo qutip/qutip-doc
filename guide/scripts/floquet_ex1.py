@@ -21,7 +21,7 @@ f_coeff = floquet_state_decomposition(f_modes_0, f_energies, psi0)
 # calculate the wavefunctions using the from the floquet modes
 p_ex = zeros(len(tlist))
 for n, t in enumerate(tlist):
-    psi_t = floquet_wavefunction_t(f_modes_0, f_energies, f_coeff, t, H, T, args)
+    psi_t = Qobj(floquet_wavefunction_t(f_modes_0, f_energies, f_coeff, t, H, T, args))
     p_ex[n] = expect(num(2), psi_t)
 
 # For reference: calculate the same thing with mesolve
