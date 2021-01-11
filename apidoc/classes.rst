@@ -1,4 +1,4 @@
-.. QuTiP 
+.. QuTiP
    Copyright (C) 2011-2012, Paul D. Nation & Robert J. Johansson
 
 .. _classes:
@@ -15,6 +15,14 @@ Qobj
 .. autoclass:: qutip.Qobj
     :members:
 
+.. _classes-qobjevo:
+
+QobjEvo
+--------------
+
+.. autoclass:: qutip.QobjEvo
+    :members:
+
 .. _classes-eseries:
 
 eseries
@@ -29,14 +37,14 @@ Bloch sphere
 ---------------
 
 .. autoclass:: qutip.bloch.Bloch
-    :members: 
+    :members:
 
 
 Cubic Spline
 ---------------
 
 .. autoclass:: qutip.interpolate.Cubic_Spline
-    :members: 
+    :members:
 
 
 .. _classes-non_markov:
@@ -45,14 +53,14 @@ Non-Markovian Solvers
 ---------------------
 
 .. autoclass:: qutip.nonmarkov.heom.HEOMSolver
-    :members: 
+    :members:
 
 .. autoclass:: qutip.nonmarkov.heom.HSolverDL
     :members:
-    
+
 .. autoclass:: qutip.nonmarkov.memorycascade.MemoryCascade
     :members:
-    
+
 .. autoclass:: qutip.nonmarkov.transfertensor.TTMSolverOptions
     :members:
 
@@ -61,12 +69,18 @@ Non-Markovian Solvers
 Solver Options and Results
 ---------------------------
 
+.. autoclass:: qutip.solver.ExpectOps
+    :members:
+
 .. autoclass:: qutip.solver.Options
     :members:
 
 .. autoclass:: qutip.solver.Result
     :members:
-    
+
+.. autoclass:: qutip.solver.SolverConfiguration
+    :members:
+
 .. autoclass:: qutip.solver.Stats
     :members:
 
@@ -85,6 +99,12 @@ Permutational Invariance
     :members:
 
 .. _classes-distributions:
+
+One-Dimensional Lattice
+---------------
+
+.. autoclass:: qutip.lattice.Lattice1d
+    :members:
 
 Distribution functions
 ----------------------------
@@ -112,25 +132,63 @@ Distribution functions
 Quantum information processing
 ------------------------------
 
-.. autoclass:: qutip.qip.circuit.Gate
+.. autoclass:: qutip.qip.Gate
     :members:
 
-.. autoclass:: qutip.qip.circuit.QubitCircuit
+.. autoclass:: qutip.qip.QubitCircuit
     :members:
 
-.. autoclass:: qutip.qip.models.CircuitProcessor
+.. autoclass:: qutip.qip.device.Processor
     :members:
 
-.. autoclass:: qutip.qip.models.spinchain.SpinChain
+.. autoclass:: qutip.qip.device.OptPulseProcessor
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.device.ModelProcessor
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.device.SpinChain
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.device.LinearSpinChain
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.device.CircularSpinChain
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.device.DispersivecQED
+    :members:
+    :inherited-members:
+    
+.. autoclass:: qutip.qip.Noise
     :members:
 
-.. autoclass:: qutip.qip.models.spinchain.LinearSpinChain
+.. autoclass:: qutip.qip.noise.DecoherenceNoise
     :members:
+    :inherited-members:
 
-.. autoclass:: qutip.qip.models.spinchain.CircularSpinChain
+.. autoclass:: qutip.qip.noise.RelaxationNoise
     :members:
+    :inherited-members:
 
-.. autoclass:: qutip.qip.models.cqed.DispersivecQED
+.. autoclass:: qutip.qip.noise.ControlAmpNoise
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.noise.RandomNoise
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.noise.UserNoise
+    :members:
+    :inherited-members:
+
+.. autoclass:: qutip.qip.pulse.Pulse
     :members:
 
 .. _classes-control:
@@ -140,31 +198,31 @@ Optimal control
 
 .. autoclass:: qutip.control.optimizer.Optimizer
     :members:
-    
+
 .. autoclass:: qutip.control.optimizer.OptimizerBFGS
     :members:
-    
+
 .. autoclass:: qutip.control.optimizer.OptimizerLBFGSB
     :members:
-    
+
 .. autoclass:: qutip.control.optimizer.OptimizerCrab
     :members:
 
 .. autoclass:: qutip.control.optimizer.OptimizerCrabFmin
     :members:
-    
+
 .. autoclass:: qutip.control.optimizer.OptimIterSummary
     :members:
-    
+
 .. autoclass:: qutip.control.termcond.TerminationConditions
     :members:
-    
+
 .. autoclass:: qutip.control.optimresult.OptimResult
     :members:
 
 .. autoclass:: qutip.control.dynamics.Dynamics
     :members:
-    
+
 .. autoclass:: qutip.control.dynamics.DynamicsGenMat
     :members:
 
@@ -173,34 +231,34 @@ Optimal control
 
 .. autoclass:: qutip.control.dynamics.DynamicsSymplectic
     :members:
-    
+
 .. autoclass:: qutip.control.propcomp.PropagatorComputer
     :members:
-    
+
 .. autoclass:: qutip.control.propcomp.PropCompApproxGrad
     :members:
-    
+
 .. autoclass:: qutip.control.propcomp.PropCompDiag
     :members:
-    
+
 .. autoclass:: qutip.control.propcomp.PropCompFrechet
     :members:
-    
+
 .. autoclass:: qutip.control.fidcomp.FidelityComputer
     :members:
 
 .. autoclass:: qutip.control.fidcomp.FidCompUnitary
     :members:
-    
+
 .. autoclass:: qutip.control.fidcomp.FidCompTraceDiff
     :members:
-    
+
 .. autoclass:: qutip.control.fidcomp.FidCompTraceDiffApprox
     :members:
-    
+
 .. autoclass:: qutip.control.tslotcomp.TimeslotComputer
     :members:
-    
+
 .. autoclass:: qutip.control.tslotcomp.TSlotCompUpdateAll
     :members:
 
@@ -230,37 +288,36 @@ Optimal control
 
 .. autoclass:: qutip.control.pulsegen.PulseGenTriangle
     :members:
-    
+
 .. autoclass:: qutip.control.pulsegen.PulseGenGaussian
     :members:
-    
+
 .. autoclass:: qutip.control.pulsegen.PulseGenGaussianEdge
     :members:
-    
+
 .. autoclass:: qutip.control.pulsegen.PulseGenCrab
     :members:
-    
+
 .. autoclass:: qutip.control.pulsegen.PulseGenCrabFourier
     :members:
-    
+
 .. autoclass:: qutip.control.stats.Stats
     :members:
-  
+
 .. autoclass:: qutip.control.dump.Dump
     :members:
-    
+
 .. autoclass:: qutip.control.dump.OptimDump
     :members:
-    
+
 .. autoclass:: qutip.control.dump.DynamicsDump
     :members:
 
 .. autoclass:: qutip.control.dump.DumpItem
     :members:
-    
+
 .. autoclass:: qutip.control.dump.EvoCompDumpItem
     :members:
-    
+
 .. autoclass:: qutip.control.dump.DumpSummaryItem
     :members:
-

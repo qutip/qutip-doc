@@ -1,4 +1,4 @@
-.. QuTiP 
+.. QuTiP
    Copyright (C) 2011-2012, Paul D. Nation & Robert J. Johansson
 
 .. _guide:
@@ -9,7 +9,7 @@ Users Guide
 
 .. toctree::
    :maxdepth: 2
-  
+
    guide-overview.rst
    guide-basics.rst
    guide-states.rst
@@ -25,4 +25,4 @@ Users Guide
    guide-saving.rst
    guide-random.rst
    guide-settings.rst
-
+   guide-qip.rst

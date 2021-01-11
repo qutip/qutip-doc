@@ -1,4 +1,4 @@
-.. QuTiP 
+.. QuTiP
    Copyright (C) 2011 and later, Paul D. Nation & Robert J. Johansson
 
 .. _frontmatter:
@@ -12,12 +12,14 @@ Frontmatter
 About This Documentation
 ==========================
 
-This document contains a user guide and automatically generated API documentation for QuTiP. A PDF version of this text is available at the `documentation page <http://www.qutip.org/documentation.html>`_. 
+This document contains a user guide and automatically generated API documentation for QuTiP. A PDF version of this text is available at the `documentation page <http://www.qutip.org/documentation.html>`_.
 
 **For more information see the** `QuTiP project web page`_.
 
 .. _QuTiP project web page: http://www.qutip.org
 
+
+:Author: J.R. Johansson
 
 :Author: P.D. Nation
 
@@ -25,20 +27,27 @@ This document contains a user guide and automatically generated API documentatio
 
 :Author: Arne Grimsmo
 
-:Author: J.R. Johansson
-
 :Author: Chris Grenade
 
+:Author: Nathan Shammah
 
-:version: 4.3
-:status: Released (July 18, 2018)
+:Author: Shahnawaz Ahmed
+
+:Author: Neill Lambert
+
+:Author: Eric Giguere
+
+:Author: Boxi Li
+
+:version: 4.5
+:status: Released (January 30, 2020)
 :copyright: This documentation is licensed under the Creative Commons Attribution 3.0 Unported License.
 
 .. _citing-qutip:
 
 Citing This Project
 ==========================
-    
+
 If you find this project useful, then please cite:
 
 .. centered:: J. R. Johansson, P.D. Nation, and F. Nori, "QuTiP 2: A Python framework for the dynamics of open quantum systems", Comp. Phys. Comm. **184**, 1234 (2013).
@@ -48,22 +57,27 @@ or
 .. centered:: J. R. Johansson, P.D. Nation, and F. Nori, "QuTiP: An open-source Python framework for the dynamics of open quantum systems", Comp. Phys. Comm. **183**, 1760 (2012).
 
 
-which may also be download from http://arxiv.org/abs/1211.6518 or http://arxiv.org/abs/1110.0573, respectively.
+which may also be downloaded from http://arxiv.org/abs/1211.6518 or http://arxiv.org/abs/1110.0573, respectively.
 
 .. _funding-qutip:
 
 Funding
 =======
-QuTiP is developed under the auspice of the non-profit organization:
+QuTiP is developed under the auspice of the non-profit organizations:
 
-.. _image-qustar:
+.. _image-numfocus:
 
 .. figure:: figures/NumFocus_logo.png
    :width: 3in
    :figclass: align-center
 
+.. _image-unitaryfund:
 
-QuTiP was partially supported by 
+.. figure:: figures/unitaryfund_logo.png
+   :width: 3in
+   :figclass: align-center
+
+QuTiP was partially supported by
 
 .. _image-jsps:
 
@@ -80,6 +94,10 @@ QuTiP was partially supported by
 .. _image-korea:
 
 .. figure:: figures/korea-logo.png
+	:width: 2in
+	:figclass: align-center
+
+.. figure:: figures/inst_quant_sher.png
 	:width: 2in
 	:figclass: align-center
 
@@ -106,18 +124,53 @@ The Quantum Toolbox in Python, or QuTiP, is an open-source framework written in 
 
 * Takes advantage of the multiple processing cores found in essentially all modern computers.
 
-* QuTiP was designed from the start to require a minimal learning curve for those users who have experience using the popular quantum optics toolbox by Sze M. Tan. 
+* QuTiP was designed from the start to require a minimal learning curve for those users who have experience using the popular quantum optics toolbox by Sze M. Tan.
 
 * Includes the ability to create high-quality plots, and animations, using the excellent `Matplotlib <http://matplotlib.sourceforge.net/>`_ package.
 
 
 For detailed information about new features of each release of QuTiP, see the :ref:`changelog`.
 
+.. _plugin-qutip:
+
+QuTiP Plugins
+=============
+
+Several libraries depend on QuTiP heavily making QuTiP a super-library
+
+:Matsubara: `Matsubara <https://matsubara.readthedocs.io/en/latest/>`_ is a plugin to study the ultrastrong coupling regime with structured baths
+
+:QNET: `QNET <https://qnet.readthedocs.io/en/latest/readme.html>`_ is a computer algebra package for quantum mechanics and photonic quantum networks
+
+.. _libraries:
+
+Libraries Using QuTiP
+=====================
+
+Several libraries rely on QuTiP for quantum physics or quantum information processing. Some of them are:
+
+:Krotov: `Krotov <https://qucontrol.github.io/krotov/v1.2.0/01_overview.html>`_ focuses on the python implementation of Krotov's method for quantum optimal control
+
+:pyEPR: `pyEPR <https://pyepr-docs.readthedocs.io/en/latest/index.html>`_ interfaces classical distributed microwave analysis with that of quantum structures and hamiltonians by providing easy to use analysis function and automation for the design of quantum chips
+
+:scQubits: `scQubits <https://scqubits.readthedocs.io/en/latest/>`_ is a Python library which provides a convenient way to simulate superconducting qubits by providing an interface to QuTiP
+
+:SimulaQron: `SimulaQron <https://softwarequtech.github.io/SimulaQron/html/index.html>`_ is a distributed simulation of the end nodes in a quantum internet with the specific goal to explore application development
+
+:QInfer: `QInfer <http://qinfer.org/>`_ is a library for working with sequential Monte Carlo methods for parameter estimation in quantum information
+
+:QPtomographer: `QPtomographer <https://qptomographer.readthedocs.io/en/latest/>`_ derive quantum error bars for quantum processes in terms of the diamond norm to a reference quantum channel
+
+:QuNetSim: `QuNetSim <https://tqsd.github.io/QuNetSim/_build/intro.html>`_ is a quantum networking simulation framework to develop and test protocols for quantum networks
+
+:qupulse: `qupulse <https://qupulse.readthedocs.io/en/latest/>`_ is a toolkit to facilitate experiments involving pulse driven state manipulation of physical qubits
+
+
+
 
 Contributing to QuTiP
 =====================
-We welcome anyone who is interested in helping us make QuTiP the best package for simulating quantum systems. Anyone who contributes will be duly recognized.  Even small contributions are noted. See :ref:`developers-contributors` for a list of people who have helped in one way or another. If you are interested, please drop us a line at the `QuTiP discussion group webpage`_. 
+We welcome anyone who is interested in helping us make QuTiP the best package for simulating quantum systems. Anyone who contributes will be duly recognized.  Even small contributions are noted. See :ref:`developers-contributors` for a list of people who have helped in one way or another. If you are interested, please drop us a line at the `QuTiP discussion group webpage`_.
 
 
 .. _QuTiP discussion group webpage: http://groups.google.com/group/qutip.
-

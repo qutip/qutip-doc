@@ -1,5 +1,5 @@
-.. QuTiP 
-   Copyright (C) 2011-2013, Paul D. Nation, Robert J. Johansson & Alexander Pitchford
+.. QuTiP
+   Copyright (C) 2011-2020, Paul D. Nation, Robert J. Johansson, Alexander Pitchford, Chris Granade, Arne Grimsmo, Nathan Shammah, Shahnawax Ahmed, Eric Giguère
 
 .. _changelog:
 
@@ -7,14 +7,158 @@
 Change Log
 **********
 
+
+Version 4.5.0 (January 31, 2020)
+++++++++++++++++++++++++++++++
+
+Improvements
+------------
+- **MAJOR FEATURE**: Added `qip.noise`, a module with pulse level description of quantum circuits allowing to model various types of noise and devices (by **Boxi Li**).
+
+- **MAJOR FEATURE**: Added `qip.lattice`, a module for the study of lattice dynamics in 1D (by **Saumya Biswas**).
+
+- Migrated testing from Nose to PyTest (by **Tarun Raheja**).
+
+- Optimized testing for PyTest and removed duplicated test runners (by **Jake Lishman**).
+
+- Deprecated importing `qip` functions to the qutip namespace (by **Boxi Li**).
+
+- Added the possibility to define non-square superoperators relevant for quantum circuits (by **Arne Grimsmo** and **Josh Combes**).
+
+- Implicit tensor product for `qeye`, `qzero` and `basis` (by **Jake Lishman**).
+
+- QObjEvo no longer requires Cython for string coefficient (by **Eric Giguère**).
+
+- Added marked tests for faster tests in `testing.run()` and made faster OpenMP benchmarking in CI (by **Eric Giguère**).
+
+- Added entropy and purity for Dicke density matrices, refactored into more general dicke_trace (by **Nathan Shammah**).
+
+- Added option for specifying resolution in Bloch.save function (by **Tarun Raheja**).
+
+- Added information related to the value of hbar in `wigner` and `continuous_variables` (by **Nicolas Quesada**).
+
+- Updated requirements for `scipy 1.4` (by **Eric Giguère**).
+
+- Added previous lead developers to the qutip.about() message (by **Nathan Shammah**).
+
+- Added improvements to `Qobj` introducing the `inv` method and making the partial trace, `ptrace`, faster, keeping both sparse and dense methods (by **Eric Giguère**).
+
+- Allowed general callable objects to define a time-dependent Hamiltonian (by **Eric Giguère**).
+
+- Added feature so that `QobjEvo` no longer requires Cython for string coefficients (by **Eric Giguère**).
+
+- Updated authors list on Github and added `my binder` link (by **Nathan Shammah**).
+
+
+Bug Fixes
+---------
+
+- Fixed `PolyDataMapper` construction for `Bloch3d` (by **Sam Griffiths**).
+
+- Fixed error checking for null matrix in essolve (by **Nathan Shammah**).
+
+- Fixed name collision for parallel propagator (by **Nathan Shammah**).
+
+- Fixed dimensional incongruence in `propagator` (by **Nathan Shammah**)
+
+- Fixed bug by rewriting clebsch function based on long integer fraction (by **Eric Giguère**).
+
+- Fixed bugs in QobjEvo's args depending on state and added solver tests using them (by **Eric Giguère**).
+
+- Fixed bug in `sesolve` calculation of average states when summing the timeslot states (by **Alex Pitchford**).
+
+- Fixed bug in `steadystate` solver by removing separate arguments for MKL and Scipy (by **Tarun Raheja**).
+
+- Fixed `Bloch.add_ponts` by setting `edgecolor = None` in `plot_points` (by **Nathan Shammah**).
+
+- Fixed error checking for null matrix in `essolve` solver affecting also `ode2es` (by **Peter Kirton**).
+
+- Removed unnecessary shebangs in .pyx and .pxd files (by **Samesh Lakhotia**).
+
+- Fixed `sesolve` and  import of `os` in `codegen` (by **Alex Pitchford**).
+
+- Updated `plot_fock_distribution` by removing the offset value 0.4 in the plot (by **Rajiv-B**).
+
+
+Version 4.4.1 (August 29, 2019)
+++++++++++++++++++++++++++++++
+
+Improvements
+------------
+
+- QobjEvo do not need to start from 0 anymore (by **Eric Giguère**).
+
+- Add a quantum object purity function (by **Nathan Shammah** and **Shahnawaz Ahmed**).
+
+- Add step function interpolation for array time-coefficient (by **Boxi Li**).
+
+- Generalize expand_oper for arbitrary dimensions, and new method for cyclic permutations of given target cubits (by **Boxi Li**).
+
+
+Bug Fixes
+---------
+
+- Fixed the pickling but that made solver unable to run in parallel on Windows (Thank **lrunze** for reporting)
+
+- Removed warning when mesolve fall back on sesolve (by **Michael Goerz**).
+
+- Fixed dimension check and confusing documentation in random ket (by **Yariv Yanay**).
+
+- Fixed Qobj isherm not working after using Qobj.permute (Thank **llorz1207** for reporting).
+
+- Correlation functions call now properly handle multiple time dependant functions (Thank **taw181** for reporting).
+
+- Removed mutable default values in mesolve/sesolve (by **Michael Goerz**).
+
+- Fixed simdiag bug (Thank **Croydon-Brixton** for reporting).
+
+- Better support of constant QobjEvo (by **Boxi Li**).
+
+- Fixed potential cyclic import in the control module (by **Alexander Pitchford**).
+
+
+Version 4.4.0 (July 03, 2019)
+++++++++++++++++++++++++++++++
+
+Improvements
+------------
+
+- **MAJOR FEATURE**: Added methods and techniques to the stochastic solvers (by **Eric Giguère**) which allows to use a much broader set of solvers and much more efficiently.
+
+- **MAJOR FEATURE**: Optimization of the montecarlo solver (by **Eric Giguère**). Computation are faster in many cases. Collapse information available to time dependant information.
+
+- Added the QObjEvo class and methods (by **Eric Giguère**), which is used behind the scenes by the dynamical solvers, making the code more efficient and tidier. More built-in function available to string coefficients.
+
+- The coefficients can be made from interpolated array with variable timesteps and can obtain state information more easily. Time-dependant collapse operator can have multiple terms.
+
+- New wigner_transform and plot_wigner_sphere function. (by **Nithin Ramu**).
+
+- ptrace is faster and work on bigger systems, from 15 Qbits to 30 Qbits.
+
+- QIP module: added the possibility for user-defined gates, added the possibility to remove or add gates in any point of an already built circuit, added the molmer_sorensen gate, and fixed some bugs (by **Boxi Li**).
+
+- Added the quantum Hellinger distance to qutip.metrics (by **Wojciech Rzadkowski**).
+
+- Implemented possibility of choosing a random seed (by **Marek Marekyggdrasil**).
+
+- Added a code of conduct to Github.
+
+
+Bug Fixes
+---------
+
+- Fixed bug that made QuTiP incompatible with SciPy 1.3.
+
+
 Version 4.3.0 (July 14, 2018)
 ++++++++++++++++++++++++++++++
 
 Improvements
 ------------
-- **MAJOR FEATURE**: Added the Permutational Invariant Quantum Solver (PIQS) module (**by Nathan Shammah** and **Shahnawaz Ahmed**) which allows the simluation of large TLSs ensembles including collective and local Lindblad dissipation. Applications range from superradiance to spin squeezing.
 
-- **MAJOR FEATURE**: Added a photon scattering module (**by Ben Bartlett**) which can be used to study scattering in arbitrary driven systems coupled to some configuration of output waveguides.
+- **MAJOR FEATURE**: Added the Permutational Invariant Quantum Solver (PIQS) module (by **Nathan Shammah** and **Shahnawaz Ahmed**) which allows the simluation of large TLSs ensembles including collective and local Lindblad dissipation. Applications range from superradiance to spin squeezing.
+
+- **MAJOR FEATURE**: Added a photon scattering module (by **Ben Bartlett**) which can be used to study scattering in arbitrary driven systems coupled to some configuration of output waveguides.
 
 - Cubic_Spline functions as time-dependent arguments for the collapse operators in mesolve are now allowed.
 
@@ -85,7 +229,7 @@ Improvements
 
 - Codegen now makes sure that division is done in C, as opposed to Python.
 
-- Can now set different controls for a each timeslot in quantum optimization. 
+- Can now set different controls for a each timeslot in quantum optimization.
 This allows time-varying controls to be used in pulse optimisation.
 
 
@@ -194,14 +338,14 @@ New Features
 - **MAJOR FEATURE**: Non-Markovian solvers: Hierarchy (**Added by Neill Lambert**), Memory-Cascade, and Transfer-Tensor methods.
 - **MAJOR FEATURE**: Default steady state solver now up to 100x faster using the Intel Pardiso library under the Anaconda and Intel Python distributions.
 - The default Wigner function now uses a Clenshaw summation algorithm to evaluate a polynomial series that is applicable for any number of exciations (previous limitation was ~50 quanta), and is ~3x faster than before. (**Added by Denis Vasilyev**)
-- Can now define a given eigen spectrum for random Hermitian and density operators. 
+- Can now define a given eigen spectrum for random Hermitian and density operators.
 - The Qobj ``expm`` method now uses the equivilent SciPy routine, and performs a much faster ``exp`` operation if the matrix is diagonal.
 - One can now build zero operators using the ``qzero`` function.
 
 *Control modules*
 
 - **MAJOR FEATURE**: CRAB algorithm added
-  This is an alternative to the GRAPE algorithm, which allows for analytical control functions, which means that experimental constraints can more easily be added into optimisation.  
+  This is an alternative to the GRAPE algorithm, which allows for analytical control functions, which means that experimental constraints can more easily be added into optimisation.
   See tutorial notebook for full information.
 
 
@@ -223,20 +367,20 @@ Improvements
 
 - The internal state / quantum operator data type can now be either Qobj or ndarray
   Previous only ndarray was possible. This now opens up possibility of using Qobj methods in fidelity calculations
-  The attributes and functions that return these operators are now preceded by an underscore, to indicate that the data type could change depending on the configuration options. 
-  In most cases these functions were for internal processing only anyway, and should have been 'private'. 
+  The attributes and functions that return these operators are now preceded by an underscore, to indicate that the data type could change depending on the configuration options.
+  In most cases these functions were for internal processing only anyway, and should have been 'private'.
   Accessors to the properties that could be useful outside of the library have been added. These always return Qobj. If the internal operator data type is not Qobj, then there could be signicant overhead in the conversion, and so this should be avoided during pulse optimisation.
   If custom sub-classes are developed that use Qobj properties and methods (e.g. partial trace), then it is very likely that it will be more efficient to set the internal data type to Qobj.
   The internal operator data will be chosen automatically based on the size and sparsity of the dynamics generator. It can be forced by setting ``dynamics.oper_dtype = <type>``
   Note this can be done by passing ``dyn_params={'oper_dtype':<type>}`` in any of the pulseoptim functions.
-  
+
   Some other properties and methods were renamed at the same time. A full list is given here.
-  
-  - All modules 
+
+  - All modules
     - function: ``set_log_level`` -> property: ``log_level``
 
   - dynamics functions
-  
+
     - ``_init_lists`` now ``_init_evo``
     - ``get_num_ctrls`` now property: ``num_ctrls``
     - ``get_owd_evo_target`` now property: ``onto_evo_target``
@@ -245,31 +389,31 @@ Improvements
     - ``get_ctrl_den_gen`` now ``_get_phased_ctrl_dyn_gen``
     - ``ensure_decomp_curr`` now ``_ensure_decomp_curr``
     - ``spectral_decomp`` now ``_spectral_decomp``
-    
+
   - dynamics properties
-  
+
     - ``evo_init2t`` now ``_fwd_evo`` (``fwd_evo`` as Qobj)
     - ``evo_t2end`` now ``_onwd_evo`` (``onwd_evo`` as Qobj)
     - ``evo_t2targ`` now ``_onto_evo`` (``onto_evo`` as Qobj)
 
   - fidcomp properties
-  
+
     - ``uses_evo_t2end`` now ``uses_onwd_evo``
     - ``uses_evo_t2targ`` now ``uses_onto_evo``
     - ``set_phase_option`` function now property ``phase_option``
 
   - propcomp properties
-  
+
     - ``grad_exact`` (now read only)
 
   - propcomp functions
-  
+
     - ``compute_propagator`` now ``_compute_propagator``
     - ``compute_diff_prop`` now ``_compute_diff_prop``
     - ``compute_prop_grad`` now ``_compute_prop_grad``
 
   - tslotcomp functions
-  
+
     - ``get_timeslot_for_fidelity_calc`` now ``_get_timeslot_for_fidelity_calc``
 
 
@@ -356,7 +500,7 @@ Bug Fixes
 - Fix bug in parsing of time-dependent Hamiltonian/collapse operator arguments
   that occurred when the args argument is not a dictionary.
 - Fix bug in internal _version2int function that cause a failure when parsingthe version number of the Cython package.
-- 
+-
 
 
 Version 3.0.0 (July 17, 2014):
@@ -369,7 +513,7 @@ New Features
   Schrödinger equation solvers.
 
 - Expanded steady state solvers. The function ``steady`` has been deprecated in
-  favor of ``steadystate``. The steadystate solver no longer use umfpack by 
+  favor of ``steadystate``. The steadystate solver no longer use umfpack by
   default. New pre-processing methods for reordering and balancing the linear
   equation system used in direct solution of the steady state.
 
@@ -377,7 +521,7 @@ New Features
   including pre-defined quantum gates along with functions for expanding
   arbitrary 1, 2, and 3 qubit gates to N qubit registers, circuit
   representations, library of quantum algorithms, and basic physical models for
-  some common QIP architectures. 
+  some common QIP architectures.
 
 - New module `qutip.distributions` with unified API for working with
   distribution functions.
@@ -395,7 +539,7 @@ New Features
 - Dynamics solver now support taking argument ``e_ops`` (expectation value
   operators) in dictionary form.
 
-- Public plotting functions from the ``qutip.visualization`` module are now 
+- Public plotting functions from the ``qutip.visualization`` module are now
   prefixed with ``plot_`` (e.g., ``plot_fock_distribution``). The
   ``plot_wigner`` and ``plot_wigner_fock_distribution`` now supports 3D views
   in addition to contour views.
@@ -418,7 +562,7 @@ New Features
 
 - The ``concurrence`` function now supports both pure and mixed states. Added
   function for calculating the entangling power of a two-qubit gate.
- 
+
 - Added function for generating (generalized) Lindblad dissipator
   superoperators.
 
@@ -445,13 +589,13 @@ Improvements
   significantly lower memory footprint due to avoiding excessive copying of
   internal matrix data.
 
-- The classes ``OdeData``, ``Odeoptions``, ``Odeconfig`` are now called 
+- The classes ``OdeData``, ``Odeoptions``, ``Odeconfig`` are now called
   ``Result``, ``Options``, and ``Config``, respectively, and are available in
   the module `qutip.solver`.
 
 - The ``squeez`` function has been renamed to ``squeeze``.
 
-- Better support for sparse matrices when calculating propagators using the 
+- Better support for sparse matrices when calculating propagators using the
   ``propagator`` function.
 
 - Improved Bloch sphere.
@@ -490,7 +634,7 @@ New Features
 - The master-equation solver (mesolve) now accepts pre-constructed Liouvillian
   terms, which makes it possible to solve master equations that are not on
   the standard Lindblad form.
-  
+
 - Optional Fortran Monte Carlo solver (mcsolve_f90) by Arne Grimsmo.
 
 - A module of tools for using QuTiP in IPython notebooks.
@@ -547,7 +691,7 @@ Bug Fixes:
 
 - Odeoptions now prints mc_avg correctly.
 
-- Do not check for PyObj in mcsolve when gui=False. 
+- Do not check for PyObj in mcsolve when gui=False.
 
 - Eseries now correctly handles purely complex rates.
 

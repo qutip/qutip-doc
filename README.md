@@ -9,6 +9,7 @@ Build requirements
 ------------------
 
 * Sphinx: http://sphinx-doc.org/
+* sphinx-gallery
 * sphinx_rtd_theme
 * LaTeX and pdflatex.
 * numpydoc
@@ -16,7 +17,7 @@ Build requirements
 
 In a conda environment use:
     
-    $ conda install sphinx numpydoc sphinx_rtd_theme ipython
+    $ conda install sphinx numpydoc sphinx_rtd_theme sphinx-gallery ipython
 
 2017-03-28: Successful building using:
 

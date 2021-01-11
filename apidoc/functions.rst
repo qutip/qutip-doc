@@ -1,4 +1,4 @@
-.. QuTiP 
+.. QuTiP
    Copyright (C) 2011-2012, Paul D. Nation & Robert J. Johansson
 
 .. _functions:
@@ -26,11 +26,19 @@ Quantum Operators
 
 .. _functions-rand:
 
+Quantum Objects
+---------------------
+
+.. automodule:: qutip.qobj
+    :members: qobj_list_evaluate, ptrace, dag, isequal, issuper, isoper, isoperket, isoperbra, isket, isbra,
+    isherm, shape, dims
+
+
 Random Operators and States
 ---------------------------
 
 .. automodule:: qutip.random_objects
-    :members: rand_dm, rand_dm_ginibre, rand_dm_hs, rand_herm, rand_ket, rand_ket_haar, rand_unitary, rand_unitary_haar, rand_super, rand_super_bcsz
+    :members: rand_dm, rand_dm_ginibre, rand_dm_hs, rand_herm, rand_ket, rand_ket_haar, rand_stochastic, rand_unitary, rand_unitary_haar, rand_super, rand_super_bcsz
 
 
 Three-Level Atoms
@@ -46,13 +54,19 @@ Superoperators and Liouvillians
 
 .. automodule:: qutip.superoperator
     :members: operator_to_vector, vector_to_operator, liouvillian, spost, spre, sprepost, lindblad_dissipator
-    
+
 Superoperator Representations
 -----------------------------
 
 .. automodule:: qutip.superop_reps
-    :members: to_choi, to_super, to_kraus
+    :members: super_to_choi, choi_to_super, choi_to_kraus, kraus_to_choi, kraus_to_super, choi_to_chi, chi_to_choi, to_choi, to_chi, to_super, to_kraus, to_stinespring
     :undoc-members:
+
+Operators and Superoperator Dimensions
+-----------------------------
+
+.. automodule:: qutip.dimensions
+    :members: is_scalar, is_vector, is_vectorized_oper, type_from_dims, flatten, deep_remove, unflatten, collapse_dims_oper, collapse_dims_super, enumerate_flat, deep_map, dims_to_tensor_perm, dims_to_tensor_shape, dims_idxs_to_tensor_idxs
 
 
 Functions acting on states and operators
@@ -103,6 +117,16 @@ Continuous Variables
     :members: correlation_matrix, covariance_matrix, correlation_matrix_field, correlation_matrix_quadrature, wigner_covariance_matrix, logarithmic_negativity
 
 
+Measurement
+===========
+
+Measurement of quantum states
+-----------------------------
+
+.. automodule:: qutip.measurement
+    :members: measure, measurement_statistics
+
+
 Dynamics and Time-Evolution
 ===========================
 
@@ -124,7 +148,7 @@ Monte Carlo Evolution
 .. automodule:: qutip.mcsolve
     :members: mcsolve
 
-.. ignore f90 stuff for now    
+.. ignore f90 stuff for now
     .. automodule:: qutip.fortran.mcsolve_f90
         :members: mcsolve_f90
 
@@ -147,14 +171,14 @@ Floquet States and Floquet-Markov Master Equation
 -------------------------------------------------
 
 .. automodule:: qutip.floquet
-    :members: fmmesolve, floquet_modes, floquet_modes_t, floquet_modes_table, floquet_modes_t_lookup, floquet_states_t, floquet_wavefunction_t, floquet_state_decomposition, fsesolve
+    :members: fmmesolve, floquet_modes, floquet_modes_t, floquet_modes_table, floquet_modes_t_lookup, floquet_states, floquet_states_t, floquet_wavefunction, floquet_wavefunction_t, floquet_state_decomposition, fsesolve, floquet_master_equation_rates, floquet_master_equation_steadystate, floquet_basis_transform, floquet_markov_mesolve
 
 
 Stochastic Schrödinger Equation and Master Equation
 ---------------------------------------------------
 
 .. automodule:: qutip.stochastic
-    :members: smesolve, ssesolve, smepdpsolve, ssepdpsolve
+    :members: ssesolve, photocurrent_sesolve, smepdpsolve, smesolve, photocurrent_mesolve, ssepdpsolve, stochastic_solvers, general_stochastic
 
 
 Correlation Functions
@@ -196,11 +220,27 @@ Permutational Invariance
 -------------------------------------
 
 .. automodule:: qutip.piqs
-    :members: jspin, dicke, superradiant, ghz, css, excited, ground, num_dicke_states, num_dicke_ladders, num_tls, isdiagonal, state_degeneracy, m_degeneracy, ap, am, spin_algebra, collapse_uncoupled, dicke_basis, iden
+    :members: [num_dicke_states, num_dicke_ladders, num_tls, isdiagonal, dicke_blocks, dicke_blocks_full, dicke_function_trace, purity_dicke, entropy_vn_dicke, state_degeneracy, m_degeneracy, energy_degeneracy, ap, am, spin_algebra, jspin, collapse_uncoupled, dicke_basis, dicke, excited, superradiant, css, ghz, ground, identity_uncoupled, block_matrix, tau_column,
+
+
+Lattice
+===============
+
+Lattice Properties
+-------------------------------------
+.. automodule:: qutip.lattice
+    :members: cell_structures
+
+
+Topology
+-------------------------------------
+.. automodule:: qutip.topology
+    :members: berry_curvature, plot_berry_curvature
+
 
 Visualization
 ===============
-	
+
 Pseudoprobability Functions
 ----------------------------
 
@@ -212,7 +252,7 @@ Graphs and Visualization
 ------------------------
 
 .. automodule:: qutip.visualization
-    :members: hinton, matrix_histogram, matrix_histogram_complex, plot_energy_levels, wigner_cmap, plot_fock_distribution, plot_wigner_fock_distribution, plot_wigner, sphereplot, plot_schmidt, plot_qubism, plot_expectation_values, plot_spin_distribution_2d, plot_spin_distribution_3d
+    :members: hinton, matrix_histogram, matrix_histogram_complex, plot_energy_levels, wigner_cmap, plot_fock_distribution, plot_wigner_fock_distribution, plot_wigner, sphereplot, plot_schmidt, plot_qubism, plot_expectation_values, plot_spin_distribution_2d, plot_spin_distribution_3d, plot_wigner_sphere, sphereplot
     :undoc-members:
 
 .. automodule:: qutip.orbital
@@ -237,7 +277,7 @@ Gates
 -----
 
 .. automodule:: qutip.qip.gates
-    :members: rx, ry, rz, sqrtnot, snot, phasegate, cphase, cnot, csign, berkeley, swapalpha, swap, iswap, sqrtswap, sqrtiswap, fredkin, toffoli, rotation, controlled_gate, globalphase, hadamard_transform, gate_sequence_product, gate_expand_1toN, gate_expand_2toN, gate_expand_3toN
+    :members: rx, ry, rz, sqrtnot, snot, phasegate, cphase, cnot, csign, berkeley, swapalpha, swap, iswap, sqrtswap, sqrtiswap, fredkin, toffoli, rotation, controlled_gate, globalphase, hadamard_transform, gate_sequence_product, gate_expand_1toN, gate_expand_2toN, gate_expand_3toN, expand_operator
 
 Qubits
 ------
@@ -251,9 +291,15 @@ Algorithms
 .. automodule:: qutip.qip.algorithms.qft
     :members: qft, qft_steps, qft_gate_sequence
 
+
+Noisy Devices
+----------
+.. automodule:: qutip.qip.device
+    :members:
+
 .. _functions-non_markov:
 
-non-Markovian Solvers
+Non-Markovian Solvers
 =====================
 
 .. automodule:: qutip.nonmarkov.transfertensor
@@ -310,6 +356,15 @@ Parallelization
 
 
 .. _functions-ipython:
+
+Semidefinite Programming
+---------------
+
+.. automodule:: qutip.semidefinite
+    :members: complex_var, herm, pos_noherm, pos, dens, kron, conj, bmat, bmat, memoize, qudit_swap, dnorm_problem
+
+
+.. _functions-semidefinite:
 
 IPython Notebook Tools
 ----------------------
