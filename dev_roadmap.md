@@ -86,8 +86,8 @@ A separate repository has already been made for qutip-qip.
  Alex Pitchford has a [fork](https://github.com/ajgpitch/sympsi) that does 'work' with recent Sympy versions -- unit tests pass, and most examples. 
  However, some (important) examples fail, due to lack of respect for non-commuting operators in Sympy simplifcation functions (note this was true as of Nov 2019, may be fixed now).
  
- There is [not discussed with RJ) to move this into the QuTiP family to allow the Admin Team to maintain, develop and promote it. 
- The 'Sympsi' name is cute, but a little abstract, and qutip-symbolic is proposed as an alternative, as it is plainer.
+ There is [not discussed with RJ] to move this into the QuTiP family to allow the Admin Team to maintain, develop and promote it. 
+ The 'Sympsi' name is cute, but a little abstract, and qutip-symbolic is proposed as an alternative, as it is plainer and more distinct from Sympy.
  
  ### Affilliated packages
  
@@ -109,12 +109,12 @@ A separate repository has already been made for qutip-qip.
  
  *admin lead*: [Eric](https://github.com/Ericgig)
  
- *main dev*: [jakelishman](https://github.com/jakelishman)
+ *main dev*: [Jake Lishman](https://github.com/jakelishman)
  
- Development completed as a GSoC project. Fully implemented in the dev.major branch. Currently be used by some research groups.
+ Development completed as a GSoC project. Fully implemented in the dev.major branch. Currently being used by some research groups.
  
  Abstraction of the [linear algebra] data from code qutip components, allowing for alternatives, such as sparse, dense etc.
- Difficult to summarize. Almost every file in qutip affected in some way. A major milestone for qutip. Significant performance improvements.
+ Difficult to summarize. Almost every file in qutip affected in some way. A major milestone for qutip. Significant performance improvements throughout qutip.
  
  ### qutip main reorganization
  &#x1F535; tag: qmain-reorg
@@ -123,7 +123,9 @@ A separate repository has already been made for qutip-qip.
  
  *admin lead*: [Eric](https://github.com/Ericgig)
  
- *main dev*: [jakelishman](https://github.com/jakelishman)
+ *main dev*: [Jake Lishman](https://github.com/jakelishman)
+ 
+ Reorganise qutip main components to structure [described above](#qutip-main).
  
  ### qutip user docs migration
  &#x1F535; tag: qmain-docs
@@ -175,7 +177,9 @@ A separate repository has already been made for qutip-qip.
  
  *main dev*: TBA
  
- 
+ The components currently packaged as an integrated subpackage of qutip main will be moved to separate package called Qtrl.
+ This is the original codename of the package before it was integrated into qutip.
+ Also changes to exploit the new data layer. 
  
  ### Sympy non-commuting operator simplify
  &#x1F535; tag: sympy-noncomm
