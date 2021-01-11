@@ -18,6 +18,8 @@ QuTiP is also an organisation, in the Github sense, and in the sense of a group 
 
 These related, and overlapping, uses of the QuTiP name are of little consequence until one starts to consider how to organise all the software packages that are somehow related to QuTiP, and specifically those that are maintained by the QuTiP Admim Team. Herin QuTiP will refer to the project / organisation and qutip to the library for simulating quantum dyanmics.
 
+------------------------------------
+
 ## Library package structure
 
 With a name as general as Quantum Toolkit in Python, the scope for new code modules to be added to qutip is very wide. The library was becoming increasingly difficult to maintain, and in c. 2020 the QuTiP Admim Team decided to limit the scope of the 'main' (for want of a better name) qutip package. 
@@ -95,6 +97,8 @@ A separate repository has already been made for qutip-qip.
  A package for quantum control optimisation using Krotov, developed mainly by Michael Goerz.
  
  Generally accepted by the Admin Team as well developed and maintain. A solid candiate for affilliation.
+ 
+ --------------------------------------------------------------
 
  ## Workpackages
  
@@ -103,7 +107,9 @@ A separate repository has already been made for qutip-qip.
  
  *status*: development [pretty much] complete
  
- *lead*: [jakelishman](https://github.com/jakelishman)
+ *admin lead*: [Eric](https://github.com/Ericgig)
+ 
+ *main dev*: [jakelishman](https://github.com/jakelishman)
  
  Development completed as a GSoC project. Fully implemented in the dev.major branch. Currently be used by some research groups.
  
@@ -115,19 +121,61 @@ A separate repository has already been made for qutip-qip.
  
  *status*: development [pretty much] complete
  
- *lead*: [jakelishman](https://github.com/jakelishman)
+ *admin lead*: [Eric](https://github.com/Ericgig)
  
- ### qutip main docs migration
+ *main dev*: [jakelishman](https://github.com/jakelishman)
+ 
+ ### qutip user docs migration
  &#x1F535; tag: qmain-docs
+ 
+ *status*: conceptualised
+ 
+ *admin lead*: TBA [Shahnawaz](https://github.com/quantshah)?
+ 
+ *main dev*: TBA
+ 
+ The qutip user documentation build file are to be moved to the qutip/qutip repo.
+ This is more typical for an OSS package.
+ 
+ As part of the move, the plan is to re construct the Sphinx structure from scratch.
+ Historically, there have been many issues with building the docs. Sphinx has come a long way since qutip docs first developed. 
+ The main source (rst) will remain [pretty much] as they are, although there is a lot of scope to improve them.
  
  ### Solver data layer integration
  &#x1F535; tag: solve-dl
  
+ *status*: development ongoing
+ 
+ *admin lead*: [Eric](https://github.com/Ericgig)
+ 
+ *main dev*: [Eric](https://github.com/Ericgig)
+ 
+ The new data layer gives opportunity for significantly improving performance of the qutip solvers.
+ Eric has been revamping the solvers by deploying `QobjEvo` (the time-dependent quantum object) that he developed.
+ `QobjEvo` will exploit the data layer, and the solvers in turn exploit `QobjEvo`.
+ 
  ### QIP migration
  &#x1F535; tag: qip-mig
  
+ *status*: development [pretty much] complete
+ 
+ *admin lead*: [Boxi](https://github.com/BoxiLi)
+ 
+ *main dev*: [Sidhant Saraogi](https://github.com/sarsid)
+ 
+ A separate package for qutip-qip was created during Sidhant's GSoC project.
+ There is some fine tuning required, especially after qutip.control is migrated.
+ 
  ### Qtrl migration
  &#x1F535; tag: qtrl-mig
+ 
+ *status*: conceptualised
+ 
+ *admin lead*: [Alex](https://github.com/ajgpitch)
+ 
+ *main dev*: TBA
+ 
+ 
  
  ### Sympy non-commuting operator simplify
  &#x1F535; tag: sympy-noncomm
@@ -148,7 +196,7 @@ A separate repository has already been made for qutip-qip.
  
   - [dl-abs](#data-layer-abstraction)
   - [qmain-reorg](#qutip-main-reorganization)
-  - [qmain-docs](#qutip-main-docs-migration)
+  - [qmain-docs](#qutip-user-docs-migration)
   - [solve-dl](#solver-data-layer-integration)
   - [qip-mig](#qip-migration)
   - [qtrl-mig](#qtrl-migration)
