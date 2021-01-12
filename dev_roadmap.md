@@ -274,10 +274,18 @@ A separate repository has already been made for qutip-qip.
  ### qutip Interactive
  &#x1F535; tag: qutip-gui
  
+ *status*: conceptualised
+ 
+ *admin lead*: [Alex](https://github.com/ajgpitch)
+ 
+ *main dev*: TBA
+ 
  qutip is pretty simple to use at an entry level for anyone with basic Python skills.
  However, *some* Python skills are necessary. 
  A graphical user interface (GUI) for some parts of qutip could help make qutip more accessible.
  This could be particularly helpful in education, for teachers and learners.
+ 
+ This would make an good GSoC project. It is independent and the scope is flexible.
  
  The scope for this is broad and flexible. Ideas including, but not limited to:
  
@@ -290,6 +298,10 @@ A separate repository has already been made for qutip-qip.
  #### Interactive solvers
  Options to configure dynamics generators (Lindbladian / Hamiltonian args etc) and expectation operators.
  Then run solver and view state evolution.
+ 
+ #### Animated circuits
+ QIP circuits could be animated. Status lights showing evolution of states during the processing.
+ Animated Bloch spheres for qubits. 
  
  --------------------------------------------------------------------
  
