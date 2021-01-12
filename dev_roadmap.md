@@ -181,11 +181,58 @@ A separate repository has already been made for qutip-qip.
  This is the original codename of the package before it was integrated into qutip.
  Also changes to exploit the new data layer. 
  
- ### Sympy non-commuting operator simplify
- &#x1F535; tag: sympy-noncomm
- 
  ### QuTiP control framework
  &#x1F535; tag: ctrl-fw
+ 
+ *status*: conceptualised
+ 
+ *admin lead*: [Alex](https://github.com/ajgpitch)
+ 
+ *main dev*: TBA
+ 
+ Create new package qutip-ctrlfw "QuTiP Control Framework". 
+ The aim is provide a common framework that can be adopted by control optimisation packages,
+ such that different packages (algorithms) can be applied to the same problem.
+ 
+ Classes for defining a controlled system:
+  - named control parameters. Scalar and n-dim. Continuous and discrete variables
+  - mapping of control parameters to dynamics generator args
+  - masking for control parameters to be optimised
+  
+ Classes for time-dependent variable parameterisation
+  - piecewise constant
+  - piecewise linear
+  - Fourier basis
+  
+ Classes for defining an optimisation problem:
+  - single and multiple objectives
+  
+ ### QuTiP optimisation
+ &#x1F535; tag: qutip-optim
+ 
+ *status*: conceptualised
+ 
+ *admin lead*: [Alex](https://github.com/ajgpitch)
+ 
+ *main dev*: TBA
+ 
+ A wrapper for multi-variable optimisation functions. 
+ For instance those in `scipy.optimize` (Nelder-Mead, BFGS), but also others, such as Bayesian optimisation and other machine learning based approaches.
+ Initially just providing a common interface for quantum control optimisation, but applicable more generally.
+ 
+ ### Sympsi migration
+ &#x1F535; tag: sympsi-mig
+ 
+ *status*: conceptualised
+ 
+ *admin lead*: [Alex](https://github.com/ajgpitch)
+ 
+ *main dev*: TBA
+ 
+ Create a new family package qutip-symbolic from ajgpitch fork of Sympy.
+ Must gain permission from Robert Johansson. 
+ Extended Sympy simplify to respect non-commuting operators.
+ Produce user documentation.
  
  ### Status messaging and recording
  &#x1F535; tag: status-msg
