@@ -237,8 +237,40 @@ A separate repository has already been made for qutip-qip.
  ### Status messaging and recording
  &#x1F535; tag: status-msg
  
+ *status*: conceptualised
+ 
+ *admin lead*: [Alex](https://github.com/ajgpitch)
+ 
+ *main dev*: TBA
+ 
+ qutip has various ways of recording and reporting status and progress.
+ - `ProgressBar` used some solvers
+ - Python logging used in qutip.control
+ - `Dump` used in qutip.control
+ - heom records `solver.Stats`
+ 
+ Some consolidation of these would be good.
+ 
+ Some processes (some solvers, correlation, control optimisation) have many stages and many layers. 
+ `Dump` was initially developed to help with debugging, but it is also useful for recording data for analysis.
+ qutip.logging_utils has been criticised for the way it uses Python logging. 
+ The output goes to stderr and hence the output looks like errors in Jupyter notebooks.
+ 
+ Clearly, storing process stage data is costly in terms of memory and cpu time, so any implementation must be able to be optionally switched on/off,
+ and avoided completely in low-level processes (cythonized components). 
+ 
+ Required features:
+ - optional recording (storing) of process stage data (states, operators etc)
+ - optionally write subsets to stdout
+ - maybe other graphical representations
+ - option to save subsets to file
+ - should ideally replace use of `ProgressBar`, Python logging, `solver.Stats`
+ 
+ 
  ### Interactive Bloch sphere
  &#x1F535; tag: bloch-interact
+ 
+ --------------------------------------------------------------------
  
  ## qutip major release roadmap
  
