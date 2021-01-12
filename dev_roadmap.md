@@ -29,7 +29,7 @@ The scope includes utilities to support this, including analysis and visualisati
 At the same time, again with the intention of easing maintence, a decision to limit dependences was agreed upon.
 Main `qutip` runtime code components should depend only upon Numpy and Scipy. 
 Installation (from source) requires Cython, and some optional components also require Cython at runtime.
-Unit testing requires Pytest.
+Unit testing requires Pytest. Visualisation (optional) components require Matplotlib.
 
 Due to the all encompassing nature of the plan to abstract the linear algebra data layer, this enhancement (developed as part of a GSoC project) was allowed the freedom (potential for non-backward compatibility) of requiring a major release. The timing of such allows for a restructuring of the qutip compoments, such that some that could be deemed out of scope could be packaged in a different way -- that is, not installed as part of the main qutip package. Hence the proposal for different types of package described next. With reference to the [discussion above](#what-is-qutip) on the name QuTiP/qutip, the planned restructering suffers from confusing naming, which seems unavoidable without remaining either the organisation or the main package (neither of which are desirable).
 
@@ -267,8 +267,25 @@ A separate repository has already been made for qutip-qip.
  - should ideally replace use of `ProgressBar`, Python logging, `solver.Stats`
  
  
- ### Interactive Bloch sphere
- &#x1F535; tag: bloch-interact
+ ### qutip Interactive
+ &#x1F535; tag: qutip-gui
+ 
+ qutip is pretty simple to use at an entry level for anyone with basic Python skills.
+ However, *some* Python skills are necessary. 
+ A graphical user interface (GUI) for some parts of qutip could help make qutip more accessible.
+ This could be particularly helpful in education, for teachers and learners.
+ 
+ The scope for this is broad and flexible. Ideas including, not not limited to:
+ 
+ #### Interactive Bloch sphere
+ Matplotlib has some interactive features (sliders, radio buttons, cmd buttons) that can be used to control parameters. 
+ They are a bit clunky to use, but they are there. Could maybe avoid these and develop our own GUI.
+ An interactive Bloch sphere could have sliders for qubit state angles. 
+ Buttons to add states, toggle state evolution path.
+ 
+ #### Interactive solvers
+ Options to configure dynamics generators (Lindbladian / Hamiltonian args etc) and expectation operators.
+ Then run solver and view state evolution.
  
  --------------------------------------------------------------------
  
@@ -283,6 +300,11 @@ A separate repository has already been made for qutip-qip.
   - [solve-dl](#solver-data-layer-integration)
   - [qip-mig](#qip-migration)
   - [qtrl-mig](#qtrl-migration)
+  
+  The planned timeline for the release is:
+  - alpha version, April 2021. Core features packaged and available for experienced users to test.
+  - beta version, July 2021. All required features and documentation complete, packaged and ready for community testing.
+  - full release, September 2021. Full tested version released.
   
  
 
