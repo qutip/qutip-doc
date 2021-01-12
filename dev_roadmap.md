@@ -146,6 +146,8 @@ A separate repository has already been made for qutip-qip.
  Historically, there have been many issues with building the docs. Sphinx has come a long way since qutip docs first developed. 
  The main source (rst) files will remain [pretty much] as they are, although there is a lot of scope to improve them.
  
+ The qutip-doc repo will afterwards just be used for documents, such as this one, pertaining to the QuTiP project.
+ 
  ### Solver data layer integration
  &#x1F535; tag: solve-dl
  
