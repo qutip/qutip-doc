@@ -82,14 +82,14 @@ A separate repository has already been made for qutip-qip.
  
  *planned package status*: family package `qutip-symbolic`
  
- Long ago Robert Johansson developed Sympsi. It is a fairly coomplete library for quantum computer algebra (symbolic computation). 
+ Long ago Robert Johansson and Eunjong Kim developed Sympsi. It is a fairly coomplete library for quantum computer algebra (symbolic computation). 
  It is primarily a quantum wrapper for [Sympy](https://www.sympy.org).
  
  It has fallen into unmaintained status. The latest version on the [sympsi repo](https://github.com/sympsi/sympsi) does not work with recent versions of Sympy.
  Alex Pitchford has a [fork](https://github.com/ajgpitch/sympsi) that does 'work' with recent Sympy versions -- unit tests pass, and most examples work. 
  However, some (important) examples fail, due to lack of respect for non-commuting operators in Sympy simplifcation functions (note this was true as of Nov 2019, may be fixed now).
  
- There is a [not discussed with RJ] plan to move this into the QuTiP family to allow the Admin Team to maintain, develop and promote it. 
+ There is a [not discussed with RJ & EK] plan to move this into the QuTiP family to allow the Admin Team to maintain, develop and promote it. 
  The 'Sympsi' name is cute, but a little abstract, and qutip-symbolic is proposed as an alternative, as it is plainer and more distinct from Sympy.
  
  ### Affilliated packages
@@ -236,7 +236,7 @@ A separate repository has already been made for qutip-qip.
  *main dev*: TBA
  
  Create a new family package qutip-symbolic from ajgpitch fork of Sympy.
- Must gain permission from Robert Johansson. 
+ Must gain permission from Robert Johansson and Eunjong Kim.
  Extended Sympy simplify to respect non-commuting operators.
  Produce user documentation.
  
