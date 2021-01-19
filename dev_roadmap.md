@@ -173,6 +173,17 @@ A separate repository has already been made for qutip-qip.
  A separate package for qutip-qip was created during Sidhant's GSoC project.
  There is some fine tuning required, especially after qutip.control is migrated.
  
+ ### HEOM revamp
+ &#x1F535; tag: heom-revamp
+ 
+ *status*: development [pretty much] complete
+ 
+ *admin lead*: [Neill](https://github.com/nwlambert)
+ 
+ *main dev*: [Tarun Raheja](https://github.com/tehruhn)
+ 
+ An overhaul of the HEOM solver. C++ components used to speed up construction of the hierarchy.
+ 
  ### Qtrl migration
  &#x1F535; tag: qtrl-mig
  
@@ -318,6 +329,7 @@ A separate repository has already been made for qutip-qip.
   - [solve-dl](#solver-data-layer-integration)
   - [qip-mig](#qip-migration)
   - [qtrl-mig](#qtrl-migration)
+  - [heom-revamp](#heom-revamp)
   
   The planned timeline for the release is:
   - alpha version, April 2021. Core features packaged and available for experienced users to test.
