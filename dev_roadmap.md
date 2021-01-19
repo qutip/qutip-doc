@@ -103,7 +103,7 @@ A separate repository has already been made for qutip-qip.
  
  --------------------------------------------------------------
 
- ## Workpackages
+ ## Development Projects
  
  ### data layer abstraction 
  &#x1F535; tag: dl-abs
@@ -310,7 +310,7 @@ A separate repository has already been made for qutip-qip.
  ## qutip major release roadmap
  
  ### qutip v.5
- These workpackages need to be completed for the qutip v.5 release.
+ These Projects need to be completed for the qutip v.5 release.
  
   - [dl-abs](#data-layer-abstraction)
   - [qmain-reorg](#qutip-main-reorganization)
