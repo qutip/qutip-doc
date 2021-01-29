@@ -198,7 +198,7 @@ Installation on MS Windows
 
 We are recommending and supporting installation of QuTiP into a Conda environment. Other scientific Python implementations such as Python-xy may also work, but are not supported.  
 
-As of QuTiP 4.1, recommended installation on Windows requires Python 3.5+, as well as MS Visual C++ Build Tools. MS Visual C++ Build Tools are strictly required for the install of the conda-forge package, but MS Visual Studio 2015 (or more recent) is recommended because it is required at runtime for the string format time-dependence solvers. When installing MS Visual Studio be sure to select the following components: 
+As of QuTiP 4.1, recommended installation on Windows requires Python 3.5+, as well as MS Visual C++ Build Tools. MS Visual C++ Build Tools are strictly required for the install of the conda-forge package, but [MS Visual Studio](https://visualstudio.microsoft.com/de/downloads/) 2015 (or more recent) is recommended because it is required at runtime for the string format time-dependence solvers. When installing MS Visual Studio be sure to select the following components: 
 - Windows "X" SDK (where "X" stands for your version: 7/8/8.1/10)
 - MSVC v140 - VS 2015 C++ build tools (v14.00) 
 
