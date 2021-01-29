@@ -205,9 +205,7 @@ As of QuTiP 4.1, recommended installation on Windows requires Python 3.5+, as we
 With this configuration, one can install QuTiP using any of the above mentioned receipes. 
 .. important:: In order to prevent issues with where Windows locates the PATH variables for the compiler and dll dependencies, it is recommended NOT to launch the usual command prompt in Windows, but use instead the developer command prompt provided in the Visual Studio 2015+ folder. 
 
-The 'Community' edition of Visual Studio 2015 is free to download use, however it does require approx 10GB of disk space, much of which does have to be on the system drive. If this is not feasible, then it is possible to either:
-- install only MS Visual C++ Build Tools 14.0 and the SDK ahead of QuTiP (this should save about 2 GB of space)
-- run QuTiP under Python 2.7.
+The 'Community' edition of Visual Studio 2015 is free to download use, however it does require approx 10GB of disk space, much of which does have to be on the system drive. If this is not feasible, then it is possible to install only [MS Visual C++ Build Tools 14.0 and the SDK](https://visualstudio.microsoft.com/visual-cpp-build-tools/) ahead of QuTiP (this should save about 2 GB of space)
 
 Windows and Python 2.7
 ----------------------
@@ -263,4 +261,3 @@ QuTiP includes an "about" function for viewing information about QuTiP and the i
    In [1]: from qutip import *
 
    In [2]: about()
-
