@@ -108,7 +108,7 @@ A separate repository has already been made for qutip-qip.
  ### data layer abstraction 
  &#x1F535; tag: dl-abs
  
- *status*: development [pretty much] complete
+ *status*: majority ofdevelopment completed.
  
  *admin lead*: [Eric](https://github.com/Ericgig)
  
@@ -118,6 +118,8 @@ A separate repository has already been made for qutip-qip.
  
  Abstraction of the [linear algebra] data from code qutip components, allowing for alternatives, such as sparse, dense etc.
  Difficult to summarize. Almost every file in qutip affected in some way. A major milestone for qutip. Significant performance improvements throughout qutip.
+ 
+ Some developments tasks remain, including providing full control over how the data-layer dispatchers choose the most appropriate output type.
  
  ### qutip main reorganization
  &#x1F535; tag: qmain-reorg
