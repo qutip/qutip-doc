@@ -12,9 +12,9 @@ This chapter covers the development of QuTiP and its subpackages, including
 a roadmap for upcoming releases and ideas for future improvements.
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
 
    ideas/qutip-interactive.rst
-   ideas/tensorflow-data-layer-backend.rst
    ideas/pulse-level-quantum-circuits.rst
    ideas/quantum-error-mitigation.rst
+   ideas/heom-gpu.rst
