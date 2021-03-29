@@ -7,7 +7,7 @@ TensorFlow Data Backend
     :depth: 3
 
 QuTiP's data layer provides the mathematical operations needed to work with
-quantum states and operators, i.e. `Qobjs`, inside QuTiP. As part of Google
+quantum states and operators, i.e. `Qobj`s, inside QuTiP. As part of Google
 Summer of Code 2020, the data layer was rewritten to allow new backends to
 be added more easily and for different backends to interoperate with each
 other. Backends using in-memory spares and dense matrices already exist,
