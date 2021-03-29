@@ -44,7 +44,7 @@ Expected outcomes
 * Add a `qutip.core.data.tensorflow` data type.
 * Implement specialisations for some important operations (e.g. `add`,
   `mul`, `matmul`, `eigen`, etc).
-* Write a small benchmark to show how Qobj operations scale on the new
+* Write a small benchmark to show how `Qobj` operations scale on the new
   backend in comparison to the existing backends. Run the benchmark both
   with and without using a GPU.
 * Implement enough for a solver to run on top of the new TensorFlow data
