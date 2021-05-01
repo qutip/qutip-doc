@@ -1,3 +1,13 @@
+ARCHIVED SINCE 2021-05-01
+=========================
+
+**The documentation is now hosted [in the `doc` folder of the qutip/qutip repository](https://github.com/qutip/qutip/tree/master/doc).**
+
+As of May 2021, this is no longer the main repository for QuTiP documentation development, but is preserved to avoid breaking old links.
+Please submit all new issues and pull requests there, instead.
+
+The rest of this readme and repository are left as-is.
+
 Repository for QuTiP documentation
 ==================================
 
